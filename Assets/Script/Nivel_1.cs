@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class Maniqui_Cambio : MonoBehaviour
+public class Nivel_1 : MonoBehaviour
 {
     public enum Step
     {

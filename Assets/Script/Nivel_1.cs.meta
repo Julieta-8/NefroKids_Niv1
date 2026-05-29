@@ -3,7 +3,39 @@ guid: 9768f7752180a4948adf2850d761a2e6
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - mannequinRenderer: {instanceID: 0}
+  - mannequinNormal: {instanceID: 0}
+  - mannequinWithVest: {instanceID: 0}
+  - mannequinComplete: {instanceID: 0}
+  - vestObject: {instanceID: 0}
+  - maskObject: {instanceID: 0}
+  - vestStartPosition: {instanceID: 0}
+  - maskStartPosition: {instanceID: 0}
+  - mannequinDropZone: {instanceID: 0}
+  - handsRenderer: {instanceID: 0}
+  - handsNormal: {instanceID: 0}
+  - handsWithSoap: {instanceID: 0}
+  - handsWashing: {instanceID: 0}
+  - handsDry: {instanceID: 0}
+  - soapObject: {instanceID: 0}
+  - towelObject: {instanceID: 0}
+  - faucetObject: {instanceID: 0}
+  - soapStartPosition: {instanceID: 0}
+  - towelStartPosition: {instanceID: 0}
+  - handsDropZone: {instanceID: 0}
+  - backgroundRenderer: {instanceID: 0}
+  - roomBackground: {instanceID: 0}
+  - sinkBackground: {instanceID: 0}
+  - phase1Objects: {instanceID: 0}
+  - phase2Objects: {instanceID: 0}
+  - instructionText: {instanceID: 0}
+  - nextButton: {instanceID: 0}
+  - dialoguePanel: {instanceID: 0}
+  - congratsPanel: {instanceID: 0}
+  - rikuRenderer: {instanceID: 0}
+  - rikuNeutral: {instanceID: 0}
+  - rikuCurious: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
