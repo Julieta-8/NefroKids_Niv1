@@ -10,24 +10,23 @@ public class Nivel_1 : MonoBehaviour
     {
         Intro,
 
-        // FASE 1
         DragVest,
         VestPlaced,
 
         DragMask,
         MaskPlaced,
 
-        // TRANSICION
         Phase2Intro,
 
-        // FASE 2
-        GrabSoap,
+        DragSoap,
         SoapPlaced,
 
-        OpenWater,
-        WaterOpened,
+        TurnOnWater,
+        WaterRunning,
 
-        GrabTowel,
+        TurnOffWater,
+
+        DragTowel,
         TowelPlaced,
 
         Finished
@@ -60,11 +59,15 @@ public class Nivel_1 : MonoBehaviour
     public Sprite handsNormal;
     public Sprite handsWithSoap;
     public Sprite handsWashing;
-    public Sprite handsDry;
+    public Sprite handsWet;
+    public Sprite handsClean;
 
     public GameObject soapObject;
     public GameObject towelObject;
-    public GameObject faucetObject;
+    public SpriteRenderer faucetRenderer;
+
+    public Sprite faucetOff;
+    public Sprite faucetOn;
 
     public Transform soapStartPosition;
     public Transform towelStartPosition;
@@ -182,6 +185,11 @@ public class Nivel_1 : MonoBehaviour
 
             case Step.MaskPlaced:
 
+
+
+                //-----------------------ETAPA 2 INICIO---------------------------
+
+
                 StartPhase2();
 
                 currentStep = Step.Phase2Intro;
@@ -192,19 +200,24 @@ public class Nivel_1 : MonoBehaviour
 
             case Step.Phase2Intro:
 
-                currentStep = Step.GrabSoap;
+                currentStep = Step.DragSoap;
 
                 break;
 
             case Step.SoapPlaced:
 
-                currentStep = Step.OpenWater;
+                currentStep = Step.WaterRunning;
 
                 break;
 
-            case Step.WaterOpened:
+            case Step.WaterRunning:
 
-                currentStep = Step.GrabTowel;
+                currentStep = Step.TurnOffWater;
+
+                break;
+            case Step.TurnOffWater:
+
+                currentStep = Step.TowelPlaced;
 
                 break;
 
@@ -251,7 +264,7 @@ public class Nivel_1 : MonoBehaviour
                 }
 
                 // JABON
-                if (currentStep == Step.GrabSoap &&
+                if (currentStep == Step.DragSoap &&
                     clickedObject == soapObject)
                 {
                     BeginDrag(clickedObject);
@@ -259,7 +272,7 @@ public class Nivel_1 : MonoBehaviour
                 }
 
                 // TOALLA
-                if (currentStep == Step.GrabTowel &&
+                if (currentStep == Step.DragTowel &&
                     clickedObject == towelObject)
                 {
                     BeginDrag(clickedObject);
@@ -267,8 +280,8 @@ public class Nivel_1 : MonoBehaviour
                 }
 
                 // CANILLA
-                if (currentStep == Step.OpenWater &&
-                    clickedObject == faucetObject)
+                if (currentStep == Step.WaterRunning &&
+                    clickedObject == faucetRenderer)
                 {
                     OpenWater();
                     return;
@@ -357,7 +370,7 @@ public class Nivel_1 : MonoBehaviour
 
         // JABON
         if (go == soapObject &&
-            currentStep == Step.GrabSoap)
+            currentStep == Step.DragSoap)
         {
             PlaceSoap();
             return;
@@ -365,7 +378,7 @@ public class Nivel_1 : MonoBehaviour
 
         // TOALLA
         if (go == towelObject &&
-            currentStep == Step.GrabTowel)
+            currentStep == Step.DragTowel)
         {
             PlaceTowel();
             return;
@@ -479,15 +492,37 @@ public class Nivel_1 : MonoBehaviour
         if (waterOpened) return;
 
         waterOpened = true;
+        faucetRenderer.sprite = faucetOn;
 
         handsRenderer.sprite =
             handsWashing;
 
-        currentStep = Step.WaterOpened;
+        currentStep = Step.WaterRunning;
 
-        ShowDialogue();
+        StartCoroutine(WashingRoutine());
     }
+    IEnumerator WashingRoutine()
+    {
+        yield return new WaitForSeconds(2f);
 
+        handsRenderer.sprite = handsWashing;
+
+        ShowDialogue(
+            
+        );
+
+        currentStep = Step.TurnOffWater;
+    }
+    void TurnOffFaucet()
+    {
+        faucetRenderer.sprite = faucetOff;
+
+      ShowDialogue(
+          
+        );
+
+        currentStep = Step.DragTowel;
+    }
     void PlaceTowel()
     {
         if (towelPlaced) return;
@@ -497,7 +532,7 @@ public class Nivel_1 : MonoBehaviour
         towelObject.SetActive(false);
 
         handsRenderer.sprite =
-            handsDry;
+            handsWet;
 
         currentStep = Step.TowelPlaced;
 
@@ -511,10 +546,17 @@ public class Nivel_1 : MonoBehaviour
     void ShowDialogue()
     {
         dialoguePanel.SetActive(true);
+        rikuRenderer.enabled =true;
+        nextButton.gameObject.SetActive(true);
 
         UpdateInstruction();
     }
-
+    void HideDialogue()
+    {
+        dialoguePanel.SetActive(false);
+        rikuRenderer.enabled =false;
+        nextButton.gameObject.SetActive(false);
+    }
     void ToggleRikuExpression()
     {
         if (rikuRenderer == null) return;
@@ -548,7 +590,7 @@ public class Nivel_1 : MonoBehaviour
 
                 instructionText.text =
                     "Primero coloca el chaleco sobre el maniquí.";
-
+                HideDialogue();
                 break;
 
             case Step.VestPlaced:
@@ -562,7 +604,7 @@ public class Nivel_1 : MonoBehaviour
 
                 instructionText.text =
                     "Ahora coloca el barbijo sobre el maniquí.";
-
+                HideDialogue();
                 break;
 
             case Step.MaskPlaced:
@@ -579,39 +621,44 @@ public class Nivel_1 : MonoBehaviour
 
                 break;
 
-            case Step.GrabSoap:
+            case Step.DragSoap:
 
                 instructionText.text =
                     "Primero coloca jabón sobre las manos.";
-
+                HideDialogue();
                 break;
 
             case Step.SoapPlaced:
 
                 instructionText.text =
                     "¡Perfecto! Ahora abre la canilla.";
-
+                HideDialogue();
                 break;
 
-            case Step.OpenWater:
+            case Step.TurnOnWater:
 
                 instructionText.text =
                     "Haz click sobre la canilla.";
-
+                HideDialogue();
                 break;
 
-            case Step.WaterOpened:
+            case Step.WaterRunning:
 
                 instructionText.text =
                     "¡Muy bien! Ahora seca las manos con la toalla.";
-
+                HideDialogue();
                 break;
+            case Step.TurnOffWater:
 
-            case Step.GrabTowel:
+                instructionText.text =
+                    "¡Muy bien! Ahora seca las manos con la toalla.";
+                HideDialogue();
+                break;
+            case Step.DragTowel:
 
                 instructionText.text =
                     "Arrastra la toalla hacia las manos.";
-
+                HideDialogue();
                 break;
 
             case Step.TowelPlaced:
