@@ -682,6 +682,7 @@ public class Nivel_1 : MonoBehaviour
         congratsPanel?.SetActive(true);
 
         yield return new WaitForSeconds(2f);
+        bridge.SendResultToReact();
 
         if (!string.IsNullOrEmpty(nextSceneName))
         {
