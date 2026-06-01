@@ -167,7 +167,7 @@ public class Nivel_1 : MonoBehaviour
     {
         ToggleRikuExpression();
 
-        dialoguePanel.SetActive(false);
+        HideDialogue();
 
         switch (currentStep)
         {
@@ -548,12 +548,13 @@ public class Nivel_1 : MonoBehaviour
         dialoguePanel.SetActive(true);
         rikuRenderer.enabled =true;
         nextButton.gameObject.SetActive(true);
-
+        instructionText.gameObject.SetActive(true);
         UpdateInstruction();
     }
     void HideDialogue()
     {
         dialoguePanel.SetActive(false);
+        instructionText.gameObject.SetActive(false);
         rikuRenderer.enabled =false;
         nextButton.gameObject.SetActive(false);
     }
