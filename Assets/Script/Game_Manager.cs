@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using UnityEngine.UI;
 
 public class Game_Manager : MonoBehaviour
@@ -26,3 +26,4 @@ public class ResultData
     public bool completed;
     public int durationSeconds;
 }
+*/

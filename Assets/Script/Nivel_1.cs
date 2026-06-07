@@ -206,7 +206,7 @@ public class Nivel_1 : MonoBehaviour
 
             case Step.SoapPlaced:
 
-                currentStep = Step.WaterRunning;
+                currentStep = Step.TurnOnWater;
 
                 break;
 
@@ -217,7 +217,7 @@ public class Nivel_1 : MonoBehaviour
                 break;
             case Step.TurnOffWater:
 
-                currentStep = Step.TowelPlaced;
+                currentStep = Step.DragTowel;
 
                 break;
 
@@ -240,13 +240,18 @@ public class Nivel_1 : MonoBehaviour
             Vector2 worldPoint =
                 Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            RaycastHit2D hit =
-                Physics2D.Raycast(worldPoint, Vector2.zero);
-
-            if (hit.collider != null)
+            /*RaycastHit2D hit =
+                Physics2D.Raycast(worldPoint, Vector2.zero);*/
+            Collider2D hit =
+    Physics2D.OverlapPoint(worldPoint);
+            if (hit != null)
             {
-                GameObject clickedObject = hit.collider.gameObject;
-
+                GameObject clickedObject = hit.gameObject;
+            }
+            if (hit/*.collider*/ != null)
+            {
+                GameObject clickedObject = hit/*.collider*/.gameObject;
+                Debug.Log(clickedObject.name);
                 // CHALECO
                 if (currentStep == Step.DragVest &&
                     clickedObject == vestObject)
@@ -280,10 +285,16 @@ public class Nivel_1 : MonoBehaviour
                 }
 
                 // CANILLA
-                if (currentStep == Step.WaterRunning &&
-                    clickedObject == faucetRenderer)
+                if (currentStep == Step.TurnOnWater &&
+     clickedObject == faucetRenderer.gameObject)
                 {
                     OpenWater();
+                    return;
+                }
+                if (currentStep == Step.TurnOffWater &&
+    clickedObject == faucetRenderer.gameObject)
+                {
+                    TurnOffFaucet();
                     return;
                 }
             }
@@ -507,19 +518,20 @@ public class Nivel_1 : MonoBehaviour
 
         handsRenderer.sprite = handsWashing;
 
-        ShowDialogue(
+        /*ShowDialogue(
             
-        );
+        );*/
 
         currentStep = Step.TurnOffWater;
     }
     void TurnOffFaucet()
     {
         faucetRenderer.sprite = faucetOff;
+        handsRenderer.sprite =
+            handsWet;
+        /*ShowDialogue(
 
-      ShowDialogue(
-          
-        );
+          );*/
 
         currentStep = Step.DragTowel;
     }
@@ -633,21 +645,21 @@ public class Nivel_1 : MonoBehaviour
 
                 instructionText.text =
                     "¡Perfecto! Ahora abre la canilla.";
-                HideDialogue();
+
                 break;
 
             case Step.TurnOnWater:
 
                 instructionText.text =
                     "Haz click sobre la canilla.";
-                HideDialogue();
+
                 break;
 
             case Step.WaterRunning:
 
                 instructionText.text =
                     "¡Muy bien! Ahora seca las manos con la toalla.";
-                HideDialogue();
+                
                 break;
             case Step.TurnOffWater:
 
@@ -683,7 +695,7 @@ public class Nivel_1 : MonoBehaviour
         congratsPanel?.SetActive(true);
 
         yield return new WaitForSeconds(2f);
-        bridge.SendResultToReact();
+        /*bridge.SendResultToReact();*/
 
         if (!string.IsNullOrEmpty(nextSceneName))
         {

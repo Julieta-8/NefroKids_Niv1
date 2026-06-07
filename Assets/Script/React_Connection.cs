@@ -1,4 +1,4 @@
-using System.Diagnostics;
+/*using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityMessageManagerNS;
@@ -46,3 +46,4 @@ public class React_Connection : MonoBehaviour
         UnityMessageManager.Instance.SendMessageToRN(json);
     }
 }
+*/
