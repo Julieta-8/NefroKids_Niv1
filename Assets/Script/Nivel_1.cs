@@ -79,6 +79,7 @@ public class Nivel_1 : MonoBehaviour
     [Header("================================")]
 
     public SpriteRenderer backgroundRenderer;
+    public SpriteRenderer backgroundRenderer_2;
 
     public Sprite roomBackground;
     public Sprite sinkBackground;
@@ -132,6 +133,7 @@ public class Nivel_1 : MonoBehaviour
     {
         // FONDO
         backgroundRenderer.sprite = roomBackground;
+        backgroundRenderer_2.enabled = false;
 
         // MANIQUI
         mannequinRenderer.sprite = mannequinNormal;
@@ -473,7 +475,11 @@ public class Nivel_1 : MonoBehaviour
 
     void StartPhase2()
     {
-        backgroundRenderer.sprite = sinkBackground;
+        backgroundRenderer_2.enabled = true;
+
+        backgroundRenderer_2.sprite = sinkBackground;
+
+        backgroundRenderer.enabled = false ;
 
         phase1Objects.SetActive(false);
 
