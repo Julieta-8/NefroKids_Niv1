@@ -10,27 +10,39 @@ public class Nivel_1 : MonoBehaviour
     {
         Intro,
 
+        //startTimer
         DragVest,
         VestPlaced,
 
         DragMask,
         MaskPlaced,
-
+        //EndTimer
+        //DatoCurioso1
         Phase2Intro,
-
+        //StartTimer2
         DragSoap,
         SoapPlaced,
 
         TurnOnWater,
         WaterRunning,
-
+        //HandWashSequence(datoCurioso2)
         TurnOffWater,
 
         DragTowel,
         TowelPlaced,
+        //EnTimer2
+
+        //CountScore
 
         Finished
     }
+    [Header("================================")]
+    [Header("FASE 0 - RANDOM")]
+    [Header("================================")]
+    public float tiempoMinimo = 1f;
+    public float tiempoMaximo = 50f;
+
+
 
     [Header("================================")]
     [Header("FASE 1 - MANIQUI")]
@@ -41,6 +53,9 @@ public class Nivel_1 : MonoBehaviour
     public Sprite mannequinNormal;
     public Sprite mannequinWithVest;
     public Sprite mannequinComplete;
+    //public Sprite mannequinWorried
+    //public Sprite manequinInPain
+
 
     public GameObject vestObject;
     public GameObject maskObject;
@@ -179,6 +194,9 @@ public class Nivel_1 : MonoBehaviour
 
                 break;
 
+            //case Step.StartTimer
+
+
             case Step.VestPlaced:
 
                 currentStep = Step.DragMask;
@@ -187,7 +205,7 @@ public class Nivel_1 : MonoBehaviour
 
             case Step.MaskPlaced:
 
-
+            //case Step.EndTimer
 
                 //-----------------------ETAPA 2 INICIO---------------------------
 
@@ -269,7 +287,7 @@ public class Nivel_1 : MonoBehaviour
                     BeginDrag(clickedObject);
                     return;
                 }
-
+                //AGREGAR ACA EL DATO CURIOSO!!
                 // JABON
                 if (currentStep == Step.DragSoap &&
                     clickedObject == soapObject)
@@ -286,7 +304,7 @@ public class Nivel_1 : MonoBehaviour
                     return;
                 }
 
-                // CANILLA
+                // CANILLA MODIFICAR ACA!!
                 if (currentStep == Step.TurnOnWater &&
      clickedObject == faucetRenderer.gameObject)
                 {
@@ -437,6 +455,8 @@ public class Nivel_1 : MonoBehaviour
     // FASE 1
     // ==================================================
 
+    //void StartTimer() --> pausar cada vez que se dan las intrucsiones
+
     void PlaceVest()
     {
         if (vestPlaced) return;
@@ -468,6 +488,9 @@ public class Nivel_1 : MonoBehaviour
 
         ShowDialogue();
     }
+
+    //EndTimer()
+    //CountScore
 
     // ==================================================
     // FASE 2
@@ -523,11 +546,12 @@ public class Nivel_1 : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         handsRenderer.sprite = handsWashing;
-
-        /*ShowDialogue(
-            
-        );*/
-
+        /*Agregar aca la animación y dato curioso!!!
+       void DatoCuioro1
+                instructionText.text =
+                    "¿Sabias que este proceso debe durar 60 segundos? eso es cantar 4 feliz cumpleaños!";
+         
+         */
         currentStep = Step.TurnOffWater;
     }
     void TurnOffFaucet()
@@ -535,9 +559,7 @@ public class Nivel_1 : MonoBehaviour
         faucetRenderer.sprite = faucetOff;
         handsRenderer.sprite =
             handsWet;
-        /*ShowDialogue(
-
-          );*/
+     
 
         currentStep = Step.DragTowel;
     }
@@ -605,6 +627,8 @@ public class Nivel_1 : MonoBehaviour
 
                 break;
 
+            
+
             case Step.DragVest:
 
                 instructionText.text =
@@ -632,6 +656,9 @@ public class Nivel_1 : MonoBehaviour
                     "¡Excelente! Ahora vamos a lavarnos las manos.";
 
                 break;
+
+
+            //case Step.DatoCurioso1
 
             case Step.Phase2Intro:
 
