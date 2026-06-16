@@ -39,9 +39,15 @@ public class Nivel_1 : MonoBehaviour
     [Header("================================")]
     [Header("FASE 0 - RANDOM")]
     [Header("================================")]
-    public float tiempoMinimo = 1f;
-    public float tiempoMaximo = 50f;
+    private float phase1Timer;
+    private float phase2Timer;
 
+    private bool timingPhase1;
+    private bool timingPhase2;
+    private float averageTime;
+
+    private int phase1Stars;
+    private int phase2Stars;
 
 
     [Header("================================")]
@@ -74,6 +80,13 @@ public class Nivel_1 : MonoBehaviour
     public Sprite handsNormal;
     public Sprite handsWithSoap;
     public Sprite handsWashing;
+
+    public Sprite washStep1;
+    public Sprite washStep2;
+    public Sprite washStep3;
+    public Sprite washStep4;
+
+
     public Sprite handsWet;
     public Sprite handsClean;
 
@@ -118,6 +131,13 @@ public class Nivel_1 : MonoBehaviour
 
     public GameObject congratsPanel;
 
+
+    public TMP_Text DatoCuriosoText;
+
+
+    public GameObject DatoCuriosoPanel;
+
+
     [Header("RIKU")]
     public SpriteRenderer rikuRenderer;
 
@@ -125,6 +145,9 @@ public class Nivel_1 : MonoBehaviour
     public Sprite rikuCurious;
 
     private bool rikuNeutralState = true;
+
+    public Sprite CabezarikuCurious;
+
 
     [Header("ESCENA SIGUIENTE")]
     public string nextSceneName;
@@ -178,6 +201,13 @@ public class Nivel_1 : MonoBehaviour
     void Update()
     {
         HandleMouseInput();
+
+        if (timingPhase1)
+            phase1Timer += Time.deltaTime;
+
+        if (timingPhase2)
+            phase2Timer += Time.deltaTime;
+
     }
 
     void OnNextPressed()
@@ -198,6 +228,8 @@ public class Nivel_1 : MonoBehaviour
 
 
             case Step.VestPlaced:
+                phase1Timer = 0;
+                timingPhase1 = true;
 
                 currentStep = Step.DragMask;
 
@@ -205,7 +237,7 @@ public class Nivel_1 : MonoBehaviour
 
             case Step.MaskPlaced:
 
-            //case Step.EndTimer
+                //case Step.EndTimer
 
                 //-----------------------ETAPA 2 INICIO---------------------------
 
@@ -219,7 +251,8 @@ public class Nivel_1 : MonoBehaviour
                 break;
 
             case Step.Phase2Intro:
-
+                phase2Timer = 0;
+                timingPhase2 = true;
                 currentStep = Step.DragSoap;
 
                 break;
@@ -484,13 +517,28 @@ public class Nivel_1 : MonoBehaviour
         mannequinRenderer.sprite =
             mannequinComplete;
 
+        timingPhase1 = false;
+
         currentStep = Step.MaskPlaced;
+        ShowHandwashingTip2();
 
         ShowDialogue();
     }
 
     //EndTimer()
     //CountScore
+
+    int CalculateStars(float time)
+    {
+        if (time <= 30f)
+            return 3;
+
+        if (time <= 60f)
+            return 2;
+
+        return 1;
+    }
+
 
     // ==================================================
     // FASE 2
@@ -502,7 +550,7 @@ public class Nivel_1 : MonoBehaviour
 
         backgroundRenderer_2.sprite = sinkBackground;
 
-        backgroundRenderer.enabled = false ;
+        backgroundRenderer.enabled = false;
 
         phase1Objects.SetActive(false);
 
@@ -541,18 +589,46 @@ public class Nivel_1 : MonoBehaviour
 
         StartCoroutine(WashingRoutine());
     }
+    void ShowHandwashingTip()
+{
+        //esperar 10s
+        DatoCuriosoPanel.gameObject.SetActive(true);
+        //mostrar cabeza de riku
+        DatoCuriosoText.text =
+     "¿Sabías que el lavado correcto dura aproximadamente 60 segundos?";
+        DatoCuriosoPanel.gameObject.SetActive(false);
+    
+    }
+    void ShowHandwashingTip2()
+    {
+        //esperar 10s
+        DatoCuriosoPanel.gameObject.SetActive(true);
+        //hablar sobre la importancia de la higiene y uniforme
+        DatoCuriosoText.text =
+     "¿Sabías que el lavado correcto dura aproximadamente 60 segundos?";
+        DatoCuriosoPanel.gameObject.SetActive(false);
+
+    }
     IEnumerator WashingRoutine()
     {
-        yield return new WaitForSeconds(2f);
+        ShowHandwashingTip();
 
-        handsRenderer.sprite = handsWashing;
-        /*Agregar aca la animación y dato curioso!!!
-       void DatoCuioro1
-                instructionText.text =
-                    "¿Sabias que este proceso debe durar 60 segundos? eso es cantar 4 feliz cumpleaños!";
-         
-         */
+        handsRenderer.sprite = washStep1;
+        yield return new WaitForSeconds(3f);
+
+        handsRenderer.sprite = washStep2;
+        yield return new WaitForSeconds(3f);
+
+        handsRenderer.sprite = washStep3;
+        yield return new WaitForSeconds(3f);
+
+        handsRenderer.sprite = washStep4;
+        yield return new WaitForSeconds(3f);
+
         currentStep = Step.TurnOffWater;
+
+        instructionText.text =
+            "¡Perfecto! Ahora cierra la canilla.";
     }
     void TurnOffFaucet()
     {
@@ -573,9 +649,17 @@ public class Nivel_1 : MonoBehaviour
 
         handsRenderer.sprite =
             handsWet;
+        timingPhase2 = false;
 
         currentStep = Step.TowelPlaced;
+        averageTime =
+    (phase1Timer + phase2Timer) / 2f;
 
+        phase1Stars =
+            CalculateStars(phase1Timer);
+
+        phase2Stars =
+            CalculateStars(phase2Timer);
         ShowDialogue();
     }
 
@@ -590,6 +674,11 @@ public class Nivel_1 : MonoBehaviour
         nextButton.gameObject.SetActive(true);
         instructionText.gameObject.SetActive(true);
         UpdateInstruction();
+
+
+        timingPhase1 = false;
+        timingPhase2 = false;
+
     }
     void HideDialogue()
     {
@@ -597,6 +686,26 @@ public class Nivel_1 : MonoBehaviour
         instructionText.gameObject.SetActive(false);
         rikuRenderer.enabled =false;
         nextButton.gameObject.SetActive(false);
+
+
+
+        if (currentStep == Step.DragVest ||
+      currentStep == Step.DragMask)
+        {
+            timingPhase1 = true;
+        }
+
+        if (currentStep == Step.DragSoap ||
+           currentStep == Step.TurnOnWater ||
+           currentStep == Step.TurnOffWater ||
+           currentStep == Step.DragTowel)
+        {
+            timingPhase2 = true;
+        }
+
+
+
+
     }
     void ToggleRikuExpression()
     {
@@ -729,6 +838,10 @@ public class Nivel_1 : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
         /*bridge.SendResultToReact();*/
+        instructionText.text =
+       "Tiempo fase 1: " + phase1Timer.ToString("F1") + "s\n" +
+       "Tiempo fase 2: " + phase2Timer.ToString("F1") + "s\n" +
+       "Promedio: " + averageTime.ToString("F1") + "s";
 
         if (!string.IsNullOrEmpty(nextSceneName))
         {
