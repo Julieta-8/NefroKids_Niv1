@@ -1,44 +1,24 @@
-/*using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityMessageManagerNS;
-
-[System.Serializable]
-public class GameData
-{
-    public int levelId;
-}
-
-[System.Serializable]
-public class ResultData
-{
-    public int levelId;
-    public bool completed;
-    public int durationSeconds;
-}
 public class React_Connection : MonoBehaviour
 {
     public Nivel_1 nivel1;
-
-    public void OnMessage(string json)
+    void Start()
     {
-        Debug.Log("Mensaje de React: " + json);
-
-        GameData data = JsonUtility.FromJson<GameData>(json);
-
-        if (data.levelId == 1)
-        {
-            nivel1.gameObject.SetActive(true);
-        }
+        nivel1.OnLevelCompleted += SendResultToReact;
     }
 
-    public void SendResultToReact()
+    void SendResultToReact()
     {
-        var result = new ResultData
+        ResultData result = new ResultData
         {
             levelId = 1,
             completed = true,
-            durationSeconds = 120
+            phase1Time = nivel1.Phase1Time,
+            phase2Time = nivel1.Phase2Time,
+            averageTime = nivel1.AverageTime,
+            phase1Stars = nivel1.Phase1Stars,
+            phase2Stars = nivel1.Phase2Stars
         };
 
         string json = JsonUtility.ToJson(result);
@@ -46,4 +26,3 @@ public class React_Connection : MonoBehaviour
         UnityMessageManager.Instance.SendMessageToRN(json);
     }
 }
-*/

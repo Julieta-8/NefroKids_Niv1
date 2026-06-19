@@ -39,15 +39,15 @@ public class Nivel_1 : MonoBehaviour
     [Header("================================")]
     [Header("FASE 0 - RANDOM")]
     [Header("================================")]
-    private float phase1Timer;
-    private float phase2Timer;
+    public System.Action OnLevelCompleted;
+    public bool IsCompleted { get; private set; }
 
-    private bool timingPhase1;
-    private bool timingPhase2;
-    private float averageTime;
+    public float Phase1Time => phase1Timer;
+    public float Phase2Time => phase2Timer;
+    public float AverageTime => averageTime;
 
-    private int phase1Stars;
-    private int phase2Stars;
+    public int Phase1Stars => phase1Stars;
+    public int Phase2Stars => phase2Stars;
 
 
     [Header("================================")]
@@ -834,6 +834,8 @@ public class Nivel_1 : MonoBehaviour
 
     IEnumerator FinishRoutine()
     {
+        IsCompleted = true;
+        OnLevelCompleted?.Invoke();
         congratsPanel?.SetActive(true);
 
         yield return new WaitForSeconds(2f);
