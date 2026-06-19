@@ -6,11 +6,17 @@ public class React_Connection : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("React_Connection arrancó");
+
+        Debug.Log("nivel1 = " + nivel1);
+
         if (nivel1 == null)
         {
             Debug.LogError("Nivel_1 no asignado en React_Connection");
             return;
         }
+
+        Debug.Log("Nivel_1 encontrado correctamente");
 
         nivel1.OnLevelCompleted += SendResultToReact;
     }
