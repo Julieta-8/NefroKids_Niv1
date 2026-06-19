@@ -49,6 +49,16 @@ public class Nivel_1 : MonoBehaviour
     public int Phase1Stars => phase1Stars;
     public int Phase2Stars => phase2Stars;
 
+    private float phase1Timer;
+    private float phase2Timer;
+    private float averageTime;
+
+    private bool timingPhase1;
+    private bool timingPhase2;
+
+    private int phase1Stars;
+    private int phase2Stars;
+
 
     [Header("================================")]
     [Header("FASE 1 - MANIQUI")]
@@ -832,22 +842,32 @@ public class Nivel_1 : MonoBehaviour
         }
     }
 
+    //IEnumerator FinishRoutine()
+    //{
+    //    IsCompleted = true;
+    //    OnLevelCompleted?.Invoke();
+    //    congratsPanel?.SetActive(true);
+
+    //    yield return new WaitForSeconds(2f);
+    //    /*bridge.SendResultToReact();*/
+    //    instructionText.text =
+    //   "Tiempo fase 1: " + phase1Timer.ToString("F1") + "s\n" +
+    //   "Tiempo fase 2: " + phase2Timer.ToString("F1") + "s\n" +
+    //   "Promedio: " + averageTime.ToString("F1") + "s";
+
+    //    if (!string.IsNullOrEmpty(nextSceneName))
+    //    {
+    //        SceneManager.LoadScene(nextSceneName);
+    //    }
+    //}
+
     IEnumerator FinishRoutine()
     {
-        IsCompleted = true;
-        OnLevelCompleted?.Invoke();
         congratsPanel?.SetActive(true);
 
         yield return new WaitForSeconds(2f);
-        /*bridge.SendResultToReact();*/
-        instructionText.text =
-       "Tiempo fase 1: " + phase1Timer.ToString("F1") + "s\n" +
-       "Tiempo fase 2: " + phase2Timer.ToString("F1") + "s\n" +
-       "Promedio: " + averageTime.ToString("F1") + "s";
 
-        if (!string.IsNullOrEmpty(nextSceneName))
-        {
-            SceneManager.LoadScene(nextSceneName);
-        }
+        FindObjectOfType<React_Connection>()
+            .SendResultToReact();
     }
 }
