@@ -162,6 +162,9 @@ public class Nivel_1 : MonoBehaviour
     [Header("ESCENA SIGUIENTE")]
     public string nextSceneName;
 
+
+
+
     // ESTADO
     public Step currentStep = Step.Intro;
 
@@ -179,6 +182,9 @@ public class Nivel_1 : MonoBehaviour
 
     void Start()
     {
+
+        DatoCuriosoPanel.SetActive(false);
+        DatoCuriosoText.gameObject.SetActive(false);
         // FONDO
         backgroundRenderer.sprite = roomBackground;
         backgroundRenderer_2.enabled = false;
@@ -601,8 +607,11 @@ public class Nivel_1 : MonoBehaviour
     }
     void ShowHandwashingTip()
 {
+       
         //esperar 10s
+        DatoCuriosoPanel.SetActive(true);
         DatoCuriosoPanel.gameObject.SetActive(true);
+        DatoCuriosoText.gameObject.SetActive(true);
         //mostrar cabeza de riku
         DatoCuriosoText.text =
      "¿Sabías que el lavado correcto dura aproximadamente 60 segundos?";
@@ -611,16 +620,20 @@ public class Nivel_1 : MonoBehaviour
     }
     void ShowHandwashingTip2()
     {
+        DatoCuriosoPanel.SetActive(true);
+        DatoCuriosoPanel.gameObject.SetActive(true);
+        DatoCuriosoText.gameObject.SetActive(true);
         //esperar 10s
         DatoCuriosoPanel.gameObject.SetActive(true);
         //hablar sobre la importancia de la higiene y uniforme
         DatoCuriosoText.text =
      "¿Sabías que el lavado correcto dura aproximadamente 60 segundos?";
         DatoCuriosoPanel.gameObject.SetActive(false);
-
+      
     }
     IEnumerator WashingRoutine()
     {
+       
         ShowHandwashingTip();
 
         handsRenderer.sprite = washStep1;
@@ -639,6 +652,7 @@ public class Nivel_1 : MonoBehaviour
 
         instructionText.text =
             "¡Perfecto! Ahora cierra la canilla.";
+      
     }
     void TurnOffFaucet()
     {
@@ -676,7 +690,8 @@ public class Nivel_1 : MonoBehaviour
     // ==================================================
     // DIALOGOS
     // ==================================================
-
+    
+  
     void ShowDialogue()
     {
         dialoguePanel.SetActive(true);
@@ -842,32 +857,26 @@ public class Nivel_1 : MonoBehaviour
         }
     }
 
-    //IEnumerator FinishRoutine()
-    //{
-    //    IsCompleted = true;
-    //    OnLevelCompleted?.Invoke();
-    //    congratsPanel?.SetActive(true);
-
-    //    yield return new WaitForSeconds(2f);
-    //    /*bridge.SendResultToReact();*/
-    //    instructionText.text =
-    //   "Tiempo fase 1: " + phase1Timer.ToString("F1") + "s\n" +
-    //   "Tiempo fase 2: " + phase2Timer.ToString("F1") + "s\n" +
-    //   "Promedio: " + averageTime.ToString("F1") + "s";
-
-    //    if (!string.IsNullOrEmpty(nextSceneName))
-    //    {
-    //        SceneManager.LoadScene(nextSceneName);
-    //    }
-    //}
-
     IEnumerator FinishRoutine()
     {
-        congratsPanel?.SetActive(true);
+      IsCompleted = true;
+      OnLevelCompleted?.Invoke();
+       congratsPanel?.SetActive(true);
 
-        yield return new WaitForSeconds(2f);
-
-        FindObjectOfType<React_Connection>()
+       yield return new WaitForSeconds(2f);
+       /*bridge.SendResultToReact();*/
+       instructionText.text =
+      "Tiempo fase 1: " + phase1Timer.ToString("F1") + "s\n" +
+     "Tiempo fase 2: " + phase2Timer.ToString("F1") + "s\n" +
+      "Promedio: " + averageTime.ToString("F1") + "s";
+           FindObjectOfType<React_Connection>()
             .SendResultToReact();
+        if (!string.IsNullOrEmpty(nextSceneName))
+       {
+          SceneManager.LoadScene(nextSceneName);
+      }
+
+    
     }
 }
+ 
