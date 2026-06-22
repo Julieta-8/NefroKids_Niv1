@@ -537,7 +537,8 @@ public class Nivel_1 : MonoBehaviour
 
         currentStep = Step.MaskPlaced;
         ShowHandwashingTip2();
-
+        DatoCuriosoPanel.gameObject.SetActive(false);
+        DatoCuriosoText.gameObject.SetActive(false);
         ShowDialogue();
     }
 
@@ -615,9 +616,10 @@ public class Nivel_1 : MonoBehaviour
         //mostrar cabeza de riku
         DatoCuriosoText.text =
      "¿Sabías que el lavado correcto dura aproximadamente 60 segundos?";
-        DatoCuriosoPanel.gameObject.SetActive(false);
-    
-    }
+       /* DatoCuriosoPanel.gameObject.SetActive(false);
+        DatoCuriosoText.gameObject.SetActive(false);
+    */
+        }
     void ShowHandwashingTip2()
     {
         DatoCuriosoPanel.SetActive(true);
@@ -627,9 +629,10 @@ public class Nivel_1 : MonoBehaviour
         DatoCuriosoPanel.gameObject.SetActive(true);
         //hablar sobre la importancia de la higiene y uniforme
         DatoCuriosoText.text =
-     "¿Sabías que el lavado correcto dura aproximadamente 60 segundos?";
-        DatoCuriosoPanel.gameObject.SetActive(false);
-      
+     "Esta es la parte m+as improtante d etodo le proceso";
+       /* DatoCuriosoPanel.gameObject.SetActive(false);
+        DatoCuriosoText.gameObject.SetActive(false);
+*/
     }
     IEnumerator WashingRoutine()
     {
@@ -652,7 +655,8 @@ public class Nivel_1 : MonoBehaviour
 
         instructionText.text =
             "¡Perfecto! Ahora cierra la canilla.";
-      
+        DatoCuriosoPanel.gameObject.SetActive(false);
+        DatoCuriosoText.gameObject.SetActive(false);
     }
     void TurnOffFaucet()
     {
