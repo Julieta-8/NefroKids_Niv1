@@ -869,14 +869,27 @@ public class Nivel_1 : MonoBehaviour
       "Tiempo fase 1: " + phase1Timer.ToString("F1") + "s\n" +
      "Tiempo fase 2: " + phase2Timer.ToString("F1") + "s\n" +
       "Promedio: " + averageTime.ToString("F1") + "s";
-           FindObjectOfType<React_Connection>()
-            .SendResultToReact();
-        if (!string.IsNullOrEmpty(nextSceneName))
-       {
-          SceneManager.LoadScene(nextSceneName);
-      }
+        ResultData result = new ResultData
+        {
+            levelId = 1,
+            completed = true,
 
-    
+            phase1Time = phase1Timer,
+            phase2Time = phase2Timer,
+            averageTime = averageTime,
+
+            phase1Stars = Phase1Stars,
+            phase2Stars = Phase2Stars
+        };
+        React_Connection bridge = FindObjectOfType<React_Connection>();
+        if (bridge != null)
+        {
+            bridge.SendResult(result);
+        }
+        if (!string.IsNullOrEmpty(nextSceneName))
+           {
+              SceneManager.LoadScene(nextSceneName);
+          }
     }
 }
  

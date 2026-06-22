@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using UnityEngine;
 
@@ -7,13 +6,9 @@ public class React_Connection : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void SendToReactNative(string json);
 
-    public void SendResultToReact()
+    public void SendResult(ResultData result)
     {
-        string json = JsonUtility.ToJson(new ResultData
-        {
-            levelId = 1,
-            completed = true
-        });
+        string json = JsonUtility.ToJson(result);
 
 #if UNITY_WEBGL && !UNITY_EDITOR
         SendToReactNative(json);
