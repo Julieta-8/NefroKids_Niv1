@@ -12,8 +12,8 @@ public class cardScript : MonoBehaviour {
 	private int _cardValue;
 	[SerializeField]
 	private bool _initialized = false;
-
-	private Sprite _cardBack;
+    public MaterialDialisis material;
+    private Sprite _cardBack;
 	private Sprite _cardFace;
 
 	private GameObject _manager;

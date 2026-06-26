@@ -10,8 +10,9 @@ public class gameManager : MonoBehaviour {
 	public Sprite cardBack;
 	public GameObject[] cards;
 	public GameObject gameTime;
+    public MaterialDialisis[] materiales;
 
-	private bool _init  = false;
+    private bool _init  = false;
 	private int _matches = 4;
 
 	// Update is called once per frame
