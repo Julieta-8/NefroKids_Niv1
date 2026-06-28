@@ -35,4 +35,15 @@ public class ReactConnection : MonoBehaviour
 
         OnMessageReceived?.Invoke(json);
     }
+    public void Log(string message)
+    {
+        Send(new DebugMessage { message = message });
+    }
+
+    [System.Serializable]
+    public class DebugMessage
+    {
+        public string type = "DEBUG";
+        public string message;
+    }
 }

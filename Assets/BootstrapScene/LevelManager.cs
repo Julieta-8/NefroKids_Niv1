@@ -18,14 +18,16 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         ReactConnection react = FindFirstObjectByType<ReactConnection>();
-
+        react.Log("Iniciando nivel");
         react.Send(new ReadyMessage());
     }
 
     private void ProcessMessage(string json)
     {
-        StartLevelMessage message =
-            JsonUtility.FromJson<StartLevelMessage>(json);
+        StartLevelMessage message = JsonUtility.FromJson<StartLevelMessage>(json);
+        ReactConnection react = FindFirstObjectByType<ReactConnection>();
+        react.Log("LevelManager Start");
+        react.Send(new ReadyMessage());
 
         if (message.type == "START_LEVEL")
         {
