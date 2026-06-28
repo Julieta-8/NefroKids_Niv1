@@ -1,5 +1,5 @@
 mergeInto(LibraryManager.library, {
-  
+
   SendToReactNative: function (jsonPtr) {
     var json = UTF8ToString(jsonPtr);
 
@@ -9,4 +9,5 @@ mergeInto(LibraryManager.library, {
       console.log("ReactNativeWebView no disponible:", json);
     }
   }
+
 });

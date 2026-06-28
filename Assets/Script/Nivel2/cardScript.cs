@@ -17,7 +17,13 @@ public class cardScript : MonoBehaviour
 
     private bool descubierta = false;
 
+<<<<<<< HEAD
     private bool encontrada = false;
+=======
+	public void setupGraphics() {
+		_cardBack = _manager.GetComponent<Level_2> ().getCardBack ();
+		_cardFace = _manager.GetComponent<Level_2> ().getCardFace (_cardValue);
+>>>>>>> 03c4578464c9a690586a94453f54d26c0b72b609
 
     //--------------------------------------------------
 

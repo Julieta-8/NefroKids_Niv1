@@ -4,22 +4,47 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+<<<<<<< HEAD:Assets/Script/Nivel2/gameManager.cs
 public class GameManager : MonoBehaviour
 {
     [Header("Materiales")]
     [SerializeField] private MaterialDialisis[] materiales;
+=======
+public class Level_2 : MonoBehaviour {
+>>>>>>> 03c4578464c9a690586a94453f54d26c0b72b609:Assets/Script/Nivel2/Level_2.cs
 
     [Header("Cartas")]
     [SerializeField] private cardScript[] cartas;
 
+<<<<<<< HEAD:Assets/Script/Nivel2/gameManager.cs
     [Header("UI")]
     [SerializeField] private PopupManager popupManager;
 
     [SerializeField] private Text progresoText;
+=======
+	private bool _started = false;
+    private bool _init  = false;
+	private int _matches = 4;
+
+	// Update is called once per frame
+	void Update () {
+		if (!_started)
+            return;
+		if (!_init)
+			initializeCards ();
+>>>>>>> 03c4578464c9a690586a94453f54d26c0b72b609:Assets/Script/Nivel2/Level_2.cs
 
     [SerializeField] private GameObject panelFinal;
 
+<<<<<<< HEAD:Assets/Script/Nivel2/gameManager.cs
     [SerializeField] private Text textoFinal;
+=======
+	}
+	public void StartLevel()
+    {
+        _started = true;
+    }
+>>>>>>> 03c4578464c9a690586a94453f54d26c0b72b609:Assets/Script/Nivel2/Level_2.cs
 
     //-------------------------------------------------------
     // Variables privadas
