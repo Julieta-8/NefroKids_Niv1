@@ -1,97 +1,322 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class gameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
+    [Header("Materiales")]
+    [SerializeField] private MaterialDialisis[] materiales;
 
-	public Sprite[] cardFace;
-	public Sprite cardBack;
-	public GameObject[] cards;
-	public GameObject gameTime;
-    public MaterialDialisis[] materiales;
+    [Header("Cartas")]
+    [SerializeField] private cardScript[] cartas;
 
-    private bool _init  = false;
-	private int _matches = 4;
+    [Header("UI")]
+    [SerializeField] private PopupManager popupManager;
 
-	// Update is called once per frame
-	void Update () {
-		if (!_init)
-			initializeCards ();
+    [SerializeField] private Text progresoText;
 
-		if (Input.GetMouseButtonUp (0))
-			checkCards ();
+    [SerializeField] private GameObject panelFinal;
 
-	}
+    [SerializeField] private Text textoFinal;
 
-	void initializeCards() {
-		for (int id = 0; id < 2; id++) {
-			for (int i = 1; i < 5; i++) {
+    //-------------------------------------------------------
+    // Variables privadas
+    //-------------------------------------------------------
 
-				bool test = false;
-				int choice = 0;
-				while (!test) {
-					choice = Random.Range (0, cards.Length);
-					test = !(cards [choice].GetComponent<cardScript> ().initialized);
-				}
-				cards [choice].GetComponent<cardScript> ().cardValue = i;
-				cards [choice].GetComponent<cardScript> ().initialized = true;
-			}
-		}
+    private cardScript primeraCarta;
 
-		foreach (GameObject c in cards)
-			c.GetComponent<cardScript> ().setupGraphics ();
+    private cardScript segundaCarta;
 
-		if (!_init)
-			_init = true;
-	}
+    private bool bloqueado = false;
 
-	public Sprite getCardBack() {
-		return cardBack;
-	}
+    private int paresEncontrados = 0;
 
-	public Sprite getCardFace(int i) {
-		return cardFace[i - 1];
-	}
+    private int totalPares;
 
-	void checkCards() {
-		List<int> c = new List<int> ();
+    //-------------------------------------------------------
 
-		for (int i = 0; i < cards.Length; i++) {
-			if (cards [i].GetComponent<cardScript> ().state == 1)
-				c.Add (i);
-		}
+    private void Start()
+    {
+        totalPares = materiales.Length;
 
-		if (c.Count == 2)
-			cardComparison (c);
-	}
+        panelFinal.SetActive(false);
 
-	void cardComparison(List<int> c){
-		cardScript.DO_NOT = true;
+        CrearTablero();
 
-		int x = 0;
+        ActualizarProgreso();
+    }
 
-		if (cards [c [0]].GetComponent<cardScript> ().cardValue == cards [c [1]].GetComponent<cardScript> ().cardValue) {
-			x = 2;
-			_matches--;
-			if (_matches == 0)
-				gameTime.GetComponent<timeScript> ().endGame ();
-		}
+    //-------------------------------------------------------
 
+    public bool PuedeSeleccionar()
+    {
+        return !bloqueado;
+    }
 
-		for (int i = 0; i < c.Count; i++) {
-			cards [c [i]].GetComponent<cardScript> ().state = x;
-			cards [c [i]].GetComponent<cardScript> ().falseCheck ();
-		}
-	
-	}
+    //-------------------------------------------------------
 
-	public void reGame(){
-		SceneManager.LoadScene ("gameScene");
-	}
+    public void SeleccionarCarta(cardScript carta)
+    {
+        if (bloqueado)
+            return;
 
-	public void reMenu(){
-		SceneManager.LoadScene ("menuScene");
-	}
+        //---------------------------------------------------
+        // Primera carta
+        //---------------------------------------------------
+
+        if (primeraCarta == null)
+        {
+            primeraCarta = carta;
+            return;
+        }
+
+        //---------------------------------------------------
+        // Segunda carta
+        //---------------------------------------------------
+
+        segundaCarta = carta;
+
+        StartCoroutine(CompararCartas());
+    }
+
+    //-------------------------------------------------------
+
+    void CrearTablero()
+    {
+        List<MaterialDialisis> lista = new List<MaterialDialisis>();
+
+        //---------------------------------------------------
+        // Duplicamos cada material para formar los pares
+        //---------------------------------------------------
+
+        foreach (MaterialDialisis material in materiales)
+        {
+            lista.Add(material);
+            lista.Add(material);
+        }
+
+        //---------------------------------------------------
+        // Mezclamos
+        //---------------------------------------------------
+
+        for (int i = 0; i < lista.Count; i++)
+        {
+            MaterialDialisis aux = lista[i];
+
+            int random = Random.Range(i, lista.Count);
+
+            lista[i] = lista[random];
+
+            lista[random] = aux;
+        }
+
+        //---------------------------------------------------
+        // Asignamos cada material a una carta
+        //---------------------------------------------------
+
+        for (int i = 0; i < cartas.Length; i++)
+        {
+            cartas[i].Configurar(lista[i]);
+        }
+    }
+
+    //-------------------------------------------------------
+
+    IEnumerator CompararCartas()
+    {
+        bloqueado = true;
+
+        yield return new WaitForSeconds(0.8f);
+
+        //---------------------------------------------------
+        // ¿Son iguales?
+        //---------------------------------------------------
+
+        if (primeraCarta.ObtenerID() == segundaCarta.ObtenerID())
+        {
+            primeraCarta.MarcarComoEncontrada();
+
+            segundaCarta.MarcarComoEncontrada();
+
+            paresEncontrados++;
+
+            ActualizarProgreso();
+
+            //------------------------------------------------
+            // Mostrar información educativa
+            //------------------------------------------------
+
+            popupManager.MostrarMaterial(
+                primeraCarta.ObtenerMaterial(),
+                this
+            );
+
+            //------------------------------------------------
+            // Esperamos a que el Popup avise que terminó
+            //------------------------------------------------
+
+            yield break;
+        }
+
+        //---------------------------------------------------
+        // No coinciden
+        //---------------------------------------------------
+
+        primeraCarta.OcultarCarta();
+
+        segundaCarta.OcultarCarta();
+
+        primeraCarta = null;
+
+        segundaCarta = null;
+
+        bloqueado = false;
+    }
+
+    //-------------------------------------------------------
+
+    public void ContinuarJuego()
+    {
+        primeraCarta = null;
+
+        segundaCarta = null;
+
+        bloqueado = false;
+
+        //---------------------------------------------------
+        // ¿Terminó el juego?
+        //---------------------------------------------------
+
+        if (paresEncontrados == totalPares)
+        {
+            FinalizarJuego();
+        }
+    }
+
+    //-------------------------------------------------------
+
+    void ActualizarProgreso()
+    {
+        if (progresoText != null)
+        {
+            progresoText.text =
+                "Materiales aprendidos: "
+                + paresEncontrados
+                + " / "
+                + totalPares;
+        }
+    }
+    //-------------------------------------------------------
+    // Finaliza la partida
+    //-------------------------------------------------------
+
+    void FinalizarJuego()
+    {
+        bloqueado = true;
+
+        panelFinal.SetActive(true);
+
+        if (textoFinal != null)
+        {
+            textoFinal.text =
+                "¡Felicitaciones!\n\n" +
+                "Has identificado correctamente todos los materiales necesarios para la diálisis peritoneal.\n\n" +
+                "Ahora conoces su función y la importancia de utilizarlos correctamente.";
+        }
+    }
+
+    //-------------------------------------------------------
+    // Reiniciar partida
+    //-------------------------------------------------------
+
+    public void ReiniciarJuego()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    //-------------------------------------------------------
+    // Volver al menú principal
+    //-------------------------------------------------------
+
+    public void VolverMenu()
+    {
+        SceneManager.LoadScene("menuScene");
+    }
+
+    //-------------------------------------------------------
+    // Salir del juego (solo funciona en la aplicación)
+    //-------------------------------------------------------
+
+    public void SalirJuego()
+    {
+        Application.Quit();
+    }
+
+    //-------------------------------------------------------
+    // Getters
+    //-------------------------------------------------------
+
+    public int ObtenerParesEncontrados()
+    {
+        return paresEncontrados;
+    }
+
+    public int ObtenerTotalPares()
+    {
+        return totalPares;
+    }
+
+    //-------------------------------------------------------
+    // Setters
+    //-------------------------------------------------------
+
+    public void BloquearJuego(bool estado)
+    {
+        bloqueado = estado;
+    }
+
+    //-------------------------------------------------------
+    // Permite volver a jugar sin cambiar de escena
+    //-------------------------------------------------------
+
+    public void NuevaPartida()
+    {
+        primeraCarta = null;
+        segundaCarta = null;
+
+        paresEncontrados = 0;
+
+        bloqueado = false;
+
+        panelFinal.SetActive(false);
+
+        CrearTablero();
+
+        ActualizarProgreso();
+
+        foreach (cardScript carta in cartas)
+        {
+            carta.OcultarCarta();
+        }
+    }
+
+    //-------------------------------------------------------
+    // Devuelve la cantidad de cartas
+    //-------------------------------------------------------
+
+    public int CantidadCartas()
+    {
+        return cartas.Length;
+    }
+
+    //-------------------------------------------------------
+    // Devuelve la cantidad de materiales
+    //-------------------------------------------------------
+
+    public int CantidadMateriales()
+    {
+        return materiales.Length;
+    }
 }

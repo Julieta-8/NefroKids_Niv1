@@ -1,72 +1,122 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
-public class cardScript : MonoBehaviour {
+public class cardScript : MonoBehaviour
+{
+    [Header("Componentes")]
 
-	public static bool DO_NOT = false;
+    [SerializeField] private Image cardImage;
 
-	[SerializeField]
-	private int _state;
-	[SerializeField]
-	private int _cardValue;
-	[SerializeField]
-	private bool _initialized = false;
+    [SerializeField] private Sprite backSprite;
+
+    [Header("Datos")]
+
     public MaterialDialisis material;
-    private Sprite _cardBack;
-	private Sprite _cardFace;
 
-	private GameObject _manager;
+    private GameManager gameManager;
 
-	void Start(){
-		_state = 1;
-		_manager = GameObject.FindGameObjectWithTag ("Manager");
-	}
+    private bool descubierta = false;
 
-	public void setupGraphics() {
-		_cardBack = _manager.GetComponent<gameManager> ().getCardBack ();
-		_cardFace = _manager.GetComponent<gameManager> ().getCardFace (_cardValue);
+    private bool encontrada = false;
 
-		flipcard ();
-	}
+    //--------------------------------------------------
 
-	public void flipcard() {
-		if (_state == 0)
-			_state = 1;
-		else if (_state == 1)
-			_state = 0;
-		
-		if (_state == 0 && !DO_NOT)
-			GetComponent<Image> ().sprite = _cardBack;
-		else if (_state == 1 && !DO_NOT)
-			GetComponent<Image> ().sprite = _cardFace;
-	}
+    private void Awake()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+    }
 
-	public int cardValue {
-		get { return _cardValue; }
-		set { _cardValue = value; }
-	}
+    //--------------------------------------------------
 
-	public int state {
-		get { return _state; }
-		set { _state = value; }
-	}
+    private void Start()
+    {
+        OcultarCarta();
+    }
 
-	public bool initialized {
-		get { return _initialized; }
-		set { _initialized = value; }
-	}
+    //--------------------------------------------------
 
-	public void falseCheck() {
-		StartCoroutine (pause ());
-	}
+    public void Configurar(MaterialDialisis nuevoMaterial)
+    {
+        material = nuevoMaterial;
 
-	IEnumerator pause() {
-		yield return new WaitForSeconds(0.2F);
-		if(_state == 0)
-			GetComponent<Image>().sprite = _cardBack;
-		else if(_state == 1)
-			GetComponent<Image>().sprite = _cardFace;
-		DO_NOT = false;
-	}
+        cardImage.sprite = backSprite;
+
+        descubierta = false;
+
+        encontrada = false;
+    }
+
+    //--------------------------------------------------
+
+    public void ClickCarta()
+    {
+        if (encontrada)
+            return;
+
+        if (descubierta)
+            return;
+
+        if (gameManager.PuedeSeleccionar() == false)
+            return;
+
+        MostrarCarta();
+
+        gameManager.SeleccionarCarta(this);
+    }
+
+    //--------------------------------------------------
+
+    public void MostrarCarta()
+    {
+        descubierta = true;
+
+        cardImage.sprite = material.imagen;
+    }
+
+    //--------------------------------------------------
+
+    public void OcultarCarta()
+    {
+        if (encontrada)
+            return;
+
+        descubierta = false;
+
+        cardImage.sprite = backSprite;
+    }
+
+    //--------------------------------------------------
+
+    public void MarcarComoEncontrada()
+    {
+        encontrada = true;
+    }
+
+    //--------------------------------------------------
+
+    public bool EstaDescubierta()
+    {
+        return descubierta;
+    }
+
+    //--------------------------------------------------
+
+    public bool EstaEncontrada()
+    {
+        return encontrada;
+    }
+
+    //--------------------------------------------------
+
+    public int ObtenerID()
+    {
+        return material.id;
+    }
+
+    //--------------------------------------------------
+
+    public MaterialDialisis ObtenerMaterial()
+    {
+        return material;
+    }
 }

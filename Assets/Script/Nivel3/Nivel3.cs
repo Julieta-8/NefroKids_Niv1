@@ -1,17 +1,17 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Nivel3 : MonoBehaviour
 {
-/*            Preparado del ANDY
- -Elección entre 3 tipos de bolsas, una limpia, sucia y con liquido
- -Inyección de heparina
- -limpiar el palo del Andy con alcohol y pañuelos
- -colocar las bolsas
- -retirar tapones
+          Preparado del ANDY
+ -Elección entre 3 tipos de bolsas, una limpia, sucia y con liquido(si elije mal re aparece el texto, una vez elejida la correcta, desaparecer las otras dos por medio de una animacion)
+ -Inyección de heparina(atravez de una animacion aparece la heparina, el usuario deberá arrastrar la a la bolsa elejida y una vez esté en el rango de la bolsa, conformaran un nuevo asset, la emzcla entre la bolsa y heparina juntas)
+ -limpiar el palo del Andy con alcohol y pañuelos(se cambia de escenario al Andy, el usuario deberá colocar el alcohol, despues deberá pasar la totalla por unos segundos para limiar, mientras se limpia, el andy realiza una animacion donde de apoco cambia de srpite a uno limpio)
+ -colocar las bolsas(desaparecen el alcohol y la toalla y ahora aparecen las dos bolsas que deben ser arrastradas al andy, estan denominadas bolsa 1 y 2 poer no es necesario respetar el orden al colocarlas)
+ -retirar tapones(el usuario deberá retirar 2 tapones del any, sin orden definido)
 
- */
+ 
 public enum Step
     {
         Intro,
@@ -282,13 +282,31 @@ public enum Step
 
 
 
+    void ShowDialogue()
+    {
+        dialoguePanel.SetActive(true);
+        rikuRenderer.enabled = true;
+        nextButton.gameObject.SetActive(true);
+        instructionText.gameObject.SetActive(true);
+        UpdateInstruction();
 
 
+        timingPhase1 = false;
+        timingPhase2 = false;
 
+    }
+    void HideDialogue()
+    {
+        dialoguePanel.SetActive(false);
+        instructionText.gameObject.SetActive(false);
+        rikuRenderer.enabled = false;
+        nextButton.gameObject.SetActive(false);
 
-    //------------------------------------------------------------------------------------
+    }
 
-    void UpdateInstruction()
+        //------------------------------------------------------------------------------------
+
+        void UpdateInstruction()
     {
         if (instructionText == null) return;
 
@@ -363,18 +381,18 @@ public enum Step
             case Step.DragBag1:
 
                 instructionText.text =
-                    "¡Muy bien! Ahora la segunda";
+                    "LLeva la bolsa al andy";
 
                 break;
             case Step.DragBag2:
 
                 instructionText.text =
-                    "¡Muy bien! Ahora seca las manos con la toalla.";
+                    "¡Muy bien! Ahora la segunda.";
                 HideDialogue();
                 break;
 
                 ////////////////
-            case Step.TakeLit1|:
+            case Step.TakeLit1|;
 
                 instructionText.text =
                     "Saca uno de los tapones";
@@ -411,7 +429,7 @@ public enum Step
         congratsPanel?.SetActive(true);
 
         yield return new WaitForSeconds(2f);
-        /*bridge.SendResultToReact();*/
+        
         instructionText.text =
        "Tiempo fase 1: " + phase1Timer.ToString("F1") + "s\n" +
       "Tiempo fase 2: " + phase2Timer.ToString("F1") + "s\n" +
@@ -448,3 +466,4 @@ public enum Step
 
 
 }
+*/

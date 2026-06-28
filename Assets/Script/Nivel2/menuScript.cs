@@ -1,17 +1,45 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
-public class menuScript : MonoBehaviour {
+public class MenuScript : MonoBehaviour
+{
+    //----------------------------------------------------
+    // Inicia el juego
+    //----------------------------------------------------
 
-	public void triggerMenu(int trigger) {
-		switch (trigger) {
-		case(0) :
-			SceneManager.LoadScene("gameScene");
-			break;
-		case(1) :
-			Application.Quit();
-			break;
-		}
-	}
+    public void Jugar()
+    {
+        SceneManager.LoadScene("gameScene");
+    }
+
+    //----------------------------------------------------
+    // Vuelve al menú principal
+    //----------------------------------------------------
+
+    public void MenuPrincipal()
+    {
+        SceneManager.LoadScene("menuScene");
+    }
+
+    //----------------------------------------------------
+    // Reinicia el nivel actual
+    //----------------------------------------------------
+
+    public void Reiniciar()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    //----------------------------------------------------
+    // Cierra la aplicación
+    //----------------------------------------------------
+
+    public void Salir()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }
