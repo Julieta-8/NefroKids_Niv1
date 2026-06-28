@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-public class Nivel_1 : MonoBehaviour
+public class Level_1 : MonoBehaviour
 {
     public enum Step
     {
@@ -162,7 +162,8 @@ public class Nivel_1 : MonoBehaviour
     [Header("ESCENA SIGUIENTE")]
     public string nextSceneName;
 
-
+    [Header("REACT CONNECTION")]
+    private ReactConnection bridge;
 
 
     // ESTADO
@@ -180,8 +181,10 @@ public class Nivel_1 : MonoBehaviour
     private GameObject draggingObject;
     private Vector3 draggingOffset;
 
-    void Start()
+    public void StartLevel()
     {
+        //REACT
+        bridge = FindFirstObjectByType<ReactConnection>();
 
         DatoCuriosoPanel.SetActive(false);
         DatoCuriosoText.gameObject.SetActive(false);
@@ -615,7 +618,7 @@ public class Nivel_1 : MonoBehaviour
         DatoCuriosoText.gameObject.SetActive(true);
         //mostrar cabeza de riku
         DatoCuriosoText.text =
-     "¿Sabías que el lavado correcto dura aproximadamente 60 segundos?";
+     "ï¿½Sabï¿½as que el lavado correcto dura aproximadamente 60 segundos?";
        /* DatoCuriosoPanel.gameObject.SetActive(false);
         DatoCuriosoText.gameObject.SetActive(false);
     */
@@ -654,7 +657,7 @@ public class Nivel_1 : MonoBehaviour
         currentStep = Step.TurnOffWater;
 
         instructionText.text =
-            "¡Perfecto! Ahora cierra la canilla.";
+            "ï¿½Perfecto! Ahora cierra la canilla.";
         DatoCuriosoPanel.gameObject.SetActive(false);
         DatoCuriosoText.gameObject.SetActive(false);
     }
@@ -761,7 +764,7 @@ public class Nivel_1 : MonoBehaviour
             case Step.Intro:
 
                 instructionText.text =
-                    "¡Hola! Soy Riku y voy a enseñarte cómo prepararte correctamente.";
+                    "ï¿½Hola! Soy Riku y voy a enseï¿½arte cï¿½mo prepararte correctamente.";
 
                 break;
 
@@ -770,28 +773,28 @@ public class Nivel_1 : MonoBehaviour
             case Step.DragVest:
 
                 instructionText.text =
-                    "Primero coloca el chaleco sobre el maniquí.";
+                    "Primero coloca el chaleco sobre el maniquï¿½.";
                 HideDialogue();
                 break;
 
             case Step.VestPlaced:
 
                 instructionText.text =
-                    "¡Muy bien! Ahora continuemos.";
+                    "ï¿½Muy bien! Ahora continuemos.";
 
                 break;
 
             case Step.DragMask:
 
                 instructionText.text =
-                    "Ahora coloca el barbijo sobre el maniquí.";
+                    "Ahora coloca el barbijo sobre el maniquï¿½.";
                 HideDialogue();
                 break;
 
             case Step.MaskPlaced:
 
                 instructionText.text =
-                    "¡Excelente! Ahora vamos a lavarnos las manos.";
+                    "ï¿½Excelente! Ahora vamos a lavarnos las manos.";
 
                 break;
 
@@ -808,14 +811,14 @@ public class Nivel_1 : MonoBehaviour
             case Step.DragSoap:
 
                 instructionText.text =
-                    "Primero coloca jabón sobre las manos.";
+                    "Primero coloca jabï¿½n sobre las manos.";
                 HideDialogue();
                 break;
 
             case Step.SoapPlaced:
 
                 instructionText.text =
-                    "¡Perfecto! Ahora abre la canilla.";
+                    "ï¿½Perfecto! Ahora abre la canilla.";
 
                 break;
 
@@ -829,13 +832,13 @@ public class Nivel_1 : MonoBehaviour
             case Step.WaterRunning:
 
                 instructionText.text =
-                    "¡Muy bien! Ahora seca las manos con la toalla.";
+                    "ï¿½Muy bien! Ahora seca las manos con la toalla.";
                 
                 break;
             case Step.TurnOffWater:
 
                 instructionText.text =
-                    "¡Muy bien! Ahora seca las manos con la toalla.";
+                    "ï¿½Muy bien! Ahora seca las manos con la toalla.";
                 HideDialogue();
                 break;
             case Step.DragTowel:
@@ -848,14 +851,14 @@ public class Nivel_1 : MonoBehaviour
             case Step.TowelPlaced:
 
                 instructionText.text =
-                    "¡Excelente trabajo! Terminaste correctamente.";
+                    "ï¿½Excelente trabajo! Terminaste correctamente.";
 
                 break;
 
             case Step.Finished:
 
                 instructionText.text =
-                    "¡Completado!";
+                    "ï¿½Completado!";
 
                 break;
         }
@@ -885,15 +888,11 @@ public class Nivel_1 : MonoBehaviour
             phase1Stars = Phase1Stars,
             phase2Stars = Phase2Stars
         };
-        React_Connection bridge = FindObjectOfType<React_Connection>();
+
         if (bridge != null)
         {
-            bridge.SendResult(result);
+            bridge.Send(result);
         }
-        if (!string.IsNullOrEmpty(nextSceneName))
-           {
-              SceneManager.LoadScene(nextSceneName);
-          }
     }
 }
  

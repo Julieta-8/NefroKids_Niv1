@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
-public class gameManager : MonoBehaviour {
+public class Level_2 : MonoBehaviour {
 
 	public Sprite[] cardFace;
 	public Sprite cardBack;
@@ -12,11 +12,14 @@ public class gameManager : MonoBehaviour {
 	public GameObject gameTime;
     public MaterialDialisis[] materiales;
 
+	private bool _started = false;
     private bool _init  = false;
 	private int _matches = 4;
 
 	// Update is called once per frame
 	void Update () {
+		if (!_started)
+            return;
 		if (!_init)
 			initializeCards ();
 
@@ -24,6 +27,10 @@ public class gameManager : MonoBehaviour {
 			checkCards ();
 
 	}
+	public void StartLevel()
+    {
+        _started = true;
+    }
 
 	void initializeCards() {
 		for (int id = 0; id < 2; id++) {

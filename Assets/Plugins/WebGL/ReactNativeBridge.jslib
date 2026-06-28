@@ -9,4 +9,13 @@ mergeInto(LibraryManager.library, {
       console.log("ReactNativeWebView no disponible:", json);
     }
   }
+  window.receiveFromReact = function(json){
+
+      unityInstance.SendMessage(
+          "ReactConnection",
+          "Receive",
+          json
+      );
+
+  }
 });

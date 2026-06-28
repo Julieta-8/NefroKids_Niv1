@@ -24,8 +24,8 @@ public class cardScript : MonoBehaviour {
 	}
 
 	public void setupGraphics() {
-		_cardBack = _manager.GetComponent<gameManager> ().getCardBack ();
-		_cardFace = _manager.GetComponent<gameManager> ().getCardFace (_cardValue);
+		_cardBack = _manager.GetComponent<Level_2> ().getCardBack ();
+		_cardFace = _manager.GetComponent<Level_2> ().getCardFace (_cardValue);
 
 		flipcard ();
 	}
