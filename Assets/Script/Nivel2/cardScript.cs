@@ -1,11 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.UI.Image;
+using static System.Net.Mime.MediaTypeNames;
+using UnityEngine.SceneManagement;
+using TMPro;
+//using static System.Net.Mime.MediaTypeNames.Image;
+using System.Collections;
+
 
 public class cardScript : MonoBehaviour
 {
     [Header("Componentes")]
 
-    [SerializeField] private Image cardImage;
+    [SerializeField] private Image cardImage; //ANTES ERA IMG
 
     [SerializeField] private Sprite backSprite;
 
@@ -13,23 +20,17 @@ public class cardScript : MonoBehaviour
 
     public MaterialDialisis material;
 
-    private GameManager gameManager;
+    private Level_2 gameManager;
 
     private bool descubierta = false;
 
-<<<<<<< HEAD
     private bool encontrada = false;
-=======
-	public void setupGraphics() {
-		_cardBack = _manager.GetComponent<Level_2> ().getCardBack ();
-		_cardFace = _manager.GetComponent<Level_2> ().getCardFace (_cardValue);
->>>>>>> 03c4578464c9a690586a94453f54d26c0b72b609
 
     //--------------------------------------------------
 
     private void Awake()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        gameManager = FindObjectOfType<Level_2>();
     }
 
     //--------------------------------------------------

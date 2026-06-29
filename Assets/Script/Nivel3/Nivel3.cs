@@ -1,543 +1,461 @@
-<<<<<<< HEAD
-/*using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+ï»¿//*using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
 
-public class Nivel3 : MonoBehaviour
-{
-          Preparado del ANDY
- -Elección entre 3 tipos de bolsas, una limpia, sucia y con liquido(si elije mal re aparece el texto, una vez elejida la correcta, desaparecer las otras dos por medio de una animacion)
- -Inyección de heparina(atravez de una animacion aparece la heparina, el usuario deberá arrastrar la a la bolsa elejida y una vez esté en el rango de la bolsa, conformaran un nuevo asset, la emzcla entre la bolsa y heparina juntas)
- -limpiar el palo del Andy con alcohol y pañuelos(se cambia de escenario al Andy, el usuario deberá colocar el alcohol, despues deberá pasar la totalla por unos segundos para limiar, mientras se limpia, el andy realiza una animacion donde de apoco cambia de srpite a uno limpio)
- -colocar las bolsas(desaparecen el alcohol y la toalla y ahora aparecen las dos bolsas que deben ser arrastradas al andy, estan denominadas bolsa 1 y 2 poer no es necesario respetar el orden al colocarlas)
- -retirar tapones(el usuario deberá retirar 2 tapones del any, sin orden definido)
+//public class Nivel3 : MonoBehaviour
+//{
+// //         Preparado del ANDY
+// //-Elecciï¿½n entre 3 tipos de bolsas, una limpia, sucia y con liquido(si elije mal re aparece el texto, una vez elejida la correcta, desaparecer las otras dos por medio de una animacion)
+// //-Inyecciï¿½n de heparina(atravez de una animacion aparece la heparina, el usuario deberï¿½ arrastrar la a la bolsa elejida y una vez estï¿½ en el rango de la bolsa, conformaran un nuevo asset, la emzcla entre la bolsa y heparina juntas)
+// //-limpiar el palo del Andy con alcohol y paï¿½uelos(se cambia de escenario al Andy, el usuario deberï¿½ colocar el alcohol, despues deberï¿½ pasar la totalla por unos segundos para limiar, mientras se limpia, el andy realiza una animacion donde de apoco cambia de srpite a uno limpio)
+// //-colocar las bolsas(desaparecen el alcohol y la toalla y ahora aparecen las dos bolsas que deben ser arrastradas al andy, estan denominadas bolsa 1 y 2 poer no es necesario respetar el orden al colocarlas)
+// //-retirar tapones(el usuario deberï¿½ retirar 2 tapones del any, sin orden definido)
 
  
-public enum Step
-    {
-        Intro,
-        ChooseBag,
-        BagChosen,
-        //Animacion
-        DragHeparina,
-        HeprinaPlaced,
-        //Animacion
-        Intro2,
-        DragAlcohol,
-        AlcoholPlaced,
-        //Animacion que desvanezca la suciedad
-        DragTowel,
-        TowelPlaced,
-        //Aparicion de bolsas
-        DragBag1,
-        Bag1Placed,
-        DragBag2,
-        Bag2Placed,
-        TakeLit1,
-        TakeLit2,
-        Finished
-    }
-    [Header("================================")]
-    [Header("FASE 0 - RANDOM")]
-    [Header("================================")]
-    public System.Action OnLevelCompleted;
-    public bool IsCompleted { get; private set; }
-=======
-// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine;
-
-// public class Nivel3 : MonoBehaviour
-// {
-// /*            Preparado del ANDY
-//  -Elecciï¿½n entre 3 tipos de bolsas, una limpia, sucia y con liquido
-//  -Inyecciï¿½n de heparina
-//  -limpiar el palo del Andy con alcohol y paï¿½uelos
-//  -colocar las bolsas
-//  -retirar tapones
-
-//  */
-// public enum Step
-//     {
-//         Intro,
-//         ChooseBag,
-//         BagChosen,
-//         //Animacion
-//         DragHeparina,
-//         HeprinaPlaced,
-//         //Animacion
-//         Intro2,
-//         DragAlcohol,
-//         AlcoholPlaced,
-//         //Animacion que desvanezca la suciedad
-//         DragTowel,
-//         TowelPlaced,
-//         //Aparicion de bolsas
-//         DragBag1,
-//         Bag1Placed,
-//         DragBag2,
-//         Bag2Placed,
-//         TakeLit1,
-//         TakeLit2,
-//         Finished
-//     }
-//     [Header("================================")]
-//     [Header("FASE 0 - RANDOM")]
-//     [Header("================================")]
-//     public System.Action OnLevelCompleted;
-//     public bool IsCompleted { get; private set; }
->>>>>>> 03c4578464c9a690586a94453f54d26c0b72b609
-
-//     public float Phase1Time => phase1Timer;
-//     public float Phase2Time => phase2Timer;
-//     public float AverageTime => averageTime;
-
-//     public int Phase1Stars => phase1Stars;
-//     public int Phase2Stars => phase2Stars;
-
-//     private float phase1Timer;
-//     private float phase2Timer;
-//     private float averageTime;
-
-//     private bool timingPhase1;
-//     private bool timingPhase2;
+//public enum Step
+//    {
+//        Intro,
+//        ChooseBag,
+//        BagChosen,
+//        //Animacion
+//        DragHeparina,
+//        HeprinaPlaced,
+//        //Animacion
+//        Intro2,
+//        DragAlcohol,
+//        AlcoholPlaced,
+//        //Animacion que desvanezca la suciedad
+//        DragTowel,
+//        TowelPlaced,
+//        //Aparicion de bolsas
+//        DragBag1,
+//        Bag1Placed,
+//        DragBag2,
+//        Bag2Placed,
+//        TakeLit1,
+//        TakeLit2,
+//        Finished
+//    }
+//    [Header("================================")]
+//    [Header("FASE 0 - RANDOM")]
+//    [Header("================================")]
+//    public System.Action OnLevelCompleted;
+//    public bool IsCompleted { get; private set; }
 
-//     private int phase1Stars;
-//     private int phase2Stars;
-//     [Header("================================")]
-//     [Header("FASE 1 - BOLSAS")]
-//     [Header("================================")]
-
-//     public GameObject Bag1;
-//     public GameObject Bag3;
-//     public GameObject Bag2;
-
-//     public Transform Bag1StartPosition;
-//     public Transform Bag2StartPosition;
-//     public Transform Bag3StartPosition;
+//    public float Phase1Time => phase1Timer;
+//    public float Phase2Time => phase2Timer;
+//    public float AverageTime => averageTime;
 
+//    public int Phase1Stars => phase1Stars;
+//    public int Phase2Stars => phase2Stars;
 
-//     [Header("================================")]
-//     [Header("FASE 2 - ANDY")]
-//     [Header("================================")]
+//    private float phase1Timer;
+//    private float phase2Timer;
+//    private float averageTime;
 
-//     public SpriteRenderer AndyRenderer;
+//    private bool timingPhase1;
+//    private bool timingPhase2;
 
-//     public Sprite AndyLimpio;
-//     public Sprite AndySucio;
+//    private int phase1Stars;
+//    private int phase2Stars;
+//    [Header("================================")]
+//    [Header("FASE 1 - BOLSAS")]
+//    [Header("================================")]
 
+//    public GameObject Bag1;
+//    public GameObject Bag3;
+//    public GameObject Bag2;
 
-//     public GameObject AlcoholObj;
-//     public GameObject towelObject;
+//    public Transform Bag1StartPosition;
+//    public Transform Bag2StartPosition;
+//    public Transform Bag3StartPosition;
 
-//     public GameObject Bolsa1Obj;
-//     public GameObject Bolsa2Obj;
 
-//     public GameObject Tapa1Obj;
-//     public GameObject Tapa2Obj;
+//    [Header("================================")]
+//    [Header("FASE 2 - ANDY")]
+//    [Header("================================")]
 
+//    public SpriteRenderer AndyRenderer;
 
-//     public Transform AlcoholStartPosition;
-//     public Transform towelStartPosition;
+//    public Sprite AndyLimpio;
+//    public Sprite AndySucio;
 
-//     public Collider2D AndyDropZone;
 
-//     [Header("================================")]
-//     [Header("FONDOS")]
-//     [Header("================================")]
+//    public GameObject AlcoholObj;
+//    public GameObject towelObject;
 
-//     public SpriteRenderer backgroundRenderer;
+//    public GameObject Bolsa1Obj;
+//    public GameObject Bolsa2Obj;
 
-//     public Sprite roomBackground;
+//    public GameObject Tapa1Obj;
+//    public GameObject Tapa2Obj;
 
-//     [Header("================================")]
-//     [Header("GRUPOS")]
-//     [Header("================================")]
 
-//     public GameObject phase1Objects;
-//     public GameObject phase2Objects;
+//    public Transform AlcoholStartPosition;
+//    public Transform towelStartPosition;
 
-//     [Header("================================")]
-//     [Header("UI")]
-//     [Header("================================")]
+//    public Collider2D AndyDropZone;
 
-//     public TMP_Text instructionText;
+//    [Header("================================")]
+//    [Header("FONDOS")]
+//    [Header("================================")]
 
-//     public Button nextButton;
+//    public SpriteRenderer backgroundRenderer;
 
-//     public GameObject dialoguePanel;
+//    public Sprite roomBackground;
 
-//     public GameObject congratsPanel;
+//    [Header("================================")]
+//    [Header("GRUPOS")]
+//    [Header("================================")]
 
+//    public GameObject phase1Objects;
+//    public GameObject phase2Objects;
 
-//     public TMP_Text DatoCuriosoText;
+//    [Header("================================")]
+//    [Header("UI")]
+//    [Header("================================")]
 
+//    public TMP_Text instructionText;
 
-//     public GameObject DatoCuriosoPanel;
+//    public Button nextButton;
 
+//    public GameObject dialoguePanel;
 
-//     [Header("RIKU")]
-//     public SpriteRenderer rikuRenderer;
+//    public GameObject congratsPanel;
 
-//     public Sprite rikuNeutral;
-//     public Sprite rikuCurious;
 
-//     private bool rikuNeutralState = true;
+//    public TMP_Text DatoCuriosoText;
 
-//     public Sprite CabezarikuCurious;
 
+//    public GameObject DatoCuriosoPanel;
 
-//     [Header("ESCENA SIGUIENTE")]
-//     public string nextSceneName;
 
+//    [Header("RIKU")]
+//    public SpriteRenderer rikuRenderer;
 
+//    public Sprite rikuNeutral;
+//    public Sprite rikuCurious;
 
+//    private bool rikuNeutralState = true;
 
-//     // ESTADO
-//     public Step currentStep = Step.Intro;
+//    public Sprite CabezarikuCurious;
 
-//     // FLAGS
-//     private bool BagChosen = false;
-//     private bool HeparinaPlaced = false;
 
-//     private bool AlcoholPlaced = false;
-//     private bool towelPlaced = false;
-//     private bool Bag1Placed = false;
-//     private bool Bag2Placed = false;
+//    [Header("ESCENA SIGUIENTE")]
+//    public string nextSceneName;
 
-//     // DRAG
-//     private GameObject draggingObject;
-//     private Vector3 draggingOffset;
 
-//     void Start()
-//     {
 
-//         phase1Objects.SetActive(true);
-//         phase2Objects.SetActive(false);
 
-//         // UI
-//         congratsPanel?.SetActive(false);
+//    // ESTADO
+//    public Step currentStep = Step.Intro;
 
-//         currentStep = Step.Intro;
+//    // FLAGS
+//    private bool BagChosen = false;
+//    private bool HeparinaPlaced = false;
 
-//         ShowDialogue();
+//    private bool AlcoholPlaced = false;
+//    private bool towelPlaced = false;
+//    private bool Bag1Placed = false;
+//    private bool Bag2Placed = false;
 
-//         // BOTON
-//         if (nextButton != null)
-//         {
-//             nextButton.onClick.RemoveAllListeners();
-//             nextButton.onClick.AddListener(OnNextPressed);
-//         }
+//    // DRAG
+//    private GameObject draggingObject;
+//    private Vector3 draggingOffset;
 
+//    void Start()
+//    {
 
-//     }
+//        phase1Objects.SetActive(true);
+//        phase2Objects.SetActive(false);
 
-//     // Update is called once per frame
-//     void Update()
-//     {
+//        // UI
+//        congratsPanel?.SetActive(false);
 
-//         HandleMouseInput();
+//        currentStep = Step.Intro;
 
-//         if (timingPhase1)
-//             phase1Timer += Time.deltaTime;
+//        ShowDialogue();
 
-//         if (timingPhase2)
-//             phase2Timer += Time.deltaTime;
+//        // BOTON
+//        if (nextButton != null)
+//        {
+//            nextButton.onClick.RemoveAllListeners();
+//            nextButton.onClick.AddListener(OnNextPressed);
+//        }
 
-//     }
-//     void OnNextPressed()
-//     {
-//         ToggleRikuExpression();
 
-//         HideDialogue();
+//    }
 
-//         switch (currentStep)
-//         {
-//             case Step.Intro:
+//    // Update is called once per frame
+//    void Update()
+//    {
 
-//                 currentStep = Step.ChooseBag;
+//        HandleMouseInput();
 
-//                 break;
+//        if (timingPhase1)
+//            phase1Timer += Time.deltaTime;
 
-//             //case Step.StartTimer
+//        if (timingPhase2)
+//            phase2Timer += Time.deltaTime;
 
+//    }
+//    void OnNextPressed()
+//    {
+//        ToggleRikuExpression();
 
-//             case Step.BagChosen:
-//                 phase1Timer = 0;
-//                 timingPhase1 = true;
+//        HideDialogue();
 
-//                 currentStep = Step.DragHeparina;
+//        switch (currentStep)
+//        {
+//            case Step.Intro:
 
-//                 break;
+//                currentStep = Step.ChooseBag;
 
-//             case Step.HeprinaPlaced:
+//                break;
 
+//            //case Step.StartTimer
 
-//                 //-----------------------ETAPA 2 INICIO---------------------------
 
+//            case Step.BagChosen:
+//                phase1Timer = 0;
+//                timingPhase1 = true;
 
-//                 StartPhase2();
+//                currentStep = Step.DragHeparina;
 
-//                 currentStep = Step.Phase2Intro;
+//                break;
 
-//                 ShowDialogue();
+//            case Step.HeprinaPlaced:
 
-//                 break;
 
-//             case Step.Phase2Intro:
-//                 phase2Timer = 0;
-//                 timingPhase2 = true;
-//                 currentStep = Step.DragAlcohol;
+//                //-----------------------ETAPA 2 INICIO---------------------------
 
-//                 break;
 
-//             case Step.AlcoholPlaced:
+//                StartPhase2();
 
-//                 currentStep = Step.DragTowel;
+//                currentStep = Step.Phase2Intro;
 
-//                 break;
+//                ShowDialogue();
 
-//             case Step.TowelPlaced:
+//                break;
 
-//                 currentStep = Step.DragBag1;
+//            case Step.Phase2Intro:
+//                phase2Timer = 0;
+//                timingPhase2 = true;
+//                currentStep = Step.DragAlcohol;
 
-//                 break;
-//             case Step.Bag1Placed:
+//                break;
 
-//                 currentStep = Step.DragBag2;
+//            case Step.AlcoholPlaced:
 
-//                 break;
+//                currentStep = Step.DragTowel;
 
-//             case Step.TakeLit1:
+//                break;
 
-//                 currentStep = Step.TakeLit2;
+//            case Step.TowelPlaced:
 
-//                 break;
+//                currentStep = Step.DragBag1;
 
-//             case Step.TakeLit2:
+//                break;
+//            case Step.Bag1Placed:
 
-//                 currentStep = Step.Finished;
+//                currentStep = Step.DragBag2;
 
-//                 ShowDialogue();
+//                break;
 
-//                 StartCoroutine(FinishRoutine());
+//            case Step.TakeLit1:
 
-//                 break;
-//         }
-//     }
+//                currentStep = Step.TakeLit2;
 
+//                break;
 
+//            case Step.TakeLit2:
 
-    void ShowDialogue()
-    {
-        dialoguePanel.SetActive(true);
-        rikuRenderer.enabled = true;
-        nextButton.gameObject.SetActive(true);
-        instructionText.gameObject.SetActive(true);
-        UpdateInstruction();
+//                currentStep = Step.Finished;
 
+//                ShowDialogue();
 
-        timingPhase1 = false;
-        timingPhase2 = false;
+//                StartCoroutine(FinishRoutine());
 
-    }
-    void HideDialogue()
-    {
-        dialoguePanel.SetActive(false);
-        instructionText.gameObject.SetActive(false);
-        rikuRenderer.enabled = false;
-        nextButton.gameObject.SetActive(false);
+//                break;
+//        }
+//    }
 
-<<<<<<< HEAD
-    }
 
-        //------------------------------------------------------------------------------------
 
-        void UpdateInstruction()
-    {
-        if (instructionText == null) return;
-=======
-//     //------------------------------------------------------------------------------------
+//    void ShowDialogue()
+//    {
+//        dialoguePanel.SetActive(true);
+//        rikuRenderer.enabled = true;
+//        nextButton.gameObject.SetActive(true);
+//        instructionText.gameObject.SetActive(true);
+//        UpdateInstruction();
 
-//     void UpdateInstruction()
-//     {
-//         if (instructionText == null) return;
->>>>>>> 03c4578464c9a690586a94453f54d26c0b72b609
 
-//         switch (currentStep)
-//         {
-//             case Step.Intro:
+//        timingPhase1 = false;
+//        timingPhase2 = false;
 
-//                 instructionText.text =
-//                     "Ahora vamos a ver como colocar todo para por fin relizar la dialisis";
+//    }
+//    void HideDialogue()
+//    {
+//        dialoguePanel.SetActive(false);
+//        instructionText.gameObject.SetActive(false);
+//        rikuRenderer.enabled = false;
+//        nextButton.gameObject.SetActive(false);
 
-//                 break;
+//    }
 
+//        //------------------------------------------------------------------------------------
 
+//        void UpdateInstruction()
+//    {
+//        if (instructionText == null) return;
 
-//             case Step.ChooseBag:
+//        switch (currentStep)
+//        {
+//            case Step.Intro:
 
-//                 instructionText.text =
-//                     "Elegï¿½ la bolsa correcta";
-//                 HideDialogue();
-//                 break;
+//                instructionText.text =
+//                    "Ahora vamos a ver como colocar todo para por fin relizar la dialisis";
 
-//             case Step.BagChosen:
+//                break;
 
-//                 instructionText.text =
-//                     "ï¿½Muy bien! Ahora continuemos.";
 
-//                 break;
 
-//             case Step.DragHeparina:
+//            case Step.ChooseBag:
 
-//                 instructionText.text =
-//                     "Ahora coloca la heparina.";
-//                 HideDialogue();
-//                 break;
+//                instructionText.text =
+//                    "Elegï¿½ la bolsa correcta";
+//                HideDialogue();
+//                break;
 
-//             case Step.HeprinaPlaced:
+//            case Step.BagChosen:
 
-//                 instructionText.text =
-//                     "ï¿½Excelente! Ahora vamos al ANDY.";
+//                instructionText.text =
+//                    "ï¿½Muy bien! Ahora continuemos.";
 
-//                 break;
+//                break;
 
-//             case Step.Phase2Intro:
+//            case Step.DragHeparina:
 
-//                 instructionText.text =
-//                     "Debemos higienizar el palo.";
+//                instructionText.text =
+//                    "Ahora coloca la heparina.";
+//                HideDialogue();
+//                break;
 
-//                 break;
+//            case Step.HeprinaPlaced:
 
-//             case Step.DragAlcohol:
+//                instructionText.text =
+//                    "ï¿½Excelente! Ahora vamos al ANDY.";
 
-//                 instructionText.text =
-//                     "Primero coloca el alcohol.";
-//                 HideDialogue();
-//                 break;
+//                break;
 
-//             case Step.AlcoholPlaced:
+//            case Step.Phase2Intro:
 
-//                 instructionText.text =
-//                     "ï¿½Perfecto! Ahora pasa la toalla.";
+//                instructionText.text =
+//                    "Debemos higienizar el palo.";
 
-//                 break;
+//                break;
 
-//             case Step.TowelPlaced:
+//            case Step.DragAlcohol:
 
-//                 instructionText.text =
-//                     "Coloquemos las bolsas";
+//                instructionText.text =
+//                    "Primero coloca el alcohol.";
+//                HideDialogue();
+//                break;
 
-//                 break;
-//                 /////////////
+//            case Step.AlcoholPlaced:
 
-//             case Step.DragBag1:
+//                instructionText.text =
+//                    "ï¿½Perfecto! Ahora pasa la toalla.";
 
-<<<<<<< HEAD
-                instructionText.text =
-                    "LLeva la bolsa al andy";
-=======
-//                 instructionText.text =
-//                     "ï¿½Muy bien! Ahora la segunda";
->>>>>>> 03c4578464c9a690586a94453f54d26c0b72b609
+//                break;
 
-//                 break;
-//             case Step.DragBag2:
+//            case Step.TowelPlaced:
 
-<<<<<<< HEAD
-                instructionText.text =
-                    "¡Muy bien! Ahora la segunda.";
-                HideDialogue();
-                break;
+//                instructionText.text =
+//                    "Coloquemos las bolsas";
 
-                ////////////////
-            case Step.TakeLit1|;
-=======
-//                 instructionText.text =
-//                     "ï¿½Muy bien! Ahora seca las manos con la toalla.";
-//                 HideDialogue();
-//                 break;
+//                break;
+//                /////////////
 
-//                 ////////////////
-//             case Step.TakeLit1:
->>>>>>> 03c4578464c9a690586a94453f54d26c0b72b609
+//            case Step.DragBag1:
 
-//                 instructionText.text =
-//                     "Saca uno de los tapones";
-//                 HideDialogue();
-//                 break;
+//                instructionText.text =
+//                    "LLeva la bolsa al andy";
 
-//             case Step.TakeLit2:
+//                break;
+//            case Step.DragBag2:
 
-//                 instructionText.text =
-//                     "ï¿½Excelente trabajo! Terminaste correctamente.";
+//                instructionText.text =
+//                    "ï¿½Muy bien! Ahora la segunda.";
+//                HideDialogue();
+//                break;
 
-//                 break;
+//                ////////////////
+//            case Step.TakeLit1|;
 
+//                instructionText.text =
+//                    "Saca uno de los tapones";
+//                HideDialogue();
+//                break;
 
+//            case Step.TakeLit2:
 
+//                instructionText.text =
+//                    "ï¿½Excelente trabajo! Terminaste correctamente.";
 
+//                break;
 
 
 
 
-//             case Step.Finished:
 
-//                 instructionText.text =
-//                     "ï¿½Completado!";
 
-//                 break;
-//         }
-//     }
 
-//     IEnumerator FinishRoutine()
-//     {
-//         IsCompleted = true;
-//         OnLevelCompleted?.Invoke();
-//         congratsPanel?.SetActive(true);
 
-<<<<<<< HEAD
-        yield return new WaitForSeconds(2f);
+//            case Step.Finished:
+
+//                instructionText.text =
+//                    "ï¿½Completado!";
+
+//                break;
+//        }
+//    }
+
+//    IEnumerator FinishRoutine()
+//    {
+//        IsCompleted = true;
+//        OnLevelCompleted?.Invoke();
+//        congratsPanel?.SetActive(true);
+
+//        yield return new WaitForSeconds(2f);
         
-        instructionText.text =
-       "Tiempo fase 1: " + phase1Timer.ToString("F1") + "s\n" +
-      "Tiempo fase 2: " + phase2Timer.ToString("F1") + "s\n" +
-       "Promedio: " + averageTime.ToString("F1") + "s";
-        ResultData result = new ResultData
-        {
-            levelId = 1,
-            completed = true,
-=======
-//         yield return new WaitForSeconds(2f);
-//         /*bridge.SendResultToReact();*/
-//         instructionText.text =
-//        "Tiempo fase 1: " + phase1Timer.ToString("F1") + "s\n" +
-//       "Tiempo fase 2: " + phase2Timer.ToString("F1") + "s\n" +
-//        "Promedio: " + averageTime.ToString("F1") + "s";
-//         ResultData result = new ResultData
-//         {
-//             levelId = 1,
-//             completed = true,
->>>>>>> 03c4578464c9a690586a94453f54d26c0b72b609
+//        instructionText.text =
+//       "Tiempo fase 1: " + phase1Timer.ToString("F1") + "s\n" +
+//      "Tiempo fase 2: " + phase2Timer.ToString("F1") + "s\n" +
+//       "Promedio: " + averageTime.ToString("F1") + "s";
+//        ResultData result = new ResultData
+//        {
+//            levelId = 1,
+//            completed = true,
 
-//             phase1Time = phase1Timer,
-//             phase2Time = phase2Timer,
-//             averageTime = averageTime,
+//            phase1Time = phase1Timer,
+//            phase2Time = phase2Timer,
+//            averageTime = averageTime,
 
-//             phase1Stars = Phase1Stars,
-//             phase2Stars = Phase2Stars
-//         };
-//         React_Connection bridge = FindObjectOfType<React_Connection>();
-//         if (bridge != null)
-//         {
-//             bridge.SendResult(result);
-//         }
-//         if (!string.IsNullOrEmpty(nextSceneName))
-//         {
-//             SceneManager.LoadScene(nextSceneName);
-//         }
-//     }
+//            phase1Stars = Phase1Stars,
+//            phase2Stars = Phase2Stars
+//        };
+//        React_Connection bridge = FindObjectOfType<React_Connection>();
+//        if (bridge != null)
+//        {
+//            bridge.SendResult(result);
+//        }
+//        if (!string.IsNullOrEmpty(nextSceneName))
+//        {
+//            SceneManager.LoadScene(nextSceneName);
+//        }
+//    }
 
 
 
@@ -547,9 +465,4 @@ public enum Step
 
 
 
-<<<<<<< HEAD
-}
-*/
-=======
-// }
->>>>>>> 03c4578464c9a690586a94453f54d26c0b72b609
+//}
