@@ -3,7 +3,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private Level_1 level1Manager;
-    [SerializeField] private Level_2 level2Manager; 
+   // [SerializeField] private Level_2 level2Manager; 
 
     private void OnEnable()
     {
@@ -43,9 +43,9 @@ public class LevelManager : MonoBehaviour
                 level1Manager.StartLevel();
                 break;
 
-            case 2:
-                level2Manager.StartLevel();
-                break;
+            //case 2:
+            //    level2Manager.StartLevel();
+            //    break;
 
             default:
                 Debug.LogError($"Nivel {level} no implementado.");

@@ -1,325 +1,325 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using static System.Net.Mime.MediaTypeNames;
-using TMPro;
-using System.Collections;
+﻿//using System;
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
+//using UnityEngine.SceneManagement;
+//using UnityEngine.UI;
+//using static System.Net.Mime.MediaTypeNames;
+//using TMPro;
+//using System.Collections;
 
-public class Level_2 : MonoBehaviour
-{
-    [Header("Materiales")]
-    [SerializeField] private MaterialDialisis[] materiales;
+//public class Level_2 : MonoBehaviour
+//{
+//    [Header("Materiales")]
+//    [SerializeField] private MaterialDialisis[] materiales;
 
-    [Header("Cartas")]
-    [SerializeField] private cardScript[] cartas;
+//    [Header("Cartas")]
+//    [SerializeField] private cardScript[] cartas;
 
-    [Header("UI")]
-    [SerializeField] private PopupManager popupManager;
+//    [Header("UI")]
+//    [SerializeField] private PopupManager popupManager;
 
-    [SerializeField] private TMP_Text progresoText;
+//    [SerializeField] private TMP_Text progresoText;
 
-    [SerializeField] private GameObject panelFinal;
+//    [SerializeField] private GameObject panelFinal;
 
-    [SerializeField] private TMP_Text textoFinal;
+//    [SerializeField] private TMP_Text textoFinal;
 
-    //-------------------------------------------------------
-    // Variables privadas
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
+//    // Variables privadas
+//    //-------------------------------------------------------
 
-    private cardScript primeraCarta;
+//    private cardScript primeraCarta;
 
-    private cardScript segundaCarta;
+//    private cardScript segundaCarta;
 
-    private bool bloqueado = false;
+//    private bool bloqueado = false;
 
-    private int paresEncontrados = 0;
-    private int totalPares;
+//    private int paresEncontrados = 0;
+//    private int totalPares;
 
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
 
-    private void StartLevel()
-    {
-        totalPares = materiales.Length;
+//    private void StartLevel()
+//    {
+//        totalPares = materiales.Length;
 
-        panelFinal.SetActive(false);
+//        panelFinal.SetActive(false);
 
-        CrearTablero();
+//        CrearTablero();
 
-        ActualizarProgreso();
-    }
+//        ActualizarProgreso();
+//    }
 
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
 
-    public bool PuedeSeleccionar()
-    {
-        return !bloqueado;
-    }
+//    public bool PuedeSeleccionar()
+//    {
+//        return !bloqueado;
+//    }
 
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
 
-    public void SeleccionarCarta(cardScript carta)
-    {
-        if (bloqueado)
-            return;
+//    public void SeleccionarCarta(cardScript carta)
+//    {
+//        if (bloqueado)
+//            return;
 
-        //---------------------------------------------------
-        // Primera carta
-        //---------------------------------------------------
+//        //---------------------------------------------------
+//        // Primera carta
+//        //---------------------------------------------------
 
-        if (primeraCarta == null)
-        {
-            primeraCarta = carta;
-            return;
-        }
+//        if (primeraCarta == null)
+//        {
+//            primeraCarta = carta;
+//            return;
+//        }
 
-        //---------------------------------------------------
-        // Segunda carta
-        //---------------------------------------------------
+//        //---------------------------------------------------
+//        // Segunda carta
+//        //---------------------------------------------------
 
-        segundaCarta = carta;
+//        segundaCarta = carta;
 
-        StartCoroutine(CompararCartas());
-    }
+//        StartCoroutine(CompararCartas());
+//    }
 
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
 
-    void CrearTablero()
-    {
-        List<MaterialDialisis> lista = new List<MaterialDialisis>();
+//    void CrearTablero()
+//    {
+//        List<MaterialDialisis> lista = new List<MaterialDialisis>();
 
-        //---------------------------------------------------
-        // Duplicamos cada material para formar los pares
-        //---------------------------------------------------
+//        //---------------------------------------------------
+//        // Duplicamos cada material para formar los pares
+//        //---------------------------------------------------
 
-        foreach (MaterialDialisis material in materiales)
-        {
-            lista.Add(material);
-            lista.Add(material);
-        }
+//        foreach (MaterialDialisis material in materiales)
+//        {
+//            lista.Add(material);
+//            lista.Add(material);
+//        }
 
-        //---------------------------------------------------
-        // Mezclamos
-        //---------------------------------------------------
+//        //---------------------------------------------------
+//        // Mezclamos
+//        //---------------------------------------------------
 
-        for (int i = 0; i < lista.Count; i++)
-        {
-            MaterialDialisis aux = lista[i];
+//        for (int i = 0; i < lista.Count; i++)
+//        {
+//            MaterialDialisis aux = lista[i];
 
-            int random = Random.Range(i, lista.Count);
+//            int random = Random.Range(i, lista.Count);
 
-            lista[i] = lista[random];
+//            lista[i] = lista[random];
 
-            lista[random] = aux;
-        }
+//            lista[random] = aux;
+//        }
 
-        //---------------------------------------------------
-        // Asignamos cada material a una carta
-        //---------------------------------------------------
+//        //---------------------------------------------------
+//        // Asignamos cada material a una carta
+//        //---------------------------------------------------
 
-        for (int i = 0; i < cartas.Length; i++)
-        {
-            cartas[i].Configurar(lista[i]);
-        }
-    }
+//        for (int i = 0; i < cartas.Length; i++)
+//        {
+//            cartas[i].Configurar(lista[i]);
+//        }
+//    }
 
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
 
-    IEnumerator CompararCartas()
-    {
-        bloqueado = true;
+//    IEnumerator CompararCartas()
+//    {
+//        bloqueado = true;
 
-        yield return new WaitForSeconds(0.8f);
+//        yield return new WaitForSeconds(0.8f);
 
-        //---------------------------------------------------
-        // ¿Son iguales?
-        //---------------------------------------------------
+//        //---------------------------------------------------
+//        // ¿Son iguales?
+//        //---------------------------------------------------
 
-        if (primeraCarta.ObtenerID() == segundaCarta.ObtenerID())
-        {
-            primeraCarta.MarcarComoEncontrada();
+//        if (primeraCarta.ObtenerID() == segundaCarta.ObtenerID())
+//        {
+//            primeraCarta.MarcarComoEncontrada();
 
-            segundaCarta.MarcarComoEncontrada();
+//            segundaCarta.MarcarComoEncontrada();
 
-            paresEncontrados++;
+//            paresEncontrados++;
 
-            ActualizarProgreso();
+//            ActualizarProgreso();
 
-            //------------------------------------------------
-            // Mostrar información educativa
-            //------------------------------------------------
+//            //------------------------------------------------
+//            // Mostrar información educativa
+//            //------------------------------------------------
 
-            popupManager.MostrarMaterial(
-                primeraCarta.ObtenerMaterial(),
-                this
-            );
+//            popupManager.MostrarMaterial(
+//                primeraCarta.ObtenerMaterial(),
+//                this
+//            );
 
-            //------------------------------------------------
-            // Esperamos a que el Popup avise que terminó
-            //------------------------------------------------
+//            //------------------------------------------------
+//            // Esperamos a que el Popup avise que terminó
+//            //------------------------------------------------
 
-            yield break;
-        }
+//            yield break;
+//        }
 
-        //---------------------------------------------------
-        // No coinciden
-        //---------------------------------------------------
+//        //---------------------------------------------------
+//        // No coinciden
+//        //---------------------------------------------------
 
-        primeraCarta.OcultarCarta();
+//        primeraCarta.OcultarCarta();
 
-        segundaCarta.OcultarCarta();
+//        segundaCarta.OcultarCarta();
 
-        primeraCarta = null;
+//        primeraCarta = null;
 
-        segundaCarta = null;
+//        segundaCarta = null;
 
-        bloqueado = false;
-    }
+//        bloqueado = false;
+//    }
 
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
 
-    public void ContinuarJuego()
-    {
-        primeraCarta = null;
+//    public void ContinuarJuego()
+//    {
+//        primeraCarta = null;
 
-        segundaCarta = null;
+//        segundaCarta = null;
 
-        bloqueado = false;
+//        bloqueado = false;
 
-        //---------------------------------------------------
-        // ¿Terminó el juego?
-        //---------------------------------------------------
+//        //---------------------------------------------------
+//        // ¿Terminó el juego?
+//        //---------------------------------------------------
 
-        if (paresEncontrados == totalPares)
-        {
-            FinalizarJuego();
-        }
-    }
+//        if (paresEncontrados == totalPares)
+//        {
+//            FinalizarJuego();
+//        }
+//    }
 
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
 
-    void ActualizarProgreso()
-    {
-        if (progresoText != null)
-        {
-            progresoText.text =
-                "Materiales aprendidos: "
-                + paresEncontrados
-                + " / "
-                + totalPares;
-        }
-    }
-    //-------------------------------------------------------
-    // Finaliza la partida
-    //-------------------------------------------------------
+//    void ActualizarProgreso()
+//    {
+//        if (progresoText != null)
+//        {
+//            progresoText.text =
+//                "Materiales aprendidos: "
+//                + paresEncontrados
+//                + " / "
+//                + totalPares;
+//        }
+//    }
+//    //-------------------------------------------------------
+//    // Finaliza la partida
+//    //-------------------------------------------------------
 
-    void FinalizarJuego()
-    {
-        bloqueado = true;
+//    void FinalizarJuego()
+//    {
+//        bloqueado = true;
 
-        panelFinal.SetActive(true);
+//        panelFinal.SetActive(true);
 
-        if (textoFinal != null)
-        {
-            textoFinal.text =
-                "¡Felicitaciones!\n\n" +
-                "Has identificado correctamente todos los materiales necesarios para la diálisis peritoneal.\n\n" +
-                "Ahora conoces su función y la importancia de utilizarlos correctamente.";
-        }
-    }
+//        if (textoFinal != null)
+//        {
+//            textoFinal.text =
+//                "¡Felicitaciones!\n\n" +
+//                "Has identificado correctamente todos los materiales necesarios para la diálisis peritoneal.\n\n" +
+//                "Ahora conoces su función y la importancia de utilizarlos correctamente.";
+//        }
+//    }
 
-    //-------------------------------------------------------
-    // Reiniciar partida
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
+//    // Reiniciar partida
+//    //-------------------------------------------------------
 
-    public void ReiniciarJuego()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+//    public void ReiniciarJuego()
+//    {
+//        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+//    }
 
-    //-------------------------------------------------------
-    // Volver al menú principal
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
+//    // Volver al menú principal
+//    //-------------------------------------------------------
 
-    public void VolverMenu()
-    {
-        SceneManager.LoadScene("menuScene");
-    }
+//    public void VolverMenu()
+//    {
+//        SceneManager.LoadScene("menuScene");
+//    }
 
-    //-------------------------------------------------------
-    // Salir del juego (solo funciona en la aplicación)
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
+//    // Salir del juego (solo funciona en la aplicación)
+//    //-------------------------------------------------------
 
-    public void SalirJuego()
-    {
-        Application.Quit();
-    }
+//    public void SalirJuego()
+//    {
+//        Application.Quit();
+//    }
 
-    //-------------------------------------------------------
-    // Getters
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
+//    // Getters
+//    //-------------------------------------------------------
 
-    public int ObtenerParesEncontrados()
-    {
-        return paresEncontrados;
-    }
+//    public int ObtenerParesEncontrados()
+//    {
+//        return paresEncontrados;
+//    }
 
-    public int ObtenerTotalPares()
-    {
-        return totalPares;
-    }
+//    public int ObtenerTotalPares()
+//    {
+//        return totalPares;
+//    }
 
-    //-------------------------------------------------------
-    // Setters
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
+//    // Setters
+//    //-------------------------------------------------------
 
-    public void BloquearJuego(bool estado)
-    {
-        bloqueado = estado;
-    }
+//    public void BloquearJuego(bool estado)
+//    {
+//        bloqueado = estado;
+//    }
 
-    //-------------------------------------------------------
-    // Permite volver a jugar sin cambiar de escena
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
+//    // Permite volver a jugar sin cambiar de escena
+//    //-------------------------------------------------------
 
-    public void NuevaPartida()
-    {
-        primeraCarta = null;
-        segundaCarta = null;
+//    public void NuevaPartida()
+//    {
+//        primeraCarta = null;
+//        segundaCarta = null;
 
-        paresEncontrados = 0;
+//        paresEncontrados = 0;
 
-        bloqueado = false;
+//        bloqueado = false;
 
-        panelFinal.SetActive(false);
+//        panelFinal.SetActive(false);
 
-        CrearTablero();
+//        CrearTablero();
 
-        ActualizarProgreso();
+//        ActualizarProgreso();
 
-        foreach (cardScript carta in cartas)
-        {
-            carta.OcultarCarta();
-        }
-    }
+//        foreach (cardScript carta in cartas)
+//        {
+//            carta.OcultarCarta();
+//        }
+//    }
 
-    //-------------------------------------------------------
-    // Devuelve la cantidad de cartas
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
+//    // Devuelve la cantidad de cartas
+//    //-------------------------------------------------------
 
-    public int CantidadCartas()
-    {
-        return cartas.Length;
-    }
+//    public int CantidadCartas()
+//    {
+//        return cartas.Length;
+//    }
 
-    //-------------------------------------------------------
-    // Devuelve la cantidad de materiales
-    //-------------------------------------------------------
+//    //-------------------------------------------------------
+//    // Devuelve la cantidad de materiales
+//    //-------------------------------------------------------
 
-    public int CantidadMateriales()
-    {
-        return materiales.Length;
-    }
-}
+//    public int CantidadMateriales()
+//    {
+//        return materiales.Length;
+//    }
+//}
