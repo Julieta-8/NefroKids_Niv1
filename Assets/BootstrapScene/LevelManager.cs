@@ -26,15 +26,17 @@ public class LevelManager : MonoBehaviour
         ReactConnection react = FindFirstObjectByType<ReactConnection>();
 
         react.Log("Entró a ProcessMessage");
-        react.Log(json);
 
-        StartLevelMessage message = JsonUtility.FromJson<StartLevelMessage>(json);
+        StartLevelMessage message =
+            JsonUtility.FromJson<StartLevelMessage>(json);
 
         react.Log($"Tipo: {message.type}");
         react.Log($"Nivel: {message.level}");
 
         if (message.type == "START_LEVEL")
         {
+            react.Log("Voy a StartLevel");
+
             StartLevel(message.level);
         }
     }
