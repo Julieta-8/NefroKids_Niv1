@@ -414,7 +414,7 @@ Transform:
   m_GameObject: {fileID: 317226908}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -432.9, y: -195.69, z: 0}
+  m_LocalPosition: {x: -542.62, y: -258.23, z: 0}
   m_LocalScale: {x: 0.402336, y: 0.4552786, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -623,7 +623,7 @@ Transform:
   m_GameObject: {fileID: 727363306}
   serializedVersion: 2
   m_LocalRotation: {x: -0.00083002355, y: -0.0040226527, z: -0.7042265, w: 0.70996356}
-  m_LocalPosition: {x: -441.54, y: -196.02, z: 0.15}
+  m_LocalPosition: {x: -551.26, y: -258.56003, z: 0.15}
   m_LocalScale: {x: 3.34, y: 6.036637, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2559,7 +2559,7 @@ Transform:
   m_GameObject: {fileID: 1813034128}
   serializedVersion: 2
   m_LocalRotation: {x: -0.00083002355, y: -0.0040226527, z: -0.7042265, w: 0.70996356}
-  m_LocalPosition: {x: -441.8746, y: -194.2976, z: 0.0969}
+  m_LocalPosition: {x: -551.5946, y: -256.83762, z: 0.0969}
   m_LocalScale: {x: 4.938907, y: 6.78406, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2948,49 +2948,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02937f08c6af7a04eb388ac104a4e61d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mannequinRenderer: {fileID: 0}
-  mannequinNormal: {fileID: 0}
-  mannequinWithVest: {fileID: 0}
-  mannequinComplete: {fileID: 0}
-  vestObject: {fileID: 0}
-  maskObject: {fileID: 0}
-  vestStartPosition: {fileID: 0}
-  maskStartPosition: {fileID: 0}
-  mannequinDropZone: {fileID: 0}
-  handsRenderer: {fileID: 0}
-  handsNormal: {fileID: 0}
-  handsWithSoap: {fileID: 0}
-  handsWashing: {fileID: 0}
-  washStep1: {fileID: 0}
-  washStep2: {fileID: 0}
-  washStep3: {fileID: 0}
-  washStep4: {fileID: 0}
-  handsWet: {fileID: 0}
-  handsClean: {fileID: 0}
-  soapObject: {fileID: 0}
-  towelObject: {fileID: 0}
-  faucetRenderer: {fileID: 0}
-  faucetOff: {fileID: 0}
-  faucetOn: {fileID: 0}
-  soapStartPosition: {fileID: 0}
-  towelStartPosition: {fileID: 0}
-  handsDropZone: {fileID: 0}
-  backgroundRenderer: {fileID: 0}
-  backgroundRenderer_2: {fileID: 0}
-  roomBackground: {fileID: 0}
-  sinkBackground: {fileID: 0}
-  phase1Objects: {fileID: 0}
-  phase2Objects: {fileID: 0}
-  instructionText: {fileID: 0}
-  nextButton: {fileID: 0}
-  dialoguePanel: {fileID: 0}
-  congratsPanel: {fileID: 0}
-  DatoCuriosoText: {fileID: 0}
-  DatoCuriosoPanel: {fileID: 0}
-  rikuRenderer: {fileID: 0}
-  rikuNeutral: {fileID: 0}
-  rikuCurious: {fileID: 0}
-  CabezarikuCurious: {fileID: 0}
+  mannequinRenderer: {fileID: 204570257}
+  mannequinNormal: {fileID: 21300000, guid: ddf7d57c25b70064cbec469ef1976f4b, type: 3}
+  mannequinWithVest: {fileID: 21300000, guid: af07ab9bc9229af47b9bf61b382fb5d8, type: 3}
+  mannequinComplete: {fileID: 21300000, guid: 3eb14c6fdd8e53e4fa41654fb7388510, type: 3}
+  vestObject: {fileID: 921145211}
+  maskObject: {fileID: 996316639}
+  vestStartPosition: {fileID: 1821223238}
+  maskStartPosition: {fileID: 387031793}
+  mannequinDropZone: {fileID: 846156643}
+  handsRenderer: {fileID: 1454787951}
+  handsNormal: {fileID: 21300000, guid: e224d71cb80d85a4bb66e3dddc07624c, type: 3}
+  handsWithSoap: {fileID: 21300000, guid: b603a17dfc63be7498bdb9bcae412236, type: 3}
+  handsWashing: {fileID: 21300000, guid: 809e526ac066e724bbba01e0ea1c716c, type: 3}
+  washStep1: {fileID: 21300000, guid: c21655075d6c9b14db47188444a9379c, type: 3}
+  washStep2: {fileID: 21300000, guid: c0eb94dc3cced1642ba7ab7beb1c3bc2, type: 3}
+  washStep3: {fileID: 21300000, guid: fbbf3af7868993d48a3cc3c8c7deb887, type: 3}
+  washStep4: {fileID: 21300000, guid: 809e526ac066e724bbba01e0ea1c716c, type: 3}
+  handsWet: {fileID: 21300000, guid: 31a50ec6710fd3a4087efdfe2fd9d37a, type: 3}
+  handsClean: {fileID: 21300000, guid: e224d71cb80d85a4bb66e3dddc07624c, type: 3}
+  soapObject: {fileID: 1381923316}
+  towelObject: {fileID: 765100710}
+  faucetRenderer: {fileID: 179629150}
+  faucetOff: {fileID: 21300000, guid: a7356b0bb767cb14dae93ae64f0cadba, type: 3}
+  faucetOn: {fileID: 21300000, guid: 0df93bb1e9b1c8848b63b0406375eb83, type: 3}
+  soapStartPosition: {fileID: 1528291369}
+  towelStartPosition: {fileID: 1578009209}
+  handsDropZone: {fileID: 852125399}
+  backgroundRenderer: {fileID: 2109587982}
+  backgroundRenderer_2: {fileID: 980256534}
+  roomBackground: {fileID: 21300000, guid: a457fb7995f911e4992f3fc89614f34a, type: 3}
+  sinkBackground: {fileID: 21300000, guid: 170a73196fceb7e42ba84d7fffb8d300, type: 3}
+  phase1Objects: {fileID: 1937069033}
+  phase2Objects: {fileID: 930499911}
+  instructionText: {fileID: 1096999310}
+  nextButton: {fileID: 1219501388}
+  dialoguePanel: {fileID: 1813034128}
+  congratsPanel: {fileID: 2013399393}
+  DatoCuriosoText: {fileID: 2009121685}
+  DatoCuriosoPanel: {fileID: 727363306}
+  rikuRenderer: {fileID: 317226909}
+  rikuNeutral: {fileID: 21300000, guid: d52225d777ff6764c82e6b330f0005df, type: 3}
+  rikuCurious: {fileID: 21300000, guid: ed0187affb8e3dd4b81e66b0522c3a21, type: 3}
+  CabezarikuCurious: {fileID: 21300000, guid: d52225d777ff6764c82e6b330f0005df, type: 3}
   nextSceneName: 
   currentStep: 0
 --- !u!1 &2086248448
