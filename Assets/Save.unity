@@ -1996,8 +1996,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe12328e8370c4a4999b660ba21d1956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level1Manager: {fileID: 0}
-  level2Manager: {fileID: 0}
 --- !u!4 &1380676482
 Transform:
   m_ObjectHideFlags: 0
@@ -2439,50 +2437,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
---- !u!1 &1629410415
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1629410417}
-  - component: {fileID: 1629410416}
-  m_Layer: 0
-  m_Name: ReactBridge
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1629410416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1629410415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 098e799ed6245e0498549763f411bcc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1629410417
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1629410415}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.3800426, y: -4.299657, z: -0.009202534}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2084642615}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1813034128
 GameObject:
   m_ObjectHideFlags: 0
@@ -2932,7 +2886,6 @@ Transform:
   - {fileID: 1937069034}
   - {fileID: 930499912}
   - {fileID: 980256535}
-  - {fileID: 1629410417}
   - {fileID: 2109587983}
   - {fileID: 2013399395}
   - {fileID: 2086248450}
@@ -2982,68 +2935,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9768f7752180a4948adf2850d761a2e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <IsCompleted>k__BackingField: 0
-  phase1Timer: 0
-  phase2Timer: 0
-  averageTime: 0
-  timingPhase1: 0
-  timingPhase2: 0
-  phase1Stars: 0
-  phase2Stars: 0
-  mannequinRenderer: {fileID: 204570257}
-  mannequinNormal: {fileID: 21300000, guid: ddf7d57c25b70064cbec469ef1976f4b, type: 3}
-  mannequinWithVest: {fileID: 21300000, guid: af07ab9bc9229af47b9bf61b382fb5d8, type: 3}
-  mannequinComplete: {fileID: 21300000, guid: 3eb14c6fdd8e53e4fa41654fb7388510, type: 3}
-  vestObject: {fileID: 921145211}
-  maskObject: {fileID: 996316639}
-  vestStartPosition: {fileID: 1821223238}
-  maskStartPosition: {fileID: 387031793}
-  mannequinDropZone: {fileID: 846156643}
-  handsRenderer: {fileID: 1454787951}
-  handsNormal: {fileID: 21300000, guid: e224d71cb80d85a4bb66e3dddc07624c, type: 3}
-  handsWithSoap: {fileID: 21300000, guid: b603a17dfc63be7498bdb9bcae412236, type: 3}
-  handsWashing: {fileID: 21300000, guid: 809e526ac066e724bbba01e0ea1c716c, type: 3}
-  washStep1: {fileID: 21300000, guid: c21655075d6c9b14db47188444a9379c, type: 3}
-  washStep2: {fileID: 21300000, guid: c0eb94dc3cced1642ba7ab7beb1c3bc2, type: 3}
-  washStep3: {fileID: 21300000, guid: 809e526ac066e724bbba01e0ea1c716c, type: 3}
-  washStep4: {fileID: 21300000, guid: fbbf3af7868993d48a3cc3c8c7deb887, type: 3}
-  handsWet: {fileID: 21300000, guid: 31a50ec6710fd3a4087efdfe2fd9d37a, type: 3}
-  handsClean: {fileID: 21300000, guid: e224d71cb80d85a4bb66e3dddc07624c, type: 3}
-  soapObject: {fileID: 1381923316}
-  towelObject: {fileID: 765100710}
-  faucetRenderer: {fileID: 179629150}
-  faucetOff: {fileID: 21300000, guid: a7356b0bb767cb14dae93ae64f0cadba, type: 3}
-  faucetOn: {fileID: 21300000, guid: 0df93bb1e9b1c8848b63b0406375eb83, type: 3}
-  soapStartPosition: {fileID: 1528291369}
-  towelStartPosition: {fileID: 1578009209}
-  handsDropZone: {fileID: 852125399}
-  backgroundRenderer: {fileID: 2109587982}
-  backgroundRenderer_2: {fileID: 980256534}
-  roomBackground: {fileID: 21300000, guid: a457fb7995f911e4992f3fc89614f34a, type: 3}
-  sinkBackground: {fileID: 21300000, guid: 170a73196fceb7e42ba84d7fffb8d300, type: 3}
-  phase1Objects: {fileID: 1937069033}
-  phase2Objects: {fileID: 930499911}
-  instructionText: {fileID: 1096999310}
-  nextButton: {fileID: 1219501388}
-  dialoguePanel: {fileID: 1813034128}
-  congratsPanel: {fileID: 2013399393}
-  DatoCuriosoText: {fileID: 2009121685}
-  DatoCuriosoPanel: {fileID: 727363306}
-  rikuRenderer: {fileID: 317226909}
-  rikuNeutral: {fileID: 21300000, guid: d52225d777ff6764c82e6b330f0005df, type: 3}
-  rikuCurious: {fileID: 21300000, guid: ed0187affb8e3dd4b81e66b0522c3a21, type: 3}
-  rikuNeutralState: 1
-  CabezarikuCurious: {fileID: 21300000, guid: ed0187affb8e3dd4b81e66b0522c3a21, type: 3}
-  nextSceneName: 
-  bridge: {fileID: 0}
-  currentStep: 0
-  vestPlaced: 0
-  maskPlaced: 0
-  soapPlaced: 0
-  towelPlaced: 0
-  waterOpened: 0
-  draggingObject: {fileID: 0}
-  draggingOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &2109587981
 GameObject:
   m_ObjectHideFlags: 0
