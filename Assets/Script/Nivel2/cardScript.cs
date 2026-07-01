@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UIImage = UnityEngine.UI.Image;
-using static System.Net.Mime.MediaTypeNames;
 using UnityEngine.SceneManagement;
 using TMPro;
 //using static System.Net.Mime.MediaTypeNames.Image;
