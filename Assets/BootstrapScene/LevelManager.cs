@@ -3,7 +3,8 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     private Level_1 level1Manager;
-   // [SerializeField] private Level_2 level2Manager; 
+    // [SerializeField] private Level_2 level2Manager; 
+    [SerializeField] private int debugLevel = 1;
 
     private void OnEnable()
     {
@@ -15,10 +16,15 @@ public class LevelManager : MonoBehaviour
         ReactConnection.OnMessageReceived -= ProcessMessage;
     }
 
-    private void Start() { 
-        ReactConnection react = FindFirstObjectByType<ReactConnection>(); 
-        react.Log("Iniciando nivel"); 
-        react.Send(new ReadyMessage()); 
+    private void Start() {
+#if UNITY_EDITOR
+        Debug.Log($"[DEBUG] Iniciando automáticamente el nivel {debugLevel}");
+        StartLevel(debugLevel);
+#else
+        ReactConnection react = FindFirstObjectByType<ReactConnection>();
+        react.Log("Iniciando nivel");
+        react.Send(new ReadyMessage());
+#endif
     }
 
     private void ProcessMessage(string json)
