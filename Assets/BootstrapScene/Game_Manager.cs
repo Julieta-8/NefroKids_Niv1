@@ -37,23 +37,5 @@ public class GameManager : MonoBehaviour
     }
 }
 
-[System.Serializable]
-public class ReadyMessage
-{
-    public string type = "READY";
-}
 
-[System.Serializable]
-public class StartLevelMessage
-{
-    public string type;
-    public int level;
-}
 
-[System.Serializable]
-public class LevelCompletedMessage
-{
-    public string type = "LEVEL_COMPLETED";
-    public int stars;
-    public float time;
-}

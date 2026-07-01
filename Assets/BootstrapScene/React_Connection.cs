@@ -32,6 +32,7 @@ public class ReactConnection : MonoBehaviour
     public void Receive(string json)
     {
         Debug.Log($"[ReactConnection] Recibido: {json}");
+        Log($"Recibido: {json}");
 
         OnMessageReceived?.Invoke(json);
     }

@@ -891,7 +891,9 @@ public class Level_1 : MonoBehaviour
 
         if (bridge != null)
         {
-            bridge.Send(result);
+            bridge.Send(new LevelCompletedMessage{
+                result = result
+            });
         }
     }
 }

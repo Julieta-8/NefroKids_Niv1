@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private Level_1 level1Manager;
+    private Level_1 level1Manager;
    // [SerializeField] private Level_2 level2Manager; 
 
     private void OnEnable()
@@ -15,41 +15,66 @@ public class LevelManager : MonoBehaviour
         ReactConnection.OnMessageReceived -= ProcessMessage;
     }
 
-    private void Start()
-    {
-        ReactConnection react = FindFirstObjectByType<ReactConnection>();
-        react.Log("Iniciando nivel");
-        react.Send(new ReadyMessage());
+    private void Start() { 
+        ReactConnection react = FindFirstObjectByType<ReactConnection>(); 
+        react.Log("Iniciando nivel"); 
+        react.Send(new ReadyMessage()); 
     }
 
     private void ProcessMessage(string json)
     {
-        StartLevelMessage message = JsonUtility.FromJson<StartLevelMessage>(json);
         ReactConnection react = FindFirstObjectByType<ReactConnection>();
-        react.Log("LevelManager Start");
-        react.Send(new ReadyMessage());
+
+        react.Log("Entró a ProcessMessage");
+
+        StartLevelMessage message =
+            JsonUtility.FromJson<StartLevelMessage>(json);
+
+        react.Log($"Tipo: {message.type}");
+        react.Log($"Nivel: {message.level}");
 
         if (message.type == "START_LEVEL")
         {
+            react.Log("Voy a StartLevel");
+
             StartLevel(message.level);
         }
     }
 
     private void StartLevel(int level)
     {
+        Level_1 level1Manager = FindFirstObjectByType<Level_1>();
+
+        if (level1Manager == null)
+        {
+            Debug.LogError("No se encontró Level_1");
+            return;
+        }
+
         switch (level)
         {
             case 1:
                 level1Manager.StartLevel();
                 break;
-
-            //case 2:
-            //    level2Manager.StartLevel();
-            //    break;
-
-            default:
-                Debug.LogError($"Nivel {level} no implementado.");
-                break;
         }
     }
+}
+
+[System.Serializable]
+public class LevelCompletedMessage
+{
+    public string type = "LEVEL_COMPLETED";
+
+    public ResultData result;
+}
+[System.Serializable]
+public class ReadyMessage
+{
+    public string type = "READY";
+}
+[System.Serializable]
+public class StartLevelMessage
+{
+    public string type;
+    public int level;
 }
