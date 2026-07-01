@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea43f23c07fa57f4db37814eb55d5637, type: 3}
+  m_Name: Heparina
+  m_EditorClassIdentifier: 
+  id: 4
+  nombre: Heparina
+  funcion: "Medicamento anticoagulante que puede agregarse a la soluci\xF3n dializante
+    para evitar la formaci\xF3n de co\xE1gulos de fibrina dentro del cat\xE9ter."
+  importancia: "Mantiene el cat\xE9ter permeable y favorece el correcto drenaje e
+    ingreso de la soluci\xF3n durante la di\xE1lisis."
+  riesgo: "Si no se utiliza cuando est\xE1 indicada, pueden formarse co\xE1gulos
+    que obstruyan el cat\xE9ter y dificulten el tratamiento."
+  imagen: {fileID: 21300000, guid: 4ea8c5cceab019941a81a30817ed8a71, type: 3}
