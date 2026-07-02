@@ -3,8 +3,8 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     private Level_1 level1Manager;
-    // [SerializeField] private Level_2 level2Manager; 
-    [SerializeField] private int debugLevel = 1;
+    private Level_2 level2Manager;
+    [SerializeField] private int debugLevel = 2;
 
     private void OnEnable()
     {
@@ -16,7 +16,8 @@ public class LevelManager : MonoBehaviour
         ReactConnection.OnMessageReceived -= ProcessMessage;
     }
 
-    private void Start() {
+    private void Start()
+    {
 #if UNITY_EDITOR
         Debug.Log($"[DEBUG] Iniciando automáticamente el nivel {debugLevel}");
         StartLevel(debugLevel);
@@ -49,6 +50,7 @@ public class LevelManager : MonoBehaviour
 
     private void StartLevel(int level)
     {
+        /*
         Level_1 level1Manager = FindFirstObjectByType<Level_1>();
 
         if (level1Manager == null)
@@ -56,31 +58,47 @@ public class LevelManager : MonoBehaviour
             Debug.LogError("No se encontró Level_1");
             return;
         }
+        */
+
+
+        Level_2 level2Manager = FindFirstObjectByType<Level_2>();
+
+        if (level2Manager == null)
+        {
+            Debug.LogError("No se encontró Level_2");
+            return;
+        }
 
         switch (level)
         {
             case 1:
-                level1Manager.StartLevel();
+                level2Manager.StartLevel();
                 break;
+            /*case 2:
+                level2Manager.StartLevel();
+                break;
+                */
+
         }
+
     }
 }
 
-[System.Serializable]
-public class LevelCompletedMessage
-{
-    public string type = "LEVEL_COMPLETED";
+    [System.Serializable]
+    public class LevelCompletedMessage
+    {
+        public string type = "LEVEL_COMPLETED";
 
-    public ResultData result;
-}
-[System.Serializable]
-public class ReadyMessage
-{
-    public string type = "READY";
-}
-[System.Serializable]
-public class StartLevelMessage
-{
-    public string type;
-    public int level;
-}
+        public ResultData result;
+    }
+    [System.Serializable]
+    public class ReadyMessage
+    {
+        public string type = "READY";
+    }
+    [System.Serializable]
+    public class StartLevelMessage
+    {
+        public string type;
+        public int level;
+    }

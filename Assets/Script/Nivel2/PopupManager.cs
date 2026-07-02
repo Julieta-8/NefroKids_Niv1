@@ -1,8 +1,14 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PopupManager : MonoBehaviour
 {
+    private MaterialDialisis materialActual;
+    private int pasoActual;
+
+
+
     [Header("Panel")]
     [SerializeField] private GameObject panelPopup;
 
@@ -10,10 +16,10 @@ public class PopupManager : MonoBehaviour
     [SerializeField] private Image imagenMaterial;
 
     [Header("Textos")]
-    [SerializeField] private Text nombreMaterial;
-    [SerializeField] private Text funcionMaterial;
-    [SerializeField] private Text importanciaMaterial;
-    [SerializeField] private Text riesgoMaterial;
+    [SerializeField] private TMP_Text nombreMaterial;
+    [SerializeField] private TMP_Text funcionMaterial;
+    [SerializeField] private TMP_Text importanciaMaterial;
+    [SerializeField] private TMP_Text riesgoMaterial;
 
     [Header("Botón")]
     [SerializeField] private Button botonContinuar;
@@ -26,38 +32,87 @@ public class PopupManager : MonoBehaviour
     private void Start()
     {
         panelPopup.SetActive(false);
+        nombreMaterial.text = "";
+        funcionMaterial.text = "";
+        importanciaMaterial.text = "";
+        riesgoMaterial.text = "";
 
-        botonContinuar.onClick.AddListener(CerrarPopup);
+        imagenMaterial.enabled = false;
+
+        botonContinuar.gameObject.SetActive(false);
+
+        botonContinuar.onClick.AddListener(SiguientePaso);
+
     }
 
     //--------------------------------------------------------
 
     public void MostrarMaterial(MaterialDialisis material, Level_2 gm)
     {
-        gameManager = gm;
+        imagenMaterial.enabled = true;
 
-        //Pausa el juego
+        gameManager = gm;
+        materialActual = material;
+        pasoActual = 0;
+
         gameManager.BloquearJuego(true);
 
-        //Completa la información
-
         imagenMaterial.sprite = material.imagen;
-
         nombreMaterial.text = material.nombre;
 
-        funcionMaterial.text =
-            "<b>Función</b>\n\n" +
-            material.funcion;
-
-        importanciaMaterial.text =
-            "<b>Importancia</b>\n\n" +
-            material.importancia;
-
-        riesgoMaterial.text =
-            "<b>¿Qué puede ocurrir si no se utiliza correctamente?</b>\n\n" +
-            material.riesgo;
-
         panelPopup.SetActive(true);
+        botonContinuar.gameObject.SetActive(true);
+
+        MostrarPaso();
+    }
+    private void MostrarPaso()
+    {
+        funcionMaterial.text = "";
+        importanciaMaterial.text = "";
+        riesgoMaterial.text = "";
+
+        switch (pasoActual)
+        {
+            case 0:
+
+                funcionMaterial.text =
+                    "<b>¿Para qué sirve?</b>\n\n" +
+                    materialActual.funcion;
+
+                botonContinuar.GetComponentInChildren<TMP_Text>().text = "Siguiente";
+                break;
+
+            case 1:
+
+                importanciaMaterial.text =
+                    "<b>¿Por qué es importante?</b>\n\n" +
+                    materialActual.importancia;
+
+                botonContinuar.GetComponentInChildren<TMP_Text>().text = "Siguiente";
+                break;
+
+            case 2:
+
+                riesgoMaterial.text =
+                    "<b>¿Qué puede pasar si no se usa correctamente?</b>\n\n" +
+                    materialActual.riesgo;
+
+                botonContinuar.GetComponentInChildren<TMP_Text>().text = "Entendido";
+                break;
+        }
+    }
+    private void SiguientePaso()
+    {
+        pasoActual++;
+
+        if (pasoActual > 2)
+        {
+            CerrarPopup();
+        }
+        else
+        {
+            MostrarPaso();
+        }
     }
 
     //--------------------------------------------------------
@@ -65,6 +120,12 @@ public class PopupManager : MonoBehaviour
     public void CerrarPopup()
     {
         panelPopup.SetActive(false);
+        nombreMaterial.text = "";
+        funcionMaterial.text = "";
+        importanciaMaterial.text = "";
+        riesgoMaterial.text = "";
+        botonContinuar.gameObject.SetActive(false);
+        imagenMaterial.enabled = false;
 
         gameManager.ContinuarJuego();
     }
@@ -84,9 +145,16 @@ public class PopupManager : MonoBehaviour
     }
 
     //--------------------------------------------------------
-
     public void OcultarPopup()
     {
+        imagenMaterial.enabled = false;
+
+        nombreMaterial.text = "";
+        funcionMaterial.text = "";
+        importanciaMaterial.text = "";
+        riesgoMaterial.text = "";
+
+        botonContinuar.gameObject.SetActive(false);
         panelPopup.SetActive(false);
     }
 }

@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   nombre: "Bolsa con soluci\xF3n"
-  funcion: "Contiene la soluci\xF3n dializante que ingresar\xE1 a la cavidad peritoneal."
-  importancia: "Permite eliminar toxinas y exceso de l\xEDquidos del organismo durante
-    la di\xE1lisis."
-  riesgo: "Si est\xE1 contaminada o da\xF1ada puede provocar una peritonitis."
+  funcion: "Contiene un l\xEDquido especial que entra al abdomen para ayudar a limpiar
+    la sangre durante la di\xE1lisis peritoneal."
+  importancia: "Ayuda a eliminar los desechos y el exceso de l\xEDquido que los ri\xF1ones
+    ya no pueden quitar."
+  riesgo: "Si la bolsa est\xE1 da\xF1ada o contaminada, puede provocar una infecci\xF3n
+    llamada peritonitis."
   imagen: {fileID: 21300000, guid: 1d480c0e008c1734c859f84094c17f71, type: 3}

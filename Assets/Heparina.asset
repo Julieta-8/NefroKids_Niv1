@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   nombre: Heparina
-  funcion: "Medicamento anticoagulante que puede agregarse a la soluci\xF3n dializante
-    para evitar la formaci\xF3n de co\xE1gulos de fibrina dentro del cat\xE9ter."
-  importancia: "Mantiene el cat\xE9ter permeable y favorece el correcto drenaje e
-    ingreso de la soluci\xF3n durante la di\xE1lisis."
-  riesgo: "Si no se utiliza cuando est\xE1 indicada, pueden formarse co\xE1gulos
-    que obstruyan el cat\xE9ter y dificulten el tratamiento."
+  funcion: "Es un medicamento que, cuando el m\xE9dico lo indica, se agrega a la
+    soluci\xF3n para ayudar a que no se formen co\xE1gulos dentro del cat\xE9ter."
+  importancia: "Mantiene el cat\xE9ter libre para que la soluci\xF3n pueda entrar
+    y salir sin problemas."
+  riesgo: "Si se necesita y no se utiliza, el cat\xE9ter puede taparse y dificultar
+    la di\xE1lisis."
   imagen: {fileID: 21300000, guid: 4ea8c5cceab019941a81a30817ed8a71, type: 3}

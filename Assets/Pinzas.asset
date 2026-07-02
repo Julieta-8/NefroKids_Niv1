@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   nombre: Pinza
-  funcion: "Permite cerrar temporalmente la l\xEDnea de di\xE1lisis."
-  importancia: "Evita p\xE9rdidas de l\xEDquido y contaminaci\xF3n."
-  riesgo: "Un mal uso puede producir p\xE9rdidas o entrada de aire."
+  funcion: "Sirve para cerrar temporalmente la l\xEDnea de di\xE1lisis cuando es
+    necesario."
+  importancia: "Evita que salga l\xEDquido o que entre aire al sistema."
+  riesgo: "Si se usa de forma incorrecta, puede haber p\xE9rdidas de l\xEDquido o
+    entrar aire en la l\xEDnea."
   imagen: {fileID: 21300000, guid: a280e1ba588cfd64cbc46fbae1131820, type: 3}

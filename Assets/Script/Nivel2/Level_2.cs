@@ -39,7 +39,7 @@ public class Level_2 : MonoBehaviour
 
     //-------------------------------------------------------
 
-    private void StartLevel()
+    public void StartLevel()
     {
         totalPares = materiales.Length;
 

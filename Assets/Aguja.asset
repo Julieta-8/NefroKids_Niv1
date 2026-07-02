@@ -14,10 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5
   nombre: Aguja
-  funcion: Se utiliza junto con la jeringa para extraer o cargar medicamentos, como
-    la heparina, manteniendo la esterilidad del procedimiento.
-  importancia: "Permite preparar la medicaci\xF3n de forma segura antes de administrarla,
-    reduciendo el riesgo de contaminaci\xF3n."
-  riesgo: "Una aguja contaminada o reutilizada puede provocar infecciones, lesiones
-    o accidentes por punci\xF3n."
+  funcion: Se usa junto con la jeringa para cargar medicamentos de forma limpia y
+    segura.
+  importancia: "Ayuda a preparar la medicaci\xF3n sin que se contamine antes de usarla."
+  riesgo: "Si una aguja ya fue usada o no est\xE1 limpia, puede lastimar a quien
+    la manipula."
   imagen: {fileID: 21300000, guid: 4e068fe3bfb413d44bdf3d37974f1992, type: 3}

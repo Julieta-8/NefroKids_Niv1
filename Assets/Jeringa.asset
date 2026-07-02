@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   nombre: Jeringa
-  funcion: Permite cargar y administrar medicamentos, como la heparina, de forma
-    segura y precisa durante el procedimiento.
-  importancia: Garantiza que la dosis indicada sea administrada correctamente, evitando
-    errores durante el tratamiento.
-  riesgo: "Una jeringa contaminada o utilizada de manera incorrecta puede provocar
-    infecciones o errores en la administraci\xF3n de medicamentos."
+  funcion: Sirve para cargar y agregar medicamentos, como la heparina, de manera
+    precisa y segura.
+  importancia: Permite colocar la cantidad correcta de medicamento para que el tratamiento
+    funcione como debe.
+  riesgo: Si se usa de forma incorrecta, puede causar infecciones o hacer que la
+    dosis no sea la adecuada.
   imagen: {fileID: 21300000, guid: 4e068fe3bfb413d44bdf3d37974f1992, type: 3}
