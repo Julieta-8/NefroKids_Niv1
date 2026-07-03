@@ -4,6 +4,8 @@ public class LevelManager : MonoBehaviour
 {
     private Level_1 level1Manager;
     private Level_2 level2Manager;
+    [SerializeField] private GameObject nivel1;
+    [SerializeField] private GameObject nivel2;
     [SerializeField] private int debugLevel = 2;
 
     private void OnEnable()
@@ -15,12 +17,19 @@ public class LevelManager : MonoBehaviour
     {
         ReactConnection.OnMessageReceived -= ProcessMessage;
     }
+    private void Awake()
+    {
+        level1Manager = nivel1.GetComponentInChildren<Level_1>(true);
+        level2Manager = nivel2.GetComponentInChildren<Level_2>(true);
+    }
 
     private void Start()
     {
+        nivel1.SetActive(false);
+        nivel2.SetActive(false);
 #if UNITY_EDITOR
-        Debug.Log($"[DEBUG] Iniciando automáticamente el nivel {debugLevel}");
-        StartLevel(debugLevel);
+        Debug.Log($"[DEBUG] Iniciando automáticamente el nivel {2}");
+        StartLevel(2);
 #else
         ReactConnection react = FindFirstObjectByType<ReactConnection>();
         react.Log("Iniciando nivel");
@@ -50,37 +59,23 @@ public class LevelManager : MonoBehaviour
 
     private void StartLevel(int level)
     {
-        /*
-        Level_1 level1Manager = FindFirstObjectByType<Level_1>();
-
-        if (level1Manager == null)
-        {
-            Debug.LogError("No se encontró Level_1");
-            return;
-        }
-        */
-
-
-        Level_2 level2Manager = FindFirstObjectByType<Level_2>();
-
-        if (level2Manager == null)
-        {
-            Debug.LogError("No se encontró Level_2");
-            return;
-        }
+        nivel1.SetActive(false);
+        nivel2.SetActive(false);
 
         switch (level)
         {
             case 1:
-                level2Manager.StartLevel();
+                nivel1.SetActive(true);
+                level1Manager.StartLevel();
                 break;
-            /*case 2:
-                level2Manager.StartLevel();
-                break;
-                */
 
+            case 2:
+
+                nivel2.SetActive(true);
+                level2Manager.StartLevel();
+
+                break;
         }
-
     }
 }
 

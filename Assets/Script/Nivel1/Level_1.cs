@@ -164,6 +164,7 @@ public class Level_1 : MonoBehaviour
 
     [Header("REACT CONNECTION")]
     private ReactConnection bridge;
+    private bool isRunning;
 
 
     // ESTADO
@@ -183,6 +184,7 @@ public class Level_1 : MonoBehaviour
 
     public void StartLevel()
     {
+        isRunning = true;
         //REACT
         bridge = FindFirstObjectByType<ReactConnection>();
 
@@ -219,6 +221,10 @@ public class Level_1 : MonoBehaviour
 
     void Update()
     {
+        if (!isRunning)
+        {
+            return;
+        }
         HandleMouseInput();
 
         if (timingPhase1)
