@@ -12,6 +12,8 @@ public class Level_2 : MonoBehaviour
     [Header("Materiales")]
     [SerializeField] private MaterialDialisis[] materiales;
 
+  
+
     [Header("Cartas")]
     [SerializeField] private cardScript[] cartas;
 
@@ -23,6 +25,10 @@ public class Level_2 : MonoBehaviour
     [SerializeField] private GameObject panelFinal;
 
     [SerializeField] private TMP_Text textoFinal;
+
+    public SpriteRenderer backgroundRenderer;
+
+    public Sprite roomBackground;
 
     //-------------------------------------------------------
     // Variables privadas
@@ -41,6 +47,8 @@ public class Level_2 : MonoBehaviour
 
     public void StartLevel()
     {
+        backgroundRenderer.sprite = roomBackground;
+
         totalPares = materiales.Length;
 
         panelFinal.SetActive(false);
@@ -216,6 +224,7 @@ public class Level_2 : MonoBehaviour
 
     void FinalizarJuego()
     {
+        //cartas.SetActive(false);
         bloqueado = true;
 
         panelFinal.SetActive(true);
