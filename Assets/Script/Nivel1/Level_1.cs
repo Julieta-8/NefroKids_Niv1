@@ -183,41 +183,67 @@ public class Level_1 : MonoBehaviour
     private Vector3 draggingOffset;
 
     public void StartLevel()
+{
+    isRunning = true;
+
+    // Reiniciar estado
+    currentStep = Step.Intro;
+
+    vestPlaced = false;
+    maskPlaced = false;
+    soapPlaced = false;
+    towelPlaced = false;
+    waterOpened = false;
+
+    phase1Timer = 0f;
+    phase2Timer = 0f;
+    averageTime = 0f;
+
+    timingPhase1 = false;
+    timingPhase2 = false;
+
+    phase1Stars = 0;
+    phase2Stars = 0;
+
+    IsCompleted = false;
+
+    // Reactivar objetos
+    vestObject.SetActive(true);
+    maskObject.SetActive(true);
+    soapObject.SetActive(true);
+    towelObject.SetActive(true);
+
+    // Volver a la posición inicial
+    vestObject.transform.position = vestStartPosition.position;
+    maskObject.transform.position = maskStartPosition.position;
+    soapObject.transform.position = soapStartPosition.position;
+    towelObject.transform.position = towelStartPosition.position;
+
+    // Resto de tu código...
+    bridge = FindFirstObjectByType<ReactConnection>();
+
+    DatoCuriosoPanel.SetActive(false);
+    DatoCuriosoText.gameObject.SetActive(false);
+
+    backgroundRenderer.sprite = roomBackground;
+    backgroundRenderer_2.enabled = false;
+
+    mannequinRenderer.sprite = mannequinNormal;
+    handsRenderer.sprite = handsNormal;
+
+    phase1Objects.SetActive(true);
+    phase2Objects.SetActive(false);
+
+    congratsPanel?.SetActive(false);
+
+    ShowDialogue();
+
+    if (nextButton != null)
     {
-        isRunning = true;
-        //REACT
-        bridge = FindFirstObjectByType<ReactConnection>();
-
-        DatoCuriosoPanel.SetActive(false);
-        DatoCuriosoText.gameObject.SetActive(false);
-        // FONDO
-        backgroundRenderer.sprite = roomBackground;
-        backgroundRenderer_2.enabled = false;
-
-        // MANIQUI
-        mannequinRenderer.sprite = mannequinNormal;
-
-        // MANOS
-        handsRenderer.sprite = handsNormal;
-
-        // FASES
-        phase1Objects.SetActive(true);
-        phase2Objects.SetActive(false);
-
-        // UI
-        congratsPanel?.SetActive(false);
-
-        currentStep = Step.Intro;
-
-        ShowDialogue();
-
-        // BOTON
-        if (nextButton != null)
-        {
-            nextButton.onClick.RemoveAllListeners();
-            nextButton.onClick.AddListener(OnNextPressed);
-        }
+        nextButton.onClick.RemoveAllListeners();
+        nextButton.onClick.AddListener(OnNextPressed);
     }
+}
 
     void Update()
     {
