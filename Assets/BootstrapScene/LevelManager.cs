@@ -6,7 +6,6 @@ public class LevelManager : MonoBehaviour
     private Level_2 level2Manager;
     [SerializeField] private GameObject nivel1;
     [SerializeField] private GameObject nivel2;
-    [SerializeField] private int debugLevel = 2;
 
     private void OnEnable()
     {
@@ -28,8 +27,8 @@ public class LevelManager : MonoBehaviour
         nivel1.SetActive(false);
         nivel2.SetActive(false);
 #if UNITY_EDITOR
-        Debug.Log($"[DEBUG] Iniciando automáticamente el nivel {1}");
-        StartLevel(1);
+        Debug.Log($"[DEBUG] Iniciando automáticamente el nivel {2}");
+        StartLevel(2);
 #else
         ReactConnection react = FindFirstObjectByType<ReactConnection>();
         react.Log("Iniciando nivel");
