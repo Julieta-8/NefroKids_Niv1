@@ -10,7 +10,7 @@ public class Nivel3 : MonoBehaviour
     //Desinfectar manos y esperar a que se sequen
     //comprimir bolsa (la bolsa que se eligio antes!) para comprobar ausencia de fuga de liquido
     //-Inyecci�n de heparina(atravez de una animacion aparece la heparina, el usuario deber� arrastrar la a la bolsa elejida y una vez est� en el rango de la bolsa, conformaran un nuevo asset, la emzcla entre la bolsa y heparina juntas)
-    
+
     //-limpiar el palo del Andy con alcohol y pa�uelos(se cambia de escenario al Andy, el usuario deber� colocar el alcohol, despues deber� pasar la pañuelo por unos segundos para limiar, mientras se limpia, el andy realiza una animacion donde de apoco cambia de srpite a uno limpio)
 
 
@@ -34,6 +34,9 @@ public class Nivel3 : MonoBehaviour
         Intro,
         ChooseBag,
         BagChosen,
+    
+        DragHands, //ACA SE COMPRIME LA BOLSA
+        HandsDraged// aparece ru
         //Animacion
         DragHeparina,
         HeprinaPlaced,
@@ -44,13 +47,6 @@ public class Nivel3 : MonoBehaviour
         //Animacion que desvanezca la suciedad
         DragTowel,
         TowelPlaced,
-        //Aparicion de bolsas
-        DragBag1,
-        Bag1Placed,
-        DragBag2,
-        Bag2Placed,
-        TakeLit1,
-        TakeLit2,
         Finished
     }
     [Header("================================")]
