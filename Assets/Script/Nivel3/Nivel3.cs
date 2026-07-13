@@ -1,76 +1,58 @@
 ﻿/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 public class Nivel3 : MonoBehaviour
 {
-    //         Preparado del ANDY
-    //riku: se usan dos tipos de bolsas, una con el liquido que va a entrar y otra para la infusion
-    //-Elecci�n entre 3 tipos de bolsas, una limpia, sucia y con liquido(si elije mal re aparece el texto, una vez elejida la correcta, desaparecer las otras dos por medio de una animacion)
-    //Desinfectar manos y esperar a que se sequen
-    //comprimir bolsa (la bolsa que se eligio antes!) para comprobar ausencia de fuga de liquido
-    //-Inyecci�n de heparina(atravez de una animacion aparece la heparina, el usuario deber� arrastrar la a la bolsa elejida y una vez est� en el rango de la bolsa, conformaran un nuevo asset, la emzcla entre la bolsa y heparina juntas)
+    /* Preparado del ANDY
+ riku: se usan dos tipos de bolsas, una con el liquido que va a entrar y otra para la infusion
+     -Elecci�n entre 3 tipos de bolsas, una limpia, sucia y con liquido(si elije mal re aparece el texto, una vez elejida la correcta, desaparecer las otras dos por medio de una animacion)
+     Desinfectar manos y esperar a que se sequen
+     comprimir bolsa(la bolsa que se eligio antes!) para comprobar ausencia de fuga de liquido
+     -Inyecci�n de heparina(atravez de una animacion aparece la heparina, el usuario deber� arrastrar la a la bolsa elejida y una vez est� en el rango de la bolsa, conformaran un nuevo asset, la emzcla entre la bolsa y heparina juntas)
 
-    //-limpiar el palo del Andy con alcohol y pa�uelos(se cambia de escenario al Andy, el usuario deber� colocar el alcohol, despues deber� pasar la pañuelo por unos segundos para limiar, mientras se limpia, el andy realiza una animacion donde de apoco cambia de srpite a uno limpio)
-
-
-    //PROXIME NIVEL 4
-    //-colocar las bolsas(desaparecen el alcohol y la toalla y ahora aparecen las dos bolsas que deben ser arrastradas al andy, estan denominadas bolsa 1 y 2 poer no es necesario respetar el orden al colocarlas)
-
-    //desplegar el cable de la bolsa de drenaje (linea de drenaje) y conectarlo al disco a la izquierda
-    //conectar el cable de la bolsa de infusion
-    //conectar el tapon desinfectante al lado izquierdo del disco
+     -limpiar el palo del Andy con alcohol y pa�uelos(se cambia de escenario al Andy, el usuario deber� colocar el alcohol, despues deber� pasar la pañuelo por unos segundos para limiar, mientras se limpia, el andy realiza una animacion donde de apoco cambia de srpite a uno limpio)
 
 
-    //proximo proximo 5
-    //conexion con el paciente!
-    //cateter conectado al disco
+     PROXIME NIVEL 4
+     -colocar las bolsas(desaparecen el alcohol y la toalla y ahora aparecen las dos bolsas que deben ser arrastradas al andy, estan denominadas bolsa 1 y 2 poer no es necesario respetar el orden al colocarlas)
 
-    //-retirar tapones(el usuario deber� retirar 2 tapones del any, sin orden definido)
+     desplegar el cable de la bolsa de drenaje(linea de drenaje) y conectarlo al disco a la izquierda
+     conectar el cable de la bolsa de infusion
+     conectar el tapon desinfectante al lado izquierdo del disco
 
-    //CHEQUEAR SI SE USA HEPARINAo hay otras opciones
-    public enum Step
+
+     proximo proximo 5
+     conexion con el paciente!
+     cateter conectado al disco
+
+     -retirar tapones(el usuario deber� retirar 2 tapones del any, sin orden definido)
+
+     CHEQUEAR SI SE USA HEPARINAo hay otras opciones*/
+ /*   public enum Step
     {
         Intro,
         ChooseBag,
         BagChosen,
-    
+
         DragHands, //ACA SE COMPRIME LA BOLSA
-        HandsDraged// aparece ru
-        //Animacion
+        HandsDraged,// aparece una
+        
         DragHeparina,
         HeprinaPlaced,
-        //Animacion
-        Intro2,
+        
+
+
         DragAlcohol,
         AlcoholPlaced,
-        //Animacion que desvanezca la suciedad
+        
         DragTowel,
         TowelPlaced,
         Finished
     }
-    [Header("================================")]
-    [Header("FASE 0 - RANDOM")]
-    [Header("================================")]
-    public System.Action OnLevelCompleted;
-    public bool IsCompleted { get; private set; }
 
-    public float Phase1Time => phase1Timer;
-    public float Phase2Time => phase2Timer;
-    public float AverageTime => averageTime;
-
-    public int Phase1Stars => phase1Stars;
-    public int Phase2Stars => phase2Stars;
-
-    private float phase1Timer;
-    private float phase2Timer;
-    private float averageTime;
-
-    private bool timingPhase1;
-    private bool timingPhase2;
-
-    private int phase1Stars;
-    private int phase2Stars;
     [Header("================================")]
     [Header("FASE 1 - BOLSAS")]
     [Header("================================")]
@@ -82,6 +64,17 @@ public class Nivel3 : MonoBehaviour
     public Transform Bag1StartPosition;
     public Transform Bag2StartPosition;
     public Transform Bag3StartPosition;
+
+
+    public GameObject HeparinaObj;
+
+    public SpriteRenderer BolsaRenderer;
+    public Sprite BolsaSola;
+    public Sprite BolsaConHeparina;
+
+    public SpriteRenderer Manos;
+    public Sprite ManosP1;
+    public Sprite ManosP2;
 
 
     [Header("================================")]
@@ -100,8 +93,6 @@ public class Nivel3 : MonoBehaviour
     public GameObject Bolsa1Obj;
     public GameObject Bolsa2Obj;
 
-    public GameObject Tapa1Obj;
-    public GameObject Tapa2Obj;
 
 
     public Transform AlcoholStartPosition;
@@ -114,8 +105,10 @@ public class Nivel3 : MonoBehaviour
     [Header("================================")]
 
     public SpriteRenderer backgroundRenderer;
-
+    public Sprite Mesa;
     public Sprite roomBackground;
+    public Sprite AndyBackground;
+
 
     [Header("================================")]
     [Header("GRUPOS")]
@@ -160,10 +153,10 @@ public class Nivel3 : MonoBehaviour
 
 
 
-    // ESTADO
+    //ESTADO
     public Step currentStep = Step.Intro;
 
-    // FLAGS
+    //FLAGS
     private bool BagChosen = false;
     private bool HeparinaPlaced = false;
 
@@ -172,7 +165,7 @@ public class Nivel3 : MonoBehaviour
     private bool Bag1Placed = false;
     private bool Bag2Placed = false;
 
-    // DRAG
+    //DRAG
     private GameObject draggingObject;
     private Vector3 draggingOffset;
 
@@ -182,14 +175,14 @@ public class Nivel3 : MonoBehaviour
         phase1Objects.SetActive(true);
         phase2Objects.SetActive(false);
 
-        // UI
-        congratsPanel?.SetActive(false);
+        
+       congratsPanel?.SetActive(false);
 
         currentStep = Step.Intro;
 
         ShowDialogue();
 
-        // BOTON
+        
         if (nextButton != null)
         {
             nextButton.onClick.RemoveAllListeners();
@@ -199,17 +192,13 @@ public class Nivel3 : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+   // Update is called once per frame;
     void Update()
     {
 
         HandleMouseInput();
 
-        if (timingPhase1)
-            phase1Timer += Time.deltaTime;
-
-        if (timingPhase2)
-            phase2Timer += Time.deltaTime;
+       
 
     }
     void OnNextPressed()
@@ -226,12 +215,16 @@ public class Nivel3 : MonoBehaviour
 
                 break;
 
-            //case Step.StartTimer
-
 
             case Step.BagChosen:
-                phase1Timer = 0;
-                timingPhase1 = true;
+
+                currentStep = Step.DragHands;
+
+                break;
+
+            case Step.HandsDraged:
+
+            case Step.HandsDraged:
 
                 currentStep = Step.DragHeparina;
 
@@ -240,23 +233,18 @@ public class Nivel3 : MonoBehaviour
             case Step.HeprinaPlaced:
 
 
-                //-----------------------ETAPA 2 INICIO---------------------------
+              //  -----------------------ETAPA 2 INICIO-------------------------- -
 
 
                 StartPhase2();
 
-                currentStep = Step.Phase2Intro;
+                currentStep = Step.DragAlcohol;
 
                 ShowDialogue();
 
                 break;
 
-            case Step.Phase2Intro:
-                phase2Timer = 0;
-                timingPhase2 = true;
-                currentStep = Step.DragAlcohol;
-
-                break;
+     
 
             case Step.AlcoholPlaced:
 
@@ -266,22 +254,7 @@ public class Nivel3 : MonoBehaviour
 
             case Step.TowelPlaced:
 
-                currentStep = Step.DragBag1;
 
-                break;
-            case Step.Bag1Placed:
-
-                currentStep = Step.DragBag2;
-
-                break;
-
-            case Step.TakeLit1:
-
-                currentStep = Step.TakeLit2;
-
-                break;
-
-            case Step.TakeLit2:
 
                 currentStep = Step.Finished;
 
@@ -304,8 +277,6 @@ public class Nivel3 : MonoBehaviour
         UpdateInstruction();
 
 
-        timingPhase1 = false;
-        timingPhase2 = false;
 
     }
     void HideDialogue()
@@ -315,6 +286,69 @@ public class Nivel3 : MonoBehaviour
         rikuRenderer.enabled = false;
         nextButton.gameObject.SetActive(false);
 
+    }
+   // ----------------------------------------FASE 1--------------------------------------
+    void PlaceHeparina()
+    {
+        if (HeparinaPlaced) return;
+
+        HeparinaPlaced = true;
+
+        HeprinaObj.SetActive(false);
+
+        BolsaRenderer.sprite =
+            BolsaConHeparina;
+
+        currentStep = Step.HeprinaPlaced;
+
+        ShowDialogue();
+    }
+
+ //   ----------------------------------------FASE 2--------------------------------------
+    void PlaceAlcohol()
+    {
+        if (AlcoholPlaced) return;
+
+        AlcoholPlaced = true;
+
+        AlcoholObj.SetActive(false);
+
+        AndyRenderer.sprite =
+            AndySucio;
+
+        currentStep = Step.AlcoholPlaced;
+
+        ShowDialogue();
+    }
+    void PlaceTowel()
+    {
+        if (towelPlaced) return;
+
+        towelPlaced = true;
+
+        towelObject.SetActive(false);
+
+        AndyRenderer.sprite =
+            AndyLimpio;
+
+        currentStep = Step.TowelPlaced;
+
+        ShowDialogue();
+    }
+    void ToggleRikuExpression()
+    {
+        if (rikuRenderer == null) return;
+
+        rikuNeutralState = !rikuNeutralState;
+
+        if (rikuNeutralState)
+        {
+            rikuRenderer.sprite = rikuNeutral;
+        }
+        else
+        {
+            rikuRenderer.sprite = rikuCurious;
+        }
     }
 
     //------------------------------------------------------------------------------------
@@ -346,6 +380,15 @@ public class Nivel3 : MonoBehaviour
                 instructionText.text =
                     "�Muy bien! Ahora continuemos.";
 
+                break;
+            case Step.DragHands:
+                instructionText.text =
+                    "Arrastra las manos para detectar si hya agujeros.";
+                HideDialogue();
+                break;
+            case Step.HandsDraged:
+                "Perfecto";
+                HideDialogue();
                 break;
 
             case Step.DragHeparina:
@@ -389,40 +432,7 @@ public class Nivel3 : MonoBehaviour
                     "Coloquemos las bolsas";
 
                 break;
-            /////////////
-
-            case Step.DragBag1:
-
-                instructionText.text =
-                    "LLeva la bolsa al andy";
-
-                break;
-            case Step.DragBag2:
-
-                instructionText.text =
-                    "�Muy bien! Ahora la segunda.";
-                HideDialogue();
-                break;
-
-            ////////////////
-            case Step.TakeLit1 |;
-
-                instructionText.text =
-                    "Saca uno de los tapones";
-                HideDialogue();
-                break;
-
-            case Step.TakeLit2:
-
-                instructionText.text =
-                    "�Excelente trabajo! Terminaste correctamente.";
-
-                break;
-
-
-
-
-
+            ///////////
 
 
 
@@ -441,23 +451,12 @@ public class Nivel3 : MonoBehaviour
         OnLevelCompleted?.Invoke();
         congratsPanel?.SetActive(true);
 
-        yield return new WaitForSeconds(2f);
 
-        instructionText.text =
-       "Tiempo fase 1: " + phase1Timer.ToString("F1") + "s\n" +
-      "Tiempo fase 2: " + phase2Timer.ToString("F1") + "s\n" +
-       "Promedio: " + averageTime.ToString("F1") + "s";
+
         ResultData result = new ResultData
         {
-            levelId = 1,
-            completed = true,
-
-            phase1Time = phase1Timer,
-            phase2Time = phase2Timer,
-            averageTime = averageTime,
-
-            phase1Stars = Phase1Stars,
-            phase2Stars = Phase2Stars
+            levelId = 3,
+         
         };
         React_Connection bridge = FindObjectOfType<React_Connection>();
         if (bridge != null)
