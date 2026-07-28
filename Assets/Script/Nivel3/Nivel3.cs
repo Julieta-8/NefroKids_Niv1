@@ -1,4 +1,4 @@
-﻿/*using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,83 +6,64 @@ using UnityEngine.SceneManagement;
 using TMPro;
 public class Nivel3 : MonoBehaviour
 {
-    /* Preparado del ANDY
- riku: se usan dos tipos de bolsas, una con el liquido que va a entrar y otra para la infusion
-     -Elecci�n entre 3 tipos de bolsas, una limpia, sucia y con liquido(si elije mal re aparece el texto, una vez elejida la correcta, desaparecer las otras dos por medio de una animacion)
-     Desinfectar manos y esperar a que se sequen
-     comprimir bolsa(la bolsa que se eligio antes!) para comprobar ausencia de fuga de liquido
-     -Inyecci�n de heparina(atravez de una animacion aparece la heparina, el usuario deber� arrastrar la a la bolsa elejida y una vez est� en el rango de la bolsa, conformaran un nuevo asset, la emzcla entre la bolsa y heparina juntas)
+    // Preparado del ANDY
+    //riku: se usan dos tipos de bolsas, una con el liquido que va a entrar y otra para la infusion
+    //   -Elecci�n entre 3 tipos de bolsas, una limpia, sucia y con liquido(si elije mal re aparece el texto, una vez elejida la correcta, desaparecer las otras dos por medio de una animacion)
+    // Desinfectar manos y esperar a que se sequen
+    //   comprimir bolsa(la bolsa que se eligio antes!) para comprobar ausencia de fuga de liquido
 
-     -limpiar el palo del Andy con alcohol y pa�uelos(se cambia de escenario al Andy, el usuario deber� colocar el alcohol, despues deber� pasar la pañuelo por unos segundos para limiar, mientras se limpia, el andy realiza una animacion donde de apoco cambia de srpite a uno limpio)
+    //     -limpiar el palo del Andy con alcohol y pa�uelos(se cambia de escenario al Andy, el usuario deber� colocar el alcohol, despues deber� pasar la pañuelo por unos segundos para limiar, mientras se limpia, el andy realiza una animacion donde de apoco cambia de srpite a uno limpio)
 
-
-     PROXIME NIVEL 4
-     -colocar las bolsas(desaparecen el alcohol y la toalla y ahora aparecen las dos bolsas que deben ser arrastradas al andy, estan denominadas bolsa 1 y 2 poer no es necesario respetar el orden al colocarlas)
-
-     desplegar el cable de la bolsa de drenaje(linea de drenaje) y conectarlo al disco a la izquierda
-     conectar el cable de la bolsa de infusion
-     conectar el tapon desinfectante al lado izquierdo del disco
-
-
-     proximo proximo 5
-     conexion con el paciente!
-     cateter conectado al disco
-
-     -retirar tapones(el usuario deber� retirar 2 tapones del any, sin orden definido)
-
-     CHEQUEAR SI SE USA HEPARINAo hay otras opciones*/
- /*   public enum Step
+    public enum Step
     {
         Intro,
+
         ChooseBag,
-        BagChosen,
 
-        DragHands, //ACA SE COMPRIME LA BOLSA
-        HandsDraged,// aparece una
-        
-        DragHeparina,
-        HeprinaPlaced,
-        
+        BagZoom,
 
+        InspectBag,
+
+        WaitingAnswer,
+
+        BagVerified,
+
+        Phase2Intro,
 
         DragAlcohol,
+
         AlcoholPlaced,
-        
+
         DragTowel,
+
         TowelPlaced,
+
         Finished
     }
 
     [Header("================================")]
     [Header("FASE 1 - BOLSAS")]
     [Header("================================")]
+    public Bag bag1;
+    public Bag bag2;
+    public Bag bag3;
 
-    public GameObject Bag1;
-    public GameObject Bag3;
-    public GameObject Bag2;
-
-    public Transform Bag1StartPosition;
-    public Transform Bag2StartPosition;
-    public Transform Bag3StartPosition;
+    public Transform bagZoomPosition;
 
 
-    public GameObject HeparinaObj;
-
-    public SpriteRenderer BolsaRenderer;
-    public Sprite BolsaSola;
-    public Sprite BolsaConHeparina;
-
-    public SpriteRenderer Manos;
-    public Sprite ManosP1;
-    public Sprite ManosP2;
-
+    public Sprite bagSimpleSprite;
+    public Sprite bagDetailedSprite;
+    private bool fechaChecked;
+    private bool volumenChecked;
+    private bool glucosaChecked;
+    
 
     [Header("================================")]
     [Header("FASE 2 - ANDY")]
     [Header("================================")]
 
     public SpriteRenderer AndyRenderer;
-
+    public Sprite[] wetAnimation;
     public Sprite AndyLimpio;
     public Sprite AndySucio;
 
@@ -134,7 +115,15 @@ public class Nivel3 : MonoBehaviour
 
 
     public GameObject DatoCuriosoPanel;
+    [Header("INSPECCIÓN")]
 
+    [SerializeField] TMP_Text fechaText;
+
+    [SerializeField] TMP_Text volumenText;
+
+    [SerializeField] TMP_Text glucosaText;
+
+    [SerializeField] GameObject inspectionPanel;
 
     [Header("RIKU")]
     public SpriteRenderer rikuRenderer;
@@ -162,27 +151,52 @@ public class Nivel3 : MonoBehaviour
 
     private bool AlcoholPlaced = false;
     private bool towelPlaced = false;
-    private bool Bag1Placed = false;
-    private bool Bag2Placed = false;
+
 
     //DRAG
     private GameObject draggingObject;
     private Vector3 draggingOffset;
+    Bag selectedBag;
 
+    void SelectBag(Bag bag)
+    {
+        if (currentStep != Step.ChooseBag)
+            return;
+
+        selectedBag = bag;
+
+        StartCoroutine(ZoomBagRoutine());
+       
+    }
+   
     void Start()
     {
+        void GenerateBags()
+        {
+            int correct =
+                Random.Range(0, 3);
+
+            bag1.bagData =
+                GenerateRandomBag(correct == 0);
+
+            bag2.bagData =
+                GenerateRandomBag(correct == 1);
+
+            bag3.bagData =
+                GenerateRandomBag(correct == 2);
+        }
 
         phase1Objects.SetActive(true);
         phase2Objects.SetActive(false);
 
-        
-       congratsPanel?.SetActive(false);
+
+        congratsPanel?.SetActive(false);
 
         currentStep = Step.Intro;
 
         ShowDialogue();
 
-        
+
         if (nextButton != null)
         {
             nextButton.onClick.RemoveAllListeners();
@@ -192,13 +206,13 @@ public class Nivel3 : MonoBehaviour
 
     }
 
-   // Update is called once per frame;
+    // Update is called once per frame;
     void Update()
     {
 
         HandleMouseInput();
 
-       
+
 
     }
     void OnNextPressed()
@@ -212,60 +226,74 @@ public class Nivel3 : MonoBehaviour
             case Step.Intro:
 
                 currentStep = Step.ChooseBag;
-
                 break;
 
-
-            case Step.BagChosen:
-
-                currentStep = Step.DragHands;
-
-                break;
-
-            case Step.HandsDraged:
-
-            case Step.HandsDraged:
-
-                currentStep = Step.DragHeparina;
-
-                break;
-
-            case Step.HeprinaPlaced:
-
-
-              //  -----------------------ETAPA 2 INICIO-------------------------- -
-
+            case Step.BagVerified:
 
                 StartPhase2();
 
-                currentStep = Step.DragAlcohol;
+                currentStep = Step.Phase2Intro;
 
                 ShowDialogue();
-
                 break;
 
-     
+            case Step.Phase2Intro:
+
+                currentStep = Step.DragAlcohol;
+                break;
 
             case Step.AlcoholPlaced:
 
                 currentStep = Step.DragTowel;
-
                 break;
 
             case Step.TowelPlaced:
-
-
 
                 currentStep = Step.Finished;
 
                 ShowDialogue();
 
-                StartCoroutine(FinishRoutine());
+               // StartCoroutine(FinishRoutine());
 
                 break;
         }
     }
 
+    void HandleMouseInput()
+    {
+        switch (currentStep)
+        {
+            case Step.ChooseBag:
+                HandleBagSelection();
+                break;
+
+            case Step.DragAlcohol:
+            case Step.DragTowel:
+                HandleDragInput();
+                break;
+        }
+    }
+    void HandleBagSelection()
+    {
+        if (!Input.GetMouseButtonDown(0))
+            return;
+
+        Vector2 mouse =
+            Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        Collider2D hit =
+            Physics2D.OverlapPoint(mouse);
+
+        if (hit == null)
+            return;
+
+        Bag bag = hit.GetComponent<Bag>();
+
+        if (bag != null)
+        {
+            SelectBag(bag);
+        }
+    }
 
 
     void ShowDialogue()
@@ -287,49 +315,383 @@ public class Nivel3 : MonoBehaviour
         nextButton.gameObject.SetActive(false);
 
     }
-   // ----------------------------------------FASE 1--------------------------------------
-    void PlaceHeparina()
+    IEnumerator ZoomBagRoutine()
     {
-        if (HeparinaPlaced) return;
+        currentStep = Step.BagZoom;
 
-        HeparinaPlaced = true;
+        yield return StartCoroutine(AnimateBagZoom());
 
-        HeprinaObj.SetActive(false);
+        ShowDetailedBag();
 
-        BolsaRenderer.sprite =
-            BolsaConHeparina;
-
-        currentStep = Step.HeprinaPlaced;
+        currentStep = Step.InspectBag;
 
         ShowDialogue();
     }
-
- //   ----------------------------------------FASE 2--------------------------------------
-    void PlaceAlcohol()
+    IEnumerator AnimateBagZoom()
     {
-        if (AlcoholPlaced) return;
+        Vector3 startPos = selectedBag.transform.position;
+        Vector3 endPos = bagZoomPosition.position;
 
+        Vector3 startScale = selectedBag.transform.localScale;
+        Vector3 endScale = startScale * 2.5f;
+
+        float t = 0;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime;
+
+            selectedBag.transform.position =
+                Vector3.Lerp(startPos, endPos, t);
+
+            selectedBag.transform.localScale =
+                Vector3.Lerp(startScale, endScale, t);
+
+            yield return null;
+        }
+    }
+    void ShowDetailedBag()
+    {
+        selectedBag.SpriteRenderer.sprite =
+        bagDetailedSprite;
+        fechaChecked = false;
+        volumenChecked = false;
+        glucosaChecked = false;
+
+        // actualizar textos
+
+        fechaText.text =
+            selectedBag.bagData.fecha;
+
+        volumenText.text =
+            selectedBag.bagData.volumen + " ml";
+
+        glucosaText.text =
+            selectedBag.bagData.glucosa + "%";
+
+        inspectionPanel.SetActive(true);
+    }
+    void HandleDragging()
+    {
+        if (draggingObject == null)
+            return;
+
+        if (!Input.GetMouseButton(0))
+            return;
+
+        Vector3 mouse =
+            Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        mouse.z = 0;
+
+        draggingObject.transform.position =
+            mouse + draggingOffset;
+    }
+    void BeginDrag(GameObject go)
+    {
+        draggingObject = go;
+
+        Vector3 mouse =
+            Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        mouse.z = 0;
+
+        draggingOffset =
+            go.transform.position - mouse;
+    }
+    GameObject GetCurrentDraggable()
+    {
+        switch (currentStep)
+        {
+            case Step.DragAlcohol:
+
+                return AlcoholObj;
+
+            case Step.DragTowel:
+
+                return towelObject;
+        }
+
+        return null;
+    }
+    Collider2D GetCurrentDropZone()
+    {
+        switch (currentStep)
+        {
+            case Step.DragAlcohol:
+
+            case Step.DragTowel:
+
+                return AndyDropZone;
+        }
+
+        return null;
+    }
+    void ReturnObject(GameObject go)
+    {
+        if (go == AlcoholObj)
+        {
+            go.transform.position =
+                AlcoholStartPosition.position;
+        }
+
+        if (go == towelObject)
+        {
+            go.transform.position =
+                towelStartPosition.position;
+        }
+    }
+    IEnumerator FadeAlcohol()
+    {
+        Color c = AndyRenderer.color;
+
+        while (c.a > 0)
+        {
+            c.a -= Time.deltaTime * 0.6f;
+
+            AndyRenderer.color = c;
+
+            yield return null;
+        }
+
+        AndyRenderer.color = Color.white;
+    }
+    void ShowWrongAnswerMessage()
+    {
+        instructionText.text =
+            "Esa respuesta no es correcta. Revisá nuevamente la fecha, el volumen y la concentración de glucosa.";
+
+        ShowDialogue();
+    }
+    void StartPhase2()
+    {
+        phase1Objects.SetActive(false);
+
+        phase2Objects.SetActive(true);
+
+        backgroundRenderer.sprite =
+            AndyBackground;
+
+        currentStep = Step.Phase2Intro;
+    }
+    void ResetInspection()
+    {
+        fechaChecked = false;
+
+        volumenChecked = false;
+
+        glucosaChecked = false;
+
+        inspectionPanel.SetActive(false);
+    }
+    public void AnswerYes()
+    {
+        ValidateAnswer(true);
+    }
+
+    public void AnswerNo()
+    {
+        ValidateAnswer(false);
+    }
+    void ValidateAnswer(bool answer)
+    {
+        bool correct =
+            selectedBag.bagData.IsCorrect();
+
+        if (answer == correct)
+        {
+            currentStep = Step.BagVerified;
+
+            ShowDialogue();
+        }
+        else
+        {
+            ShowWrongAnswerMessage();
+
+            currentStep = Step.InspectBag;
+        }
+    }
+    void HandleDragInput()
+    {
+        HandleBeginDrag();
+
+        HandleDragging();
+
+        HandleRelease();
+    }
+    void HandleBeginDrag()
+    {
+        if (!Input.GetMouseButtonDown(0))
+            return;
+
+        Vector2 mouse =
+            Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        Collider2D hit =
+            Physics2D.OverlapPoint(mouse);
+
+        if (hit == null)
+            return;
+
+        GameObject draggable =
+            GetCurrentDraggable();
+
+        if (hit.gameObject == draggable)
+        {
+            BeginDrag(draggable);
+        }
+    }
+    void HandleRelease()
+    {
+        if (draggingObject == null)
+            return;
+
+        if (!Input.GetMouseButtonUp(0))
+            return;
+
+        TryDrop(draggingObject);
+
+        draggingObject = null;
+    }
+    void TryDrop(GameObject go)
+    {
+        Collider2D zone =
+            GetCurrentDropZone();
+
+        if (zone == null)
+            return;
+
+        if (!zone.OverlapPoint(go.transform.position))
+        {
+            ReturnObject(go);
+            return;
+        }
+
+        switch (currentStep)
+        {
+            case Step.DragAlcohol:
+
+                StartCoroutine(PlaceAlcohol());
+
+                break;
+
+            case Step.DragTowel:
+
+                StartCoroutine(PlaceTowel());
+
+                break;
+        }
+    }
+    BagData GenerateRandomBag(bool correct)
+    {
+        BagData bag = new BagData();
+
+        if (correct)
+        {
+            // Bolsa completamente correcta
+            bag.fecha = "10/2028";
+            bag.volumen = 2000;
+            bag.glucosa = 1.5f;
+            bag.tieneFugas = false;
+            bag.estaVencida = false;
+        }
+        else
+        {
+            // Primero generamos una bolsa correcta
+            bag.fecha = "10/2028";
+            bag.volumen = 2000;
+            bag.glucosa = 1.5f;
+            bag.tieneFugas = false;
+            bag.estaVencida = false;
+
+            // Después le agregamos UN error aleatorio
+            int error = Random.Range(0, 4);
+
+            switch (error)
+            {
+                case 0:
+                    bag.estaVencida = true;
+                    bag.fecha = "05/2023";
+                    break;
+
+                case 1:
+                    bag.volumen = 1000;
+                    break;
+
+                case 2:
+                    bag.glucosa = 2.5f;
+                    break;
+
+                case 3:
+                    bag.tieneFugas = true;
+                    break;
+            }
+        }
+
+        return bag;
+    }
+    // ----------------------------------------FASE 1--------------------------------------
+
+
+    void RevisarBolsa()
+    {
+        if (fechaChecked &&
+           volumenChecked &&
+           glucosaChecked)
+        {
+            currentStep = Step.WaitingAnswer;
+            ShowDialogue();
+        }
+    }
+    public void CheckFecha()
+    {
+        fechaChecked = true;
+
+        RevisarBolsa();
+    }
+    public void CheckVolumen()
+    {
+        volumenChecked = true;
+
+        RevisarBolsa();
+    }
+    public void CheckGlucosa()
+    {
+        glucosaChecked = true;
+
+        RevisarBolsa();
+    }
+    //   ----------------------------------------FASE 2--------------------------------------
+    IEnumerator WetAndyAnimation()
+    {
+        foreach (Sprite s in wetAnimation)
+        {
+            AndyRenderer.sprite = s;
+
+            yield return new WaitForSeconds(0.15f);
+        }
+    }
+    IEnumerator PlaceAlcohol()
+    {
         AlcoholPlaced = true;
 
         AlcoholObj.SetActive(false);
 
-        AndyRenderer.sprite =
-            AndySucio;
+        yield return StartCoroutine(WetAndyAnimation());
 
         currentStep = Step.AlcoholPlaced;
 
         ShowDialogue();
     }
-    void PlaceTowel()
+    IEnumerator PlaceTowel()
     {
-        if (towelPlaced) return;
-
         towelPlaced = true;
 
         towelObject.SetActive(false);
 
-        AndyRenderer.sprite =
-            AndyLimpio;
+        yield return StartCoroutine(FadeAlcohol());
+
+        AndyRenderer.sprite = AndyLimpio;
 
         currentStep = Step.TowelPlaced;
 
@@ -374,36 +736,13 @@ public class Nivel3 : MonoBehaviour
                     "Eleg� la bolsa correcta";
                 HideDialogue();
                 break;
-
-            case Step.BagChosen:
-
-                instructionText.text =
-                    "�Muy bien! Ahora continuemos.";
-
-                break;
-            case Step.DragHands:
-                instructionText.text =
-                    "Arrastra las manos para detectar si hya agujeros.";
-                HideDialogue();
-                break;
-            case Step.HandsDraged:
-                "Perfecto";
-                HideDialogue();
-                break;
-
-            case Step.DragHeparina:
+            case Step.InspectBag:
 
                 instructionText.text =
-                    "Ahora coloca la heparina.";
-                HideDialogue();
-                break;
-
-            case Step.HeprinaPlaced:
-
-                instructionText.text =
-                    "�Excelente! Ahora vamos al ANDY.";
+                "Revisá cuidadosamente la información de la bolsa.";
 
                 break;
+
 
             case Step.Phase2Intro:
 
@@ -444,8 +783,8 @@ public class Nivel3 : MonoBehaviour
                 break;
         }
     }
-
-    IEnumerator FinishRoutine()
+}
+   /* IEnumerator FinishRoutine()
     {
         IsCompleted = true;
         OnLevelCompleted?.Invoke();
