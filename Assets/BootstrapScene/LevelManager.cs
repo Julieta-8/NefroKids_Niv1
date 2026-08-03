@@ -4,8 +4,11 @@ public class LevelManager : MonoBehaviour
 {
     private Level_1 level1Manager;
     private Level_2 level2Manager;
+    private Nivel3 level3Manager;
+
     [SerializeField] private GameObject nivel1;
     [SerializeField] private GameObject nivel2;
+    [SerializeField] private GameObject nivel3;
 
     private void OnEnable()
     {
@@ -20,15 +23,18 @@ public class LevelManager : MonoBehaviour
     {
         level1Manager = nivel1.GetComponentInChildren<Level_1>(true);
         level2Manager = nivel2.GetComponentInChildren<Level_2>(true);
+        level3Manager = nivel3.GetComponentInChildren<Nivel3>(true);
+
     }
 
     private void Start()
     {
         nivel1.SetActive(false);
         nivel2.SetActive(false);
+        nivel3.SetActive(false);
 #if UNITY_EDITOR
-        Debug.Log($"[DEBUG] Iniciando automáticamente el nivel {2}");
-        StartLevel(2);
+        Debug.Log($"[DEBUG] Iniciando automáticamente el nivel {3}");
+        StartLevel(3);
 #else
         ReactConnection react = FindFirstObjectByType<ReactConnection>();
         react.Log("Iniciando nivel");
@@ -60,6 +66,7 @@ public class LevelManager : MonoBehaviour
     {
         nivel1.SetActive(false);
         nivel2.SetActive(false);
+        nivel3.SetActive(false);
 
         switch (level)
         {
@@ -72,6 +79,12 @@ public class LevelManager : MonoBehaviour
 
                 nivel2.SetActive(true);
                 level2Manager.StartLevel();
+
+                break;
+            case 3:
+
+                nivel3.SetActive(true);
+                level3Manager.StartLevel();
 
                 break;
         }

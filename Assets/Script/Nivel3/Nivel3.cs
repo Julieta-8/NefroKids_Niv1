@@ -97,6 +97,7 @@ public class Nivel3 : MonoBehaviour
 
     public GameObject phase1Objects;
     public GameObject phase2Objects;
+    public GameObject phase3Objects;
 
     [Header("================================")]
     [Header("UI")]
@@ -110,11 +111,11 @@ public class Nivel3 : MonoBehaviour
 
     public GameObject congratsPanel;
 
+    [SerializeField] Button yesButton;
 
-    public TMP_Text DatoCuriosoText;
+    [SerializeField] Button noButton;
 
 
-    public GameObject DatoCuriosoPanel;
     [Header("INSPECCIÓN")]
 
     [SerializeField] TMP_Text fechaText;
@@ -133,7 +134,6 @@ public class Nivel3 : MonoBehaviour
 
     private bool rikuNeutralState = true;
 
-    public Sprite CabezarikuCurious;
 
 
     [Header("ESCENA SIGUIENTE")]
@@ -169,7 +169,7 @@ public class Nivel3 : MonoBehaviour
        
     }
    
-    void Start()
+  public void StartLevel()
     {
         void GenerateBags()
         {
