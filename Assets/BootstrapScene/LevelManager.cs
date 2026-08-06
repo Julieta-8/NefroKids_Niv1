@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -24,6 +25,7 @@ public class LevelManager : MonoBehaviour
         level1Manager = nivel1.GetComponentInChildren<Level_1>(true);
         level2Manager = nivel2.GetComponentInChildren<Level_2>(true);
         level4Manager = nivel4.GetComponentInChildren<Level_4>(true);
+        Debug.Log(level4Manager);
     }
 
     private void Start()
