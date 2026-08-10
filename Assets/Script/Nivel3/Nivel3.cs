@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 public class Nivel3 : MonoBehaviour
 {
     // Preparado del ANDY
@@ -70,9 +71,6 @@ public class Nivel3 : MonoBehaviour
 
     public GameObject AlcoholObj;
     public GameObject towelObject;
-
-    public GameObject Bolsa1Obj;
-    public GameObject Bolsa2Obj;
 
 
 
@@ -168,31 +166,46 @@ public class Nivel3 : MonoBehaviour
         StartCoroutine(ZoomBagRoutine());
        
     }
-   
-  public void StartLevel()
+    void GenerateBags()
     {
-        void GenerateBags()
-        {
-            int correct =
-                Random.Range(0, 3);
+        int correct =
+            UnityEngine.Random.Range(0, 3);
 
-            bag1.bagData =
-                GenerateRandomBag(correct == 0);
+        bag1.bagData =
+            GenerateRandomBag(correct == 0);
 
-            bag2.bagData =
-                GenerateRandomBag(correct == 1);
+        bag2.bagData =
+            GenerateRandomBag(correct == 1);
 
-            bag3.bagData =
-                GenerateRandomBag(correct == 2);
-        }
+        bag3.bagData =
+            GenerateRandomBag(correct == 2);
+    }
+    public void StartLevel()
+    {
+        GenerateBags();
+
 
         phase1Objects.SetActive(true);
         phase2Objects.SetActive(false);
 
+        fechaText.gameObject.SetActive(false);
+
+         volumenText.gameObject.SetActive(false);
+
+         glucosaText.gameObject.SetActive(false);
 
         congratsPanel?.SetActive(false);
 
         currentStep = Step.Intro;
+
+
+        yesButton.onClick.RemoveAllListeners();
+        yesButton.onClick.AddListener(AnswerYes);
+
+        noButton.onClick.RemoveAllListeners();
+        noButton.onClick.AddListener(AnswerNo);
+
+
 
         ShowDialogue();
 
@@ -205,6 +218,7 @@ public class Nivel3 : MonoBehaviour
 
 
     }
+ 
 
     // Update is called once per frame;
     void Update()
@@ -227,7 +241,18 @@ public class Nivel3 : MonoBehaviour
 
                 currentStep = Step.ChooseBag;
                 break;
+            case Step.ChooseBag:
 
+                currentStep = Step.InspectBag;
+                break;
+            case Step.InspectBag:
+
+                currentStep = Step.WaitingAnswer;
+                break;
+            case Step.WaitingAnswer:
+
+                currentStep = Step.BagVerified;
+                break;
             case Step.BagVerified:
 
                 StartPhase2();
@@ -317,11 +342,27 @@ public class Nivel3 : MonoBehaviour
     }
     IEnumerator ZoomBagRoutine()
     {
+        fechaText.gameObject.SetActive(true);
+
+        volumenText.gameObject.SetActive(true);
+
+        glucosaText.gameObject.SetActive(true);
+
+        phase2Objects.SetActive(false);
+
+        phase3Objects.SetActive(true);
         currentStep = Step.BagZoom;
 
         yield return StartCoroutine(AnimateBagZoom());
 
         ShowDetailedBag();
+        nextButton.gameObject.SetActive(false);
+
+        yesButton.gameObject.SetActive(true);
+        noButton.gameObject.SetActive(true);
+
+        inspectionPanel.SetActive(true);
+
 
         currentStep = Step.InspectBag;
 
@@ -466,6 +507,7 @@ public class Nivel3 : MonoBehaviour
     void StartPhase2()
     {
         phase1Objects.SetActive(false);
+        phase3Objects.SetActive(false);
 
         phase2Objects.SetActive(true);
 
@@ -605,7 +647,7 @@ public class Nivel3 : MonoBehaviour
             bag.estaVencida = false;
 
             // Después le agregamos UN error aleatorio
-            int error = Random.Range(0, 4);
+            int error = UnityEngine.Random.Range(0, 4);
 
             switch (error)
             {
