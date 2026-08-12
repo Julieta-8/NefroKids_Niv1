@@ -15,7 +15,7 @@ public class Alcohol : MonoBehaviour
     public Sprite manosMojadas;
     public Sprite manosFrotadas;
     public SpriteRenderer manosRenderer;
-
+    private bool terminoParte = false;
     public TMP_Text Textalc;
 
     void OnMouseDown()
@@ -81,8 +81,9 @@ public class Alcohol : MonoBehaviour
         {
             tiempoSecado += Time.deltaTime;
 
-            if (tiempoSecado >= 5f)
+            if (tiempoSecado >= 5f && !terminoParte)
             {
+                terminoParte = true;
                 level4.MostrarBotonSiguiente();
             }
         }

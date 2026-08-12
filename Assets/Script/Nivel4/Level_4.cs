@@ -4,35 +4,25 @@ public class Level_4 : MonoBehaviour
 {
     public GameObject Alcohol;
     public GameObject Bolsa;
+    public GameObject phase2;
     public GameObject BotonSiguiente;
 
     public void StartLevel()
     {
         Alcohol.SetActive(true);
-        Bolsa.SetActive(false);
-
-        // El botón empieza oculto
+        phase2.SetActive(false);
         BotonSiguiente.SetActive(false);
     }
 
-    // Esta función pasa de Alcohol a Bolsa
     public void PasarABolsa()
     {
         Alcohol.SetActive(false);
-        Bolsa.SetActive(true);
-
-        // Ocultar el botón
+        phase2.SetActive(true);
         BotonSiguiente.SetActive(false);
     }
 
-    // Mostrar el botón cuando termina Alcohol
     public void MostrarBotonSiguiente()
     {
         BotonSiguiente.SetActive(true);
-    }
-
-    void Update()
-    {
-
     }
 }

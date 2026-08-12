@@ -500,7 +500,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 44342239}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1653927068}
+        m_TargetAssemblyTypeName: Level_4, Assembly-CSharp
+        m_MethodName: PasarABolsa
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &44342239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3211,54 +3223,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45a57b5a119e0847a2eff4dabeec571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bag1: {fileID: 0}
-  bag2: {fileID: 0}
-  bag3: {fileID: 0}
-  bagZoomPosition: {fileID: 0}
-  bagSimpleSprite: {fileID: 0}
-  bagDetailedSprite: {fileID: 0}
-  fechaChecked: 0
-  volumenChecked: 0
-  glucosaChecked: 0
-  AndyRenderer: {fileID: 0}
-  wetAnimation: []
-  AndyLimpio: {fileID: 0}
-  AndySucio: {fileID: 0}
-  AlcoholObj: {fileID: 0}
-  towelObject: {fileID: 0}
-  AlcoholStartPosition: {fileID: 0}
-  towelStartPosition: {fileID: 0}
-  AndyDropZone: {fileID: 0}
-  backgroundRenderer: {fileID: 0}
-  Mesa: {fileID: 0}
-  roomBackground: {fileID: 0}
-  AndyBackground: {fileID: 0}
-  phase1Objects: {fileID: 0}
-  phase2Objects: {fileID: 0}
-  phase3Objects: {fileID: 0}
-  instructionText: {fileID: 0}
-  nextButton: {fileID: 0}
-  dialoguePanel: {fileID: 0}
-  congratsPanel: {fileID: 0}
-  yesButton: {fileID: 0}
-  noButton: {fileID: 0}
-  fechaText: {fileID: 0}
-  volumenText: {fileID: 0}
-  glucosaText: {fileID: 0}
-  inspectionPanel: {fileID: 0}
-  rikuRenderer: {fileID: 0}
-  rikuNeutral: {fileID: 0}
-  rikuCurious: {fileID: 0}
-  rikuNeutralState: 1
-  nextSceneName: 
-  currentStep: 0
-  BagChosen: 0
-  HeparinaPlaced: 0
-  AlcoholPlaced: 0
-  towelPlaced: 0
-  draggingObject: {fileID: 0}
-  draggingOffset: {x: 0, y: 0, z: 0}
-  selectedBag: {fileID: 0}
 --- !u!1 &727363306
 GameObject:
   m_ObjectHideFlags: 0
@@ -7919,7 +7883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nivel1: {fileID: 2084642614}
   nivel2: {fileID: 329989835}
-  nivel4: {fileID: 0}
+  nivel4: {fileID: 1653927066}
   debugLevel: 2
 --- !u!4 &1380676482
 Transform:
@@ -8765,6 +8729,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Alcohol: {fileID: 1681783349}
   Bolsa: {fileID: 644981429}
+  phase2: {fileID: 1806635946}
   BotonSiguiente: {fileID: 44342236}
 --- !u!1 &1658923810
 GameObject:
