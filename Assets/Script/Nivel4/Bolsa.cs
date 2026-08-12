@@ -1,12 +1,15 @@
 using UnityEngine;
+using TMPro;
 
 public class Bolsa : MonoBehaviour
 {
     private bool bolsaAplicada = false;
+    private bool agarrado = false;
     public GameObject palo;
     public Sprite palobolsas;
-    public paloRenderer manosRenderer;
+    public SpriteRenderer paloRenderer;
 
+    public TMP_Text Textalc;
 
     void OnMouseDown()
     {
@@ -22,6 +25,7 @@ public class Bolsa : MonoBehaviour
         {
             paloRenderer.sprite = palobolsas;
             bolsaAplicada = true;
+            Textalc.text = "Bolsa aplicada";
             GetComponent<SpriteRenderer>().enabled = false;
             GetComponent<BoxCollider2D>().enabled = false;
         }
@@ -37,8 +41,9 @@ public class Bolsa : MonoBehaviour
         }
         if (bolsaAplicada && Input.GetMouseButton(0))
         {
-            palo.sprite = palobolsas;
-            
+            paloRenderer.sprite = palobolsas;
+
+
         }
     }
 }
