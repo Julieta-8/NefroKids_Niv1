@@ -1,4 +1,10 @@
-﻿using System;
+﻿//Ocultar botones de SI NO --> check
+//HACER QUE v, f y g vayan apareciendo de apco
+//explicar como funciona el nivel de la glucosa fecha y volumen
+//Que termian una vez que el jugador elige una opcion correcta
+//Agregar animación de andy mojado a andy limpio en vez de hacer que se desvanezca
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -18,6 +24,10 @@ public class Nivel3 : MonoBehaviour
     public enum Step
     {
         Intro,
+        // TUTORIAL
+        ExplainGlucose,
+        ExplainExpiration,
+        ExplainVolume,
 
         ChooseBag,
 
@@ -184,7 +194,8 @@ public class Nivel3 : MonoBehaviour
     {
         GenerateBags();
 
-
+        yesButton.gameObject.SetActive(false);
+        noButton.gameObject.SetActive(false);
         phase1Objects.SetActive(true);
         phase2Objects.SetActive(false);
 
@@ -239,7 +250,30 @@ public class Nivel3 : MonoBehaviour
         {
             case Step.Intro:
 
+                currentStep = Step.ExplainGlucose;
+                ShowDialogue();
+
+                break;
+
+            case Step.ExplainGlucose:
+
+                currentStep = Step.ExplainExpiration;
+                ShowDialogue();
+
+                break;
+
+            case Step.ExplainExpiration:
+
+                currentStep = Step.ExplainVolume;
+                ShowDialogue();
+
+                break;
+
+            case Step.ExplainVolume:
+
                 currentStep = Step.ChooseBag;
+                HideDialogue();
+
                 break;
             case Step.ChooseBag:
 
@@ -353,10 +387,13 @@ public class Nivel3 : MonoBehaviour
         phase3Objects.SetActive(true);
         currentStep = Step.BagZoom;
 
+        yesButton.gameObject.SetActive(false);
+        noButton.gameObject.SetActive(false);
         yield return StartCoroutine(AnimateBagZoom());
 
         ShowDetailedBag();
         nextButton.gameObject.SetActive(false);
+        yield return StartCoroutine(ShowInspectionTexts());
 
         yesButton.gameObject.SetActive(true);
         noButton.gameObject.SetActive(true);
@@ -411,6 +448,53 @@ public class Nivel3 : MonoBehaviour
             selectedBag.bagData.glucosa + "%";
 
         inspectionPanel.SetActive(true);
+    }
+    IEnumerator ShowInspectionTexts()
+    {
+        fechaText.gameObject.SetActive(true);
+        volumenText.gameObject.SetActive(true);
+        glucosaText.gameObject.SetActive(true);
+
+        SetTextAlpha(fechaText, 0f);
+        SetTextAlpha(volumenText, 0f);
+        SetTextAlpha(glucosaText, 0f);
+
+        yield return StartCoroutine(FadeInText(fechaText, 0.5f));
+
+        yield return new WaitForSeconds(0.15f);
+
+        yield return StartCoroutine(FadeInText(volumenText, 0.5f));
+
+        yield return new WaitForSeconds(0.15f);
+
+        yield return StartCoroutine(FadeInText(glucosaText, 0.5f));
+    }
+    IEnumerator FadeInText(TMP_Text text, float duration)
+    {
+        Color color = text.color;
+
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+
+            float alpha = Mathf.Lerp(0f, 1f, time / duration);
+
+            color.a = alpha;
+            text.color = color;
+
+            yield return null;
+        }
+
+        color.a = 1f;
+        text.color = color;
+    }
+    void SetTextAlpha(TMP_Text text, float alpha)
+    {
+        Color color = text.color;
+        color.a = alpha;
+        text.color = color;
     }
     void HandleDragging()
     {
@@ -537,21 +621,151 @@ public class Nivel3 : MonoBehaviour
     }
     void ValidateAnswer(bool answer)
     {
-        bool correct =
-            selectedBag.bagData.IsCorrect();
+        bool correct = selectedBag.bagData.IsCorrect();
 
-        if (answer == correct)
-        {
-            currentStep = Step.BagVerified;
+        // =========================================
+        // BOLSA CORRECTA
+        // =========================================
 
-            ShowDialogue();
-        }
-        else
+        if (correct)
         {
+            if (answer == true)
+            {
+                // Correcta + respondió SÍ
+                currentStep = Step.BagVerified;
+
+                yesButton.gameObject.SetActive(false);
+                noButton.gameObject.SetActive(false);
+
+                ShowDialogue();
+
+                return;
+            }
+
+            // Correcta + respondió NO
             ShowWrongAnswerMessage();
 
-            currentStep = Step.InspectBag;
+            return;
         }
+
+        // =========================================
+        // BOLSA INCORRECTA
+        // =========================================
+
+        if (answer == false)
+        {
+            // Incorrecta + respondió NO
+            // ¡Esta es la respuesta correcta!
+            StartCoroutine(ReturnToBagSelection());
+
+            return;
+        }
+
+        // Incorrecta + respondió SÍ
+        ShowWrongAnswerMessage();
+    }
+    IEnumerator ReturnToBagSelection()
+    {
+        // -----------------------------------
+        // 1. Desactivar botones de respuesta
+        // -----------------------------------
+
+        yesButton.gameObject.SetActive(false);
+        noButton.gameObject.SetActive(false);
+
+        // Ocultar panel de inspección
+        inspectionPanel.SetActive(false);
+
+        // -----------------------------------
+        // 2. Guardar posición actual
+        // -----------------------------------
+
+        Vector3 startPosition =
+            selectedBag.transform.position;
+
+        Vector3 startScale =
+            selectedBag.transform.localScale;
+
+        // Posición y escala originales
+        Vector3 targetPosition =
+            selectedBag.originalPosition;
+
+        Vector3 targetScale =
+            selectedBag.originalScale;
+
+        // -----------------------------------
+        // 3. Animar regreso
+        // -----------------------------------
+
+        float duration = 0.7f;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+
+            float t = time / duration;
+
+            selectedBag.transform.position =
+                Vector3.Lerp(
+                    startPosition,
+                    targetPosition,
+                    t
+                );
+
+            selectedBag.transform.localScale =
+                Vector3.Lerp(
+                    startScale,
+                    targetScale,
+                    t
+                );
+
+            yield return null;
+        }
+
+        // -----------------------------------
+        // 4. Asegurar posición final
+        // -----------------------------------
+
+        selectedBag.transform.position =
+            targetPosition;
+
+        selectedBag.transform.localScale =
+            targetScale;
+
+        // -----------------------------------
+        // 5. Volver al sprite normal
+        // -----------------------------------
+
+        selectedBag.SpriteRenderer.sprite =
+            bagSimpleSprite;
+
+        // -----------------------------------
+        // 6. Ocultar datos de inspección
+        // -----------------------------------
+
+        fechaText.gameObject.SetActive(false);
+        volumenText.gameObject.SetActive(false);
+        glucosaText.gameObject.SetActive(false);
+
+        // -----------------------------------
+        // 7. Cambiar de fase
+        // -----------------------------------
+
+        phase2Objects.SetActive(false);
+        phase3Objects.SetActive(false);
+
+        phase1Objects.SetActive(true);
+
+        // -----------------------------------
+        // 8. Permitir seleccionar otra bolsa
+        // -----------------------------------
+
+        selectedBag = null;
+
+        currentStep = Step.ChooseBag;
+
+        UpdateInstruction();
     }
     void HandleDragInput()
     {
@@ -769,7 +983,26 @@ public class Nivel3 : MonoBehaviour
                     "Ahora vamos a ver como colocar todo para por fin relizar la dialisis";
 
                 break;
+       
 
+            case Step.ExplainGlucose:
+
+                instructionText.text =
+                    "La glucosa es un tipo de azúcar que puede estar dentro de la bolsa.\r\nEn esta misión tenemos que mirar cuánto hay y comprobar que tenga el valor indicado. 1,5 %\r\n\r\n👀 Hay que mirar este número";
+
+                break;
+
+            case Step.ExplainExpiration:
+
+                instructionText.text = "Es la fecha que nos dice hasta cuándo podemos usar la bolsa.\r\nSi la fecha ya pasó, la bolsa está vencida y no debemos elegirla.\r\n10/2028\r\n\r\n✅ Todavía sirve";
+
+                break;
+
+            case Step.ExplainVolume:
+
+                instructionText.text = "El volumen nos dice cuánto líquido hay dentro de la bolsa.\r\nTenemos que comprobar que tenga la cantidad indicada.2000 ml\r\n\r\n✅ Cantidad correcta";
+
+                break;
 
 
             case Step.ChooseBag:

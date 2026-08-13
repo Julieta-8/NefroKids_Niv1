@@ -1,21 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Bag : MonoBehaviour
 {
     public BagData bagData;
 
-    public SpriteRenderer SpriteRenderer { get; private set; }
+    public SpriteRenderer SpriteRenderer;
+
+    public Transform zoomPoint;
+
+    public Vector3 originalPosition;
+    public Vector3 originalScale;
 
     private void Awake()
     {
-        SpriteRenderer = GetComponent<SpriteRenderer>();
-    }
+        originalPosition = transform.position;
+        originalScale = transform.localScale;
 
-    public void SetData(BagData data)
-    {
-        bagData = data;
+        if (SpriteRenderer == null)
+            SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 }
 
@@ -34,6 +36,6 @@ public class BagData
         return !estaVencida &&
                !tieneFugas &&
                volumen == 2000 &&
-               Mathf.Approximately(glucosa, 1.5f);
+               glucosa == 1.5f;
     }
 }
