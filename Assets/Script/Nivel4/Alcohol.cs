@@ -81,7 +81,7 @@ public class Alcohol : MonoBehaviour
         {
             tiempoSecado += Time.deltaTime;
 
-            if (tiempoSecado >= 5f && !terminoParte)
+            if (tiempoSecado >= 1f && !terminoParte)
             {
                 terminoParte = true;
                 level4.MostrarBotonSiguiente();
