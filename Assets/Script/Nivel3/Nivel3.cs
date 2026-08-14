@@ -1,7 +1,5 @@
-﻿//Ocultar botones de SI NO --> check
-//HACER QUE v, f y g vayan apareciendo de apco
-//explicar como funciona el nivel de la glucosa fecha y volumen
-//Que termian una vez que el jugador elige una opcion correcta
+﻿
+
 //Agregar animación de andy mojado a andy limpio en vez de hacer que se desvanezca
 
 using System;
@@ -924,7 +922,7 @@ public class Nivel3 : MonoBehaviour
         {
             AndyRenderer.sprite = s;
 
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.30f);
         }
     }
     IEnumerator PlaceAlcohol()
