@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
@@ -33,8 +33,8 @@ public class LevelManager : MonoBehaviour
         nivel2.SetActive(false);
         nivel3.SetActive(false);
 #if UNITY_EDITOR
-        Debug.Log($"[DEBUG] Iniciando automáticamente el nivel {3}");
-        StartLevel(3);
+        Debug.Log($"[DEBUG] Iniciando automáticamente el nivel {1}");
+        StartLevel(1);
 #else
         ReactConnection react = FindFirstObjectByType<ReactConnection>();
         react.Log("Iniciando nivel");
@@ -109,3 +109,4 @@ public class LevelManager : MonoBehaviour
         public string type;
         public int level;
     }
+*/

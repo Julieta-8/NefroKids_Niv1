@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,12 +30,12 @@ public class GameManager : MonoBehaviour
 
         react.Send(new ReadyMessage());
     }
-
+    
     void StartLevel(int level)
     {
         Debug.Log($"Iniciando nivel {level}");
     }
 }
-
+*/
 
 

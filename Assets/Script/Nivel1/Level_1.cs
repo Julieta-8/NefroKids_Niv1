@@ -181,10 +181,41 @@ public class Level_1 : MonoBehaviour
     // DRAG
     private GameObject draggingObject;
     private Vector3 draggingOffset;
+    private void Awake()
+    {
+        Debug.Log("========== LEVEL 1 AWAKE ==========");
+    }
 
+    private void Start()
+    {
+        Debug.Log("========== LEVEL 1 START ==========");
+        StartLevel();
+
+    }
     public void StartLevel()
 {
-    isRunning = true;
+
+
+        if (nextButton != null)
+        {
+            Debug.Log("BOTON ENCONTRADO: " + nextButton.name);
+
+            nextButton.onClick.RemoveAllListeners();
+            nextButton.onClick.AddListener(OnNextPressed);
+
+            Debug.Log("LISTENER AGREGADO");
+        }
+        else
+        {
+            Debug.LogError("NEXT BUTTON ES NULL");
+        }
+
+
+
+
+
+
+        isRunning = true;
 
     // Reiniciar estado
     currentStep = Step.Intro;
@@ -263,6 +294,11 @@ public class Level_1 : MonoBehaviour
 
     void OnNextPressed()
     {
+
+
+
+
+
         ToggleRikuExpression();
 
         HideDialogue();
@@ -272,6 +308,10 @@ public class Level_1 : MonoBehaviour
             case Step.Intro:
 
                 currentStep = Step.DragVest;
+
+
+                Debug.Log("PASO DESPUES: " + currentStep);
+
 
                 break;
 
@@ -341,6 +381,7 @@ public class Level_1 : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+
             Vector2 worldPoint =
                 Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -352,6 +393,13 @@ public class Level_1 : MonoBehaviour
             {
                 GameObject clickedObject = hit.gameObject;
             }
+
+         
+
+            Debug.Log("COLLIDER ENCONTRADO: " + hit.gameObject.name);
+
+
+
             if (hit/*.collider*/ != null)
             {
                 GameObject clickedObject = hit/*.collider*/.gameObject;
@@ -920,13 +968,13 @@ public class Level_1 : MonoBehaviour
             phase1Stars = Phase1Stars,
             phase2Stars = Phase2Stars
         };
-
+        /*
         if (bridge != null)
         {
             bridge.Send(new LevelCompletedMessage{
                 result = result
             });
-        }
+        }*/
     }
 }
  
