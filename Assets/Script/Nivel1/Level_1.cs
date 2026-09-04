@@ -1,8 +1,9 @@
 using System.Collections;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class Level_1 : MonoBehaviour
 {
@@ -381,28 +382,34 @@ public class Level_1 : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log("CLICK DETECTADO");
+
+            if (Camera.main == null)
+            {
+                Debug.LogError("NO HAY UNA CAMARA CON TAG MainCamera");
+                return;
+            }
 
             Vector2 worldPoint =
                 Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            /*RaycastHit2D hit =
-                Physics2D.Raycast(worldPoint, Vector2.zero);*/
             Collider2D hit =
-    Physics2D.OverlapPoint(worldPoint);
-            if (hit != null)
+                Physics2D.OverlapPoint(worldPoint);
+
+            if (hit == null)
             {
-                GameObject clickedObject = hit.gameObject;
+                Debug.Log("NO SE ENCONTRO NINGUN COLLIDER");
+                return;
             }
 
-         
+            GameObject clickedObject = hit.gameObject;
 
-            Debug.Log("COLLIDER ENCONTRADO: " + hit.gameObject.name);
-
+            Debug.Log("COLLIDER ENCONTRADO: " + clickedObject.name);
 
 
             if (hit/*.collider*/ != null)
             {
-                GameObject clickedObject = hit/*.collider*/.gameObject;
+                //GameObject clickedObject = hit/*.collider*/.gameObject;
                 Debug.Log(clickedObject.name);
                 // CHALECO
                 if (currentStep == Step.DragVest &&

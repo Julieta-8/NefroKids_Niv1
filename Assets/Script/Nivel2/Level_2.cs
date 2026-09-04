@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
+using System.Diagnostics;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using TMPro;
-
+using System.Collections.Generic;
 public class Level_2 : MonoBehaviour
 {
     [Header("Materiales")]
@@ -43,9 +43,14 @@ public class Level_2 : MonoBehaviour
     private int totalPares;
 
     //-------------------------------------------------------
+    private void Start()
+    {
 
+        StartLevel(); // reemplazar por el nombre real
+    }
     public void StartLevel()
     {
+
         backgroundRenderer.sprite = roomBackground;
 
         totalPares = materiales.Length;
