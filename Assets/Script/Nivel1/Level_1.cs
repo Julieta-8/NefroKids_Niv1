@@ -61,6 +61,10 @@ public class Level_1 : MonoBehaviour
     private int phase2Stars;
 
 
+
+    public Transform RikuStartPosition;
+    public Transform PanelStartPosition;
+
     [Header("================================")]
     [Header("FASE 1 - MANIQUI")]
     [Header("================================")]
@@ -245,8 +249,12 @@ public class Level_1 : MonoBehaviour
     soapObject.SetActive(true);
     towelObject.SetActive(true);
 
-    // Volver a la posición inicial
-    vestObject.transform.position = vestStartPosition.position;
+        // Volver a la posición inicial
+        rikuRenderer.transform.position = RikuStartPosition.position;
+        dialoguePanel.transform.position = PanelStartPosition.position;
+
+
+        vestObject.transform.position = vestStartPosition.position;
     maskObject.transform.position = maskStartPosition.position;
     soapObject.transform.position = soapStartPosition.position;
     towelObject.transform.position = towelStartPosition.position;
