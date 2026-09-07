@@ -489,7 +489,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 364881550}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a0d3ef971356d346b605f4a8b449892, type: 3}
+  m_Script: {fileID: 11500000, guid: c999626ec71b4e148915204fcbb1295c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   palo: {fileID: 187476216}
@@ -1520,14 +1520,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1371733873}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 403beb39d30d5f1419380cbf8ab525c8, type: 3}
+  m_Script: {fileID: 11500000, guid: 881ddcc1224255542b96ba7021b0ae0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Alcohol: {fileID: 0}
+  Alcohol: {fileID: 1588089190}
   Bolsa: {fileID: 364881550}
-  phase2: {fileID: 0}
-  BotonSiguiente: {fileID: 0}
-  manos: {fileID: 0}
+  phase2: {fileID: 1627748875}
+  BotonSiguiente: {fileID: 446686556}
+  manos: {fileID: 928964148}
 --- !u!4 &1371733875
 Transform:
   m_ObjectHideFlags: 0
@@ -1739,10 +1739,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1588089190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9aa27cb2537a8f4ca98a4b3cd73279b, type: 3}
+  m_Script: {fileID: 11500000, guid: 59e51a3f82b588e4497f521bedd8f1d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level4: {fileID: 0}
+  level4: {fileID: 1371733874}
   manos: {fileID: 928964148}
   manosMojadas: {fileID: 21300000, guid: 31a50ec6710fd3a4087efdfe2fd9d37a, type: 3}
   manosFrotadas: {fileID: 21300000, guid: 809e526ac066e724bbba01e0ea1c716c, type: 3}
