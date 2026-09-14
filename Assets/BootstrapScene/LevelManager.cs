@@ -108,3 +108,7 @@ public class LevelManager : MonoBehaviour
         public string type;
         public int level;
     }
+public void Siguiente()
+{
+    level4Manager.Siguiente();
+}

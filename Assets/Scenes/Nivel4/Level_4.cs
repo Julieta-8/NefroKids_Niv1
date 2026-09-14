@@ -32,4 +32,9 @@ public class Level_4 : MonoBehaviour
     {
         BotonSiguiente.SetActive(true);
     }
+    public void Siguiente()
+    {
+        phase1.SetActive(false);
+        phase2.SetActive(true);
+    }
 }
