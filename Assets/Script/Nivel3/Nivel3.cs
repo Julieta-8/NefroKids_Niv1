@@ -188,6 +188,10 @@ public class Nivel3 : MonoBehaviour
         bag3.bagData =
             GenerateRandomBag(correct == 2);
     }
+    private void Start()
+    {
+        StartLevel(); // reemplazar por el nombre real
+    }
     public void StartLevel()
     {
         GenerateBags();
