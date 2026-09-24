@@ -71,7 +71,7 @@ public class Alcohol : MonoBehaviour
             if (progresoFrotado >= 1f)
             {
                 manosRenderer.sprite = manosFrotadas;
-
+                Textalc.text = "nivel completado!";
                 secando = true;
             }
         }
@@ -81,7 +81,7 @@ public class Alcohol : MonoBehaviour
         {
             tiempoSecado += Time.deltaTime;
 
-            if (tiempoSecado >= 1f && !terminoParte)
+            if (tiempoSecado >= 2f && !terminoParte)
             {
                 terminoParte = true;
                 level4.MostrarBotonSiguiente();

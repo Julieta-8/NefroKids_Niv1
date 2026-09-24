@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -6,9 +5,11 @@ public class LevelManager : MonoBehaviour
     private Level_1 level1Manager;
     private Level_2 level2Manager;
     private Level_4 level4Manager;
+
     [SerializeField] private GameObject nivel1;
     [SerializeField] private GameObject nivel2;
     [SerializeField] private GameObject nivel4;
+
     [SerializeField] private int debugLevel = 2;
 
     private void OnEnable()
@@ -20,11 +21,13 @@ public class LevelManager : MonoBehaviour
     {
         ReactConnection.OnMessageReceived -= ProcessMessage;
     }
+
     private void Awake()
     {
         level1Manager = nivel1.GetComponentInChildren<Level_1>(true);
         level2Manager = nivel2.GetComponentInChildren<Level_2>(true);
         level4Manager = nivel4.GetComponentInChildren<Level_4>(true);
+
         Debug.Log(level4Manager);
     }
 
@@ -33,13 +36,18 @@ public class LevelManager : MonoBehaviour
         nivel1.SetActive(false);
         nivel2.SetActive(false);
         nivel4.SetActive(false);
+
 #if UNITY_EDITOR
-        Debug.Log($"[DEBUG] Iniciando automáticamente el nivel {1}");
-        StartLevel(4);
+
+        Debug.Log($"[DEBUG] Iniciando automáticamente el nivel {debugLevel}");
+        StartLevel(debugLevel);
+
 #else
+
         ReactConnection react = FindFirstObjectByType<ReactConnection>();
         react.Log("Iniciando nivel");
         react.Send(new ReadyMessage());
+
 #endif
     }
 
@@ -77,38 +85,46 @@ public class LevelManager : MonoBehaviour
                 break;
 
             case 2:
-
                 nivel2.SetActive(true);
                 level2Manager.StartLevel();
-
                 break;
+
             case 4:
                 nivel4.SetActive(true);
                 level4Manager.StartLevel();
                 break;
         }
     }
+
+    // 👇 AHORA ESTÁ DENTRO DE LevelManager
+    public void Siguiente()
+    {
+        level4Manager.Siguiente();
+    }
 }
 
-    [System.Serializable]
-    public class LevelCompletedMessage
-    {
-        public string type = "LEVEL_COMPLETED";
 
-        public ResultData result;
-    }
-    [System.Serializable]
-    public class ReadyMessage
-    {
-        public string type = "READY";
-    }
-    [System.Serializable]
-    public class StartLevelMessage
-    {
-        public string type;
-        public int level;
-    }
-public void Siguiente()
+// ===============================
+// MENSAJES
+// ===============================
+
+[System.Serializable]
+public class LevelCompletedMessage
 {
-    level4Manager.Siguiente();
+    public string type = "LEVEL_COMPLETED";
+
+    public ResultData result;
+}
+
+[System.Serializable]
+public class ReadyMessage
+{
+    public string type = "READY";
+}
+
+[System.Serializable]
+public class StartLevelMessage
+{
+    public string type;
+    public int level;
 }

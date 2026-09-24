@@ -611,7 +611,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &446686557
 RectTransform:
   m_ObjectHideFlags: 0
@@ -676,9 +676,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 882212927}
+      - m_Target: {fileID: 1371733874}
         m_TargetAssemblyTypeName: Level_4, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: Siguiente
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -687,7 +687,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &446686559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1095,11 +1095,6 @@ PrefabInstance:
 --- !u!4 &862107988 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3942731572321522037, guid: 2f14b520eb6821a41818696fc7bfad39, type: 3}
-  m_PrefabInstance: {fileID: 862107987}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &882212927 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4907900700818482529, guid: 2f14b520eb6821a41818696fc7bfad39, type: 3}
   m_PrefabInstance: {fileID: 862107987}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &905540236
@@ -1534,6 +1529,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Alcohol: {fileID: 1588089190}
   Bolsa: {fileID: 364881550}
+  phase1: {fileID: 1299547343}
   phase2: {fileID: 1627748875}
   BotonSiguiente: {fileID: 446686556}
   manos: {fileID: 928964148}
@@ -1928,7 +1924,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1627748876
 Transform:
   m_ObjectHideFlags: 0
