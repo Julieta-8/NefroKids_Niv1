@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Knob : MonoBehaviour
 {
@@ -12,20 +15,21 @@ public class Knob : MonoBehaviour
         Posicion4
     }
 
-    [Header("KNOB")]
+    [Header("REFERENCIA")]
     [SerializeField] private Transform knob;
 
+    [Header("ROTACIONES")]
     [SerializeField] private float[] rotationAngles;
 
     [SerializeField] private float rotationDuration = 0.4f;
 
-
     [Header("ESTADO")]
-    [SerializeField] private KnobPosition currentPosition;
+    [SerializeField]
+    private KnobPosition currentPosition =
+        KnobPosition.Posicion1;
 
     private bool isRotating = false;
     private bool isUnlocked = false;
-
 
     public KnobPosition CurrentPosition => currentPosition;
 
@@ -34,13 +38,30 @@ public class Knob : MonoBehaviour
     public bool IsUnlocked => isUnlocked;
 
 
-    // EVENTO
+    // Avisará cuando la perilla terminó de llegar
+    // a una posición.
     public event Action<KnobPosition> OnPositionReached;
 
 
     private void Start()
     {
+        SetInitialPosition();
+    }
+
+
+    private void SetInitialPosition()
+    {
         currentPosition = KnobPosition.Posicion1;
+
+        if (rotationAngles == null ||
+            rotationAngles.Length == 0)
+        {
+            Debug.Log(
+                "Knob: No hay rotationAngles configurados."
+            );
+
+            return;
+        }
 
         knob.rotation = Quaternion.Euler(
             0,
@@ -50,17 +71,40 @@ public class Knob : MonoBehaviour
     }
 
 
-    public void Unlock()
+    // =====================================================
+    // INTERACCIÓN
+    // =====================================================
+
+    public void EnableInteraction()
     {
         isUnlocked = true;
     }
 
 
-    public void Lock()
+    public void DisableInteraction()
     {
         isUnlocked = false;
     }
 
+
+    // Estos dos pueden quedar como alias para mantener
+    // compatibilidad con tu código anterior.
+
+    public void Unlock()
+    {
+        EnableInteraction();
+    }
+
+
+    public void Lock()
+    {
+        DisableInteraction();
+    }
+
+
+    // =====================================================
+    // MOVIMIENTO
+    // =====================================================
 
     public void RotateRight()
     {
@@ -70,27 +114,36 @@ public class Knob : MonoBehaviour
         if (isRotating)
             return;
 
-        if (currentPosition == KnobPosition.Posicion4)
+        if (currentPosition ==
+            KnobPosition.Posicion4)
             return;
 
 
-        currentPosition =
-            (KnobPosition)((int)currentPosition + 1);
+        KnobPosition nextPosition =
+            (KnobPosition)(
+                (int)currentPosition + 1
+            );
 
 
-        StartCoroutine(RotateAnimation());
+        StartCoroutine(
+            RotateToPosition(nextPosition)
+        );
     }
 
 
-    private IEnumerator RotateAnimation()
+    private IEnumerator RotateToPosition(
+        KnobPosition targetPosition)
     {
         isRotating = true;
 
 
-        float startAngle = knob.eulerAngles.z;
+        float startAngle =
+            knob.eulerAngles.z;
 
         float targetAngle =
-            rotationAngles[(int)currentPosition];
+            rotationAngles[
+                (int)targetPosition
+            ];
 
 
         float elapsed = 0f;
@@ -104,15 +157,20 @@ public class Knob : MonoBehaviour
                 elapsed / rotationDuration;
 
 
-            float angle = Mathf.LerpAngle(
-                startAngle,
-                targetAngle,
-                t
-            );
+            float angle =
+                Mathf.LerpAngle(
+                    startAngle,
+                    targetAngle,
+                    t
+                );
 
 
             knob.rotation =
-                Quaternion.Euler(0, 0, angle);
+                Quaternion.Euler(
+                    0,
+                    0,
+                    angle
+                );
 
 
             yield return null;
@@ -127,10 +185,90 @@ public class Knob : MonoBehaviour
             );
 
 
+        currentPosition = targetPosition;
+
         isRotating = false;
 
 
-        // AVISARLE AL LEVEL 5
-        OnPositionReached?.Invoke(currentPosition);
+        // Avisamos al Level_5
+        OnPositionReached?.Invoke(
+            currentPosition
+        );
+    }
+
+
+    // =====================================================
+    // VOLVER A UNA POSICIÓN
+    // =====================================================
+
+    public void ResetToPosition(
+        KnobPosition targetPosition)
+    {
+        if (isRotating)
+            return;
+
+        StartCoroutine(
+            ResetAnimation(targetPosition)
+        );
+    }
+
+
+    private IEnumerator ResetAnimation(
+        KnobPosition targetPosition)
+    {
+        isRotating = true;
+
+
+        float startAngle =
+            knob.eulerAngles.z;
+
+        float targetAngle =
+            rotationAngles[
+                (int)targetPosition
+            ];
+
+
+        float elapsed = 0f;
+
+
+        while (elapsed < rotationDuration)
+        {
+            elapsed += Time.deltaTime;
+
+            float t =
+                elapsed / rotationDuration;
+
+
+            float angle =
+                Mathf.LerpAngle(
+                    startAngle,
+                    targetAngle,
+                    t
+                );
+
+
+            knob.rotation =
+                Quaternion.Euler(
+                    0,
+                    0,
+                    angle
+                );
+
+
+            yield return null;
+        }
+
+
+        knob.rotation =
+            Quaternion.Euler(
+                0,
+                0,
+                targetAngle
+            );
+
+
+        currentPosition = targetPosition;
+
+        isRotating = false;
     }
 }

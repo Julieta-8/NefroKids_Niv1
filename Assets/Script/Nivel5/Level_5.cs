@@ -4,6 +4,7 @@ using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Level_5 : MonoBehaviour
 {
@@ -391,13 +392,14 @@ public class Level_5 : MonoBehaviour
     private void StartChoosePosition3()
     {
         targetPosition = Knob.KnobPosition.Posicion3;
-
         verifyButton.gameObject.SetActive(true);
 
         leftArrow.gameObject.SetActive(true);
         rightArrow.gameObject.SetActive(true);
 
         knob.EnableInteraction();
+        verifyButton.gameObject.SetActive(true);
+
     }
     private void CorrectPosition1()
     {
@@ -412,6 +414,74 @@ public class Level_5 : MonoBehaviour
 
         ShowDialogue();
     }
+    private void ContinueFromPosition1()
+    {
+        currentStep = Step.RedirectFluid1;
+
+        Liquid1Obj.SetActive(true);
+
+        instructionText.text =
+            "Ahora seguí el recorrido del líquido hasta la bolsa de drenaje.";
+    }
+    private void CorrectPosition2()
+    {
+        verifyButton.gameObject.SetActive(false);
+
+        leftArrow.gameObject.SetActive(false);
+        rightArrow.gameObject.SetActive(false);
+        knob.DisableInteraction();
+
+        currentStep = Step.Position2Correct;
+
+        ShowDialogue(
+           
+        );
+    }
+    private void ContinueFromPosition2()
+    {
+        currentStep = Step.RedirectFluid2;
+
+        Liquid2Obj.SetActive(true);
+
+        instructionText.text =
+            "Seguí el recorrido del líquido hasta la bolsa.";
+    }
+    private void CorrectPosition3()
+    {
+        verifyButton.gameObject.SetActive(false);
+
+        leftArrow.gameObject.SetActive(false);
+        rightArrow.gameObject.SetActive(false);
+        currentStep = Step.Position3Correct;
+
+        ShowDialogue(
+           
+        );
+    }
+    private void ContinueFromPosition3()
+    {
+        currentStep = Step.Infusion;
+
+        StartInfusion();
+    }
+    private void CorrectPosition4()
+    {
+        verifyButton.gameObject.SetActive(false);
+
+        leftArrow.gameObject.SetActive(false);
+        rightArrow.gameObject.SetActive(false);
+        currentStep = Step.Position4Correct;
+
+        ShowDialogue(
+           
+        );
+    }
+    private void ContinueFromPosition4()
+    {
+        currentStep = Step.Finished;
+
+        FinishLevel();
+    }
     private void OnKnobPositionReached(Knob.KnobPosition position)
     {
         switch (currentStep)
@@ -421,6 +491,10 @@ public class Level_5 : MonoBehaviour
                 if (position == Knob.KnobPosition.Posicion1)
                 {
                     CorrectPosition1();
+                }
+                else
+                {
+                    WrongPosition();
                 }
 
                 break;
@@ -432,7 +506,10 @@ public class Level_5 : MonoBehaviour
                 {
                     CorrectPosition2();
                 }
-
+                else
+                {
+                    WrongPosition();
+                }
                 break;
 
 
@@ -442,7 +519,10 @@ public class Level_5 : MonoBehaviour
                 {
                     CorrectPosition3();
                 }
-
+                else
+                {
+                    WrongPosition();
+                }
                 break;
 
 
@@ -452,7 +532,10 @@ public class Level_5 : MonoBehaviour
                 {
                     CorrectPosition4();
                 }
-
+                else
+                {
+                    WrongPosition();
+                }
                 break;
         }
     }
@@ -465,20 +548,72 @@ public class Level_5 : MonoBehaviour
         else
         {
             WrongPosition(
-                "Esta no es la posición que necesitamos para comenzar el drenaje."
             );
         }
     }
-    private void WrongPosition(string message)
+    private void WrongPosition()
     {
+        knob.DisableInteraction();
 
-        instructionText.text = message;
+        switch (currentStep)
+        {
+            case Step.ChoosePosition1:
 
-        rikuRenderer.enabled = true;
-        dialoguePanel.SetActive(true);
-        nextButton.gameObject.SetActive(true);
+                ShowDialogue(//DEBERIA MOSTRAR EL ERROR
+                );
 
-        rikuRenderer.sprite = rikuCurious;
+                break;
+
+
+            case Step.ChoosePosition2:
+                instructionText.text = "Esa no es la posición que necesitamos para realizar el lavado. Probá nuevamente.";
+                ShowDialogue( );
+
+                break;
+
+
+            case Step.ChoosePosition3:
+                instructionText.text = "Todavía no. Buscá la posición que permite comenzar la infusión.";
+
+                ShowDialogue( );
+
+                break;
+
+
+            case Step.ChoosePosition4:
+                instructionText.text = "Todavía no. Necesitamos llevar la perilla hasta la posición final para cerrar el sistema.";
+                ShowDialogue( );
+
+                break;
+        }
+    }
+    private void StartInfusion()
+    {
+        currentStep = Step.Infusion;
+
+        instructionText.text =
+            "Ahora seguí el recorrido del líquido hasta que termine la infusión.";
+
+        knob.DisableInteraction();
+
+        verifyButton.gameObject.SetActive(false);
+
+        // Mostrar el líquido de infusión
+        Liquid2Obj.SetActive(true);
+    }
+    public void CompleteInfusion()
+    {
+        Liquid2Obj.SetActive(false);
+
+        currentStep = Step.InsertPin;
+
+        StartPin();
+    }
+    public void CompletePinza()
+    {
+        pinzaObject.SetActive(false);
+
+        StartChoosePosition1();
     }
     void HandleMouseInput()
         {
@@ -692,7 +827,12 @@ public class Level_5 : MonoBehaviour
                     "Elegí la posición que permite comenzar el drenaje.";
 
                 break;
+            case Step.Position1Correct:
 
+                instructionText.text =
+                    "¡Muy bien! Esta posición permite comenzar el drenaje.";
+
+                break;
 
             case Step.RedirectFluid1:
 
@@ -708,7 +848,12 @@ public class Level_5 : MonoBehaviour
                     "Ahora cambiemos el recorrido para realizar el lavado.";
 
                 break;
+            case Step.Position2Correct:
 
+                instructionText.text =
+                    "¡Exacto! Ahora podemos cambiar el recorrido para realizar el lavado.";
+
+                break;
 
             case Step.RedirectFluid2:
 
@@ -723,6 +868,12 @@ public class Level_5 : MonoBehaviour
                 instructionText.text =
                     "Ahora prepararemos la infusión. " +
                     "Elegí la posición correspondiente.";
+
+                break;
+            case Step.Position3Correct:
+
+                instructionText.text =
+                    "¡Muy bien! Esta es la posición que necesitamos para comenzar la infusión.";
 
                 break;
 
@@ -741,7 +892,12 @@ public class Level_5 : MonoBehaviour
                     "Último paso: llevá la perilla hasta la posición final.";
 
                 break;
+            case Step.Position4Correct:
 
+                instructionText.text =
+                    "¡Excelente! La perilla está en la posición correcta para cerrar el sistema.";
+
+                break;
 
             case Step.Finished:
 
@@ -751,7 +907,16 @@ public class Level_5 : MonoBehaviour
                 break;
         }
     }
+    private void FinishLevel()
+    {
+        instructionText.text =
+            "¡Completaste correctamente el procedimiento!";
 
+        knob.DisableInteraction();
+
+        congratsPanel.SetActive(true);
+
+    }
 
     // Update is called once per frame
     void Update()
