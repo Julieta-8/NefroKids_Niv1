@@ -28,8 +28,21 @@ public class LevelManager : MonoBehaviour
         ReactConnection.OnMessageReceived -= ProcessMessage;
     }
 
+    private void Start()
+    {
+        ReactConnection react = FindFirstObjectByType<ReactConnection>();
+
+        if (react != null)
+        {
+            react.Log("Bootstrap listo");
+            react.Send(new ReadyMessage());
+        }
+    }
+
     private void ProcessMessage(string json)
     {
+        Debug.Log($"[LevelManager] Mensaje recibido: {json}");
+
         StartLevelMessage message =
             JsonUtility.FromJson<StartLevelMessage>(json);
 
@@ -51,7 +64,13 @@ public class LevelManager : MonoBehaviour
 
         if (sceneName == null)
         {
-            Debug.LogError($"Nivel inválido: {level}");
+            Debug.LogError($"[LevelManager] Nivel inválido: {level}");
+            return;
+        }
+
+        if (SceneManager.GetActiveScene().name == sceneName)
+        {
+            Debug.Log($"[LevelManager] Ya estamos en {sceneName}");
             return;
         }
 
@@ -59,6 +78,28 @@ public class LevelManager : MonoBehaviour
 
         SceneManager.LoadScene(sceneName);
     }
+
+#if UNITY_EDITOR
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            StartLevel(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            StartLevel(2);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            StartLevel(3);
+        }
+    }
+
+#endif
 }
 
 [System.Serializable]
@@ -66,4 +107,10 @@ public class StartLevelMessage
 {
     public string type;
     public int level;
+}
+
+[System.Serializable]
+public class ReadyMessage
+{
+    public string type = "READY";
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class ResultData
+public class ResultData : MonoBehaviour
 {
     public int levelId;
 

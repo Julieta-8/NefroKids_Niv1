@@ -26,9 +26,6 @@ public class ReactConnection : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    /// <summary>
-    /// Envía cualquier objeto serializable a React Native.
-    /// </summary>
     public void Send(object message)
     {
         string json = JsonUtility.ToJson(message);
@@ -40,9 +37,6 @@ public class ReactConnection : MonoBehaviour
 #endif
     }
 
-    /// <summary>
-    /// React Native llama a este método mediante SendMessage().
-    /// </summary>
     public void Receive(string json)
     {
         Debug.Log($"[ReactConnection] Recibido: {json}");
