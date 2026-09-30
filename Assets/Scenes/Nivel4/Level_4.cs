@@ -4,6 +4,7 @@ public class Level_4 : MonoBehaviour
 {
     public GameObject Alcohol;
     public GameObject Bolsa;
+    public GameObject bolsadrenajec;
 
     public GameObject phase1;
     public GameObject phase2;

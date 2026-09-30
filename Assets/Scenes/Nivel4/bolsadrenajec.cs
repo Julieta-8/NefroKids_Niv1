@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class bolsacrenaje : MonoBehaviour
+public class bolsadrenajec : MonoBehaviour
 {
     private bool bolsaAplicada = false;
     private bool agarrado = false;
