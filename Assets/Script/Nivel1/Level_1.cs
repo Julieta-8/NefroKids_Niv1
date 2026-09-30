@@ -198,7 +198,7 @@ public class Level_1 : MonoBehaviour
 
     }
     public void StartLevel()
-{
+    {
 
 
         if (nextButton != null)
@@ -222,32 +222,32 @@ public class Level_1 : MonoBehaviour
 
         isRunning = true;
 
-    // Reiniciar estado
-    currentStep = Step.Intro;
+        // Reiniciar estado
+        currentStep = Step.Intro;
 
-    vestPlaced = false;
-    maskPlaced = false;
-    soapPlaced = false;
-    towelPlaced = false;
-    waterOpened = false;
+        vestPlaced = false;
+        maskPlaced = false;
+        soapPlaced = false;
+        towelPlaced = false;
+        waterOpened = false;
 
-    phase1Timer = 0f;
-    phase2Timer = 0f;
-    averageTime = 0f;
+        phase1Timer = 0f;
+        phase2Timer = 0f;
+        averageTime = 0f;
 
-    timingPhase1 = false;
-    timingPhase2 = false;
+        timingPhase1 = false;
+        timingPhase2 = false;
 
-    phase1Stars = 0;
-    phase2Stars = 0;
+        phase1Stars = 0;
+        phase2Stars = 0;
 
-    IsCompleted = false;
+        IsCompleted = false;
 
-    // Reactivar objetos
-    vestObject.SetActive(true);
-    maskObject.SetActive(true);
-    soapObject.SetActive(true);
-    towelObject.SetActive(true);
+        // Reactivar objetos
+        vestObject.SetActive(true);
+        maskObject.SetActive(true);
+        soapObject.SetActive(true);
+        towelObject.SetActive(true);
 
         // Volver a la posición inicial
         rikuRenderer.transform.position = RikuStartPosition.position;
@@ -255,35 +255,35 @@ public class Level_1 : MonoBehaviour
 
 
         vestObject.transform.position = vestStartPosition.position;
-    maskObject.transform.position = maskStartPosition.position;
-    soapObject.transform.position = soapStartPosition.position;
-    towelObject.transform.position = towelStartPosition.position;
+        maskObject.transform.position = maskStartPosition.position;
+        soapObject.transform.position = soapStartPosition.position;
+        towelObject.transform.position = towelStartPosition.position;
 
-    // Resto de tu código...
-    bridge = FindFirstObjectByType<ReactConnection>();
+        // Resto de tu código...
+        bridge = FindFirstObjectByType<ReactConnection>();
 
-    DatoCuriosoPanel.SetActive(false);
-    DatoCuriosoText.gameObject.SetActive(false);
+        DatoCuriosoPanel.SetActive(false);
+        DatoCuriosoText.gameObject.SetActive(false);
 
-    backgroundRenderer.sprite = roomBackground;
-    backgroundRenderer_2.enabled = false;
+        backgroundRenderer.sprite = roomBackground;
+        backgroundRenderer_2.enabled = false;
 
-    mannequinRenderer.sprite = mannequinNormal;
-    handsRenderer.sprite = handsNormal;
+        mannequinRenderer.sprite = mannequinNormal;
+        handsRenderer.sprite = handsNormal;
 
-    phase1Objects.SetActive(true);
-    phase2Objects.SetActive(false);
+        phase1Objects.SetActive(true);
+        phase2Objects.SetActive(false);
 
-    congratsPanel?.SetActive(false);
+        congratsPanel?.SetActive(false);
 
-    ShowDialogue();
+        ShowDialogue();
 
-    if (nextButton != null)
-    {
-        nextButton.onClick.RemoveAllListeners();
-        nextButton.onClick.AddListener(OnNextPressed);
+        if (nextButton != null)
+        {
+            nextButton.onClick.RemoveAllListeners();
+            nextButton.onClick.AddListener(OnNextPressed);
+        }
     }
-}
 
     void Update()
     {
@@ -705,8 +705,8 @@ public class Level_1 : MonoBehaviour
         StartCoroutine(WashingRoutine());
     }
     void ShowHandwashingTip()
-{
-       
+    {
+
         //esperar 10s
         DatoCuriosoPanel.SetActive(true);
         DatoCuriosoPanel.gameObject.SetActive(true);
@@ -714,10 +714,10 @@ public class Level_1 : MonoBehaviour
         //mostrar cabeza de riku
         DatoCuriosoText.text =
      "�Sab�as que el lavado correcto dura aproximadamente 60 segundos?";
-       /* DatoCuriosoPanel.gameObject.SetActive(false);
-        DatoCuriosoText.gameObject.SetActive(false);
-    */
-        }
+        /* DatoCuriosoPanel.gameObject.SetActive(false);
+         DatoCuriosoText.gameObject.SetActive(false);
+     */
+    }
     void ShowHandwashingTip2()
     {
         DatoCuriosoPanel.SetActive(true);
@@ -728,13 +728,13 @@ public class Level_1 : MonoBehaviour
         //hablar sobre la importancia de la higiene y uniforme
         DatoCuriosoText.text =
      "Esta es la parte m+as improtante d etodo le proceso";
-       /* DatoCuriosoPanel.gameObject.SetActive(false);
-        DatoCuriosoText.gameObject.SetActive(false);
-*/
+        /* DatoCuriosoPanel.gameObject.SetActive(false);
+         DatoCuriosoText.gameObject.SetActive(false);
+ */
     }
     IEnumerator WashingRoutine()
     {
-       
+
         ShowHandwashingTip();
 
         handsRenderer.sprite = washStep1;
@@ -761,7 +761,7 @@ public class Level_1 : MonoBehaviour
         faucetRenderer.sprite = faucetOff;
         handsRenderer.sprite =
             handsWet;
-     
+
 
         currentStep = Step.DragTowel;
     }
@@ -792,12 +792,12 @@ public class Level_1 : MonoBehaviour
     // ==================================================
     // DIALOGOS
     // ==================================================
-    
-  
+
+
     void ShowDialogue()
     {
         dialoguePanel.SetActive(true);
-        rikuRenderer.enabled =true;
+        rikuRenderer.enabled = true;
         nextButton.gameObject.SetActive(true);
         instructionText.gameObject.SetActive(true);
         UpdateInstruction();
@@ -811,7 +811,7 @@ public class Level_1 : MonoBehaviour
     {
         dialoguePanel.SetActive(false);
         instructionText.gameObject.SetActive(false);
-        rikuRenderer.enabled =false;
+        rikuRenderer.enabled = false;
         nextButton.gameObject.SetActive(false);
 
 
@@ -863,7 +863,7 @@ public class Level_1 : MonoBehaviour
 
                 break;
 
-            
+
 
             case Step.DragVest:
 
@@ -928,7 +928,7 @@ public class Level_1 : MonoBehaviour
 
                 instructionText.text =
                     "�Muy bien! Ahora seca las manos con la toalla.";
-                
+
                 break;
             case Step.TurnOffWater:
 
@@ -961,35 +961,35 @@ public class Level_1 : MonoBehaviour
 
     IEnumerator FinishRoutine()
     {
-      IsCompleted = true;
-      OnLevelCompleted?.Invoke();
-       congratsPanel?.SetActive(true);
+        IsCompleted = true;
+        OnLevelCompleted?.Invoke();
+        congratsPanel?.SetActive(true);
 
-       yield return new WaitForSeconds(2f);
-       /*bridge.SendResultToReact();*/
-       instructionText.text =
-      "Tiempo fase 1: " + phase1Timer.ToString("F1") + "s\n" +
-     "Tiempo fase 2: " + phase2Timer.ToString("F1") + "s\n" +
-      "Promedio: " + averageTime.ToString("F1") + "s";
-        ResultData result = new ResultData
+        yield return new WaitForSeconds(2f);
+        /*bridge.SendResultToReact();*/
+        //    instructionText.text =
+        //   "Tiempo fase 1: " + phase1Timer.ToString("F1") + "s\n" +
+        //  "Tiempo fase 2: " + phase2Timer.ToString("F1") + "s\n" +
+        //   "Promedio: " + averageTime.ToString("F1") + "s";
+        //     ResultData result = new ResultData
+        //     {
+        //         levelId = 1,
+        //         completed = true,
+
+        //         phase1Time = phase1Timer,
+        //         phase2Time = phase2Timer,
+        //         averageTime = averageTime,
+
+        //         phase1Stars = Phase1Stars,
+        //         phase2Stars = Phase2Stars
+        //     };
+        ReactConnection react =
+    FindFirstObjectByType<ReactConnection>();
+
+        if (react != null)
         {
-            levelId = 1,
-            completed = true,
-
-            phase1Time = phase1Timer,
-            phase2Time = phase2Timer,
-            averageTime = averageTime,
-
-            phase1Stars = Phase1Stars,
-            phase2Stars = Phase2Stars
-        };
-        /*
-        if (bridge != null)
-        {
-            bridge.Send(new LevelCompletedMessage{
-                result = result
-            });
-        }*/
+            react.Send(new LevelCompletedMessage());
+        }
     }
 }
- 
+

@@ -56,4 +56,11 @@ public class ReactConnection : MonoBehaviour
         public string type = "DEBUG";
         public string message;
     }
+
+
+}
+[System.Serializable]
+public class LevelCompletedMessage
+{
+    public string type = "LEVEL_COMPLETED";
 }
