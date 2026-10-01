@@ -130,7 +130,23 @@ public class Knob : MonoBehaviour
         );
     }
 
+    public void RotateLeft()
+    {
+        if (!isUnlocked || isRotating)
+            return;
 
+        if (currentPosition <= 0)
+            return;
+
+        KnobPosition nextPosition =
+            (KnobPosition)((int)currentPosition - 1);
+
+        currentPosition = nextPosition;
+
+        StartCoroutine(
+            RotateToPosition(nextPosition)
+        );
+    }
     private IEnumerator RotateToPosition(
         KnobPosition targetPosition)
     {
