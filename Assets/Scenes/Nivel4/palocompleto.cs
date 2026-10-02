@@ -1,11 +1,14 @@
 using UnityEngine;
+using TMPro; // LÍNEA OBLIGATORIA PARA USAR TMP_Text
 
 public class PaloCompleto : MonoBehaviour
 {
     [Header("Referencias de la Imagen Zoom")]
-    public GameObject PaloCompleto1;// Arrastra aquí el GameObject que contiene la imagen de zoom
+    public GameObject PaloCompleto1; // Arrastra aquí el GameObject que contiene la imagen de zoom
     public GameObject imagenZoom; 
     public GameObject Pitito; 
+    public TMP_Text textoSuperior;  // El texto central de la pantalla
+    public TMP_Text textoCostado;   // El texto de la izquierda ("Toca a Andy...")
 
     private void Start()
     {
@@ -13,7 +16,10 @@ public class PaloCompleto : MonoBehaviour
         if (imagenZoom != null)
         {
             imagenZoom.SetActive(false);
-            Pitito.SetActive(false);
+            if (Pitito != null) Pitito.SetActive(false);
+            
+            if (textoSuperior != null) textoSuperior.text = "toca a andy para continuar";
+            if (textoCostado != null) textoCostado.gameObject.SetActive(false);
         }
     }
 
@@ -27,9 +33,9 @@ public class PaloCompleto : MonoBehaviour
     {
         if (imagenZoom != null)
         {
-            PaloCompleto1.SetActive(false);
+            if (PaloCompleto1 != null) PaloCompleto1.SetActive(false);
             imagenZoom.SetActive(true);
-            Pitito.SetActive(true);
+            if (Pitito != null) Pitito.SetActive(true);
         }
         else
         {

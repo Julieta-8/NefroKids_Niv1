@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class Pitito : MonoBehaviour
 {
@@ -8,45 +9,55 @@ public class Pitito : MonoBehaviour
     public float pasoRotacion = -72f;
     
     [Header("Referencias y Tiempos")]
-    public GameObject palocompleto; // Arrastrá el GameObject del palo completo desde la jerarquía
+    public GameObject palocompleto; 
     public GameObject imagenZoom; 
     public GameObject Pitito1; 
-    public float tiempoEspera = 3f;
+    public float tiempoEspera = 2f; // Tiempo de espera tras acomodar el pitito a 0°
 
+    [Header("Interfaz de Fin de Juego")]
+    public GameObject panelFinal;
+    public TMP_Text textoFinal;
+    private bool bloqueado = false;
+
+    [Header("Textos de la Interfaz (UI)")]
+    public TMP_Text textoSuperior;  // El texto central de la pantalla
+    public TMP_Text textoCostado;   // El texto de la izquierda ("Toca a Andy...")
     private float rotacionActual;
     private bool cuentaIniciada = false;
 
     void Start()
     {
-        // Establecer la rotación inicial en Z
         rotacionActual = rotacionInicial;
         AplicarRotacion();
 
         if (palocompleto != null)
         {
             palocompleto.SetActive(false);
-          
+        }
+
+        if (textoSuperior != null)
+        {
+            textoSuperior.text = "Rota para conseguir que Andy esté en la posición correcta";
+        }
+
+        if (textoCostado != null)
+        {
+            textoCostado.gameObject.SetActive(false);
         }
     }
 
     void OnMouseDown()
     {
-        // Si ya está contando los 3 segundos en 0°, evitamos que sigan haciendo clic
-        if (cuentaIniciada) return;
+        if (cuentaIniciada || bloqueado) return;
 
-        // Sumamos -72°
         rotacionActual += pasoRotacion;
-
-        // Normalizamos el ángulo para que se mantenga en el rango (-360 a 360) o de 0 a 360
         rotacionActual = Mathf.Repeat(rotacionActual, 360f);
 
-        // Si el ángulo es prácticamente 0° (o 360°)
         if (Mathf.Approximately(rotacionActual, 0f) || Mathf.Approximately(rotacionActual, 360f))
         {
             rotacionActual = 0f;
             AplicarRotacion();
 
-            // Iniciamos la cuenta regresiva de 3 segundos
             StartCoroutine(EsperarYMostrarPalo());
         }
         else
@@ -64,19 +75,55 @@ public class Pitito : MonoBehaviour
     {
         cuentaIniciada = true;
 
-        // Espera los 3 segundos manteniendo la rotación en 0°
+        // 1. Espera inicial de la mecánica de rotación
         yield return new WaitForSeconds(tiempoEspera);
 
-        // Muestra la imagen del palo completo
         if (palocompleto != null)
         {
             imagenZoom.SetActive(false);
             Pitito1.SetActive(false);
             palocompleto.SetActive(true);
+
+            // 2. Muestra el mensaje de éxito
+            if (textoSuperior != null)
+            {
+                textoSuperior.text = "¡Excelente! Andy está en la posición correcta.";
+            }
+
+            // 3. PAUSA SOLICITADA: Espera 2 segundos antes de terminar completamente
+            yield return new WaitForSeconds(2f);
+
+            // 4. Muestra la pantalla final y concluye el juego
+            FinalizarJuego();
         }
         else
         {
             Debug.LogError("¡Falta asignar 'palocompleto' en el Inspector de Pitito!");
+        }
+    }
+
+    public void FinalizarJuego()
+    {
+        bloqueado = true;
+
+        if (panelFinal != null)
+        {
+            panelFinal.SetActive(true);
+        }
+
+        if (textoFinal != null)
+        {
+            textoFinal.text =
+                "¡Felicitaciones!\n\n" +
+                "Has identificado correctamente todos los materiales necesarios para la diálisis peritoneal.\n\n" +
+                "Ahora conoces su función y la importancia de utilizarlos correctamente.";
+        }
+
+        ReactConnection react = FindFirstObjectByType<ReactConnection>();
+
+        if (react != null)
+        {
+            react.Send(new LevelCompletedMessage());
         }
     }
 }
