@@ -71,7 +71,7 @@ public class Alcohol : MonoBehaviour
             if (progresoFrotado >= 1f)
             {
                 manosRenderer.sprite = manosFrotadas;
-                Textalc.text = "nivel completado!";
+                Textalc.text = "fase completada!";
                 secando = true;
             }
         }
