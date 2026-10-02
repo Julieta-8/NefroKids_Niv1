@@ -59,6 +59,7 @@ public class LevelManager : MonoBehaviour
             1 => "Nivel 1",
             2 => "Nivel 2",
             3 => "Nivel 3",
+            5 => "Nivel 5",
             _ => null
         };
 
@@ -96,6 +97,11 @@ public class LevelManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             StartLevel(3);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            StartLevel(5);
         }
     }
 

@@ -65,7 +65,7 @@ public class Nivel3 : MonoBehaviour
     private bool fechaChecked;
     private bool volumenChecked;
     private bool glucosaChecked;
-    
+
 
     [Header("================================")]
     [Header("FASE 2 - ANDY")]
@@ -172,7 +172,7 @@ public class Nivel3 : MonoBehaviour
         selectedBag = bag;
 
         StartCoroutine(ZoomBagRoutine());
-       
+
     }
     void GenerateBags()
     {
@@ -203,9 +203,9 @@ public class Nivel3 : MonoBehaviour
 
         fechaText.gameObject.SetActive(false);
 
-         volumenText.gameObject.SetActive(false);
+        volumenText.gameObject.SetActive(false);
 
-         glucosaText.gameObject.SetActive(false);
+        glucosaText.gameObject.SetActive(false);
 
         congratsPanel?.SetActive(false);
 
@@ -231,7 +231,7 @@ public class Nivel3 : MonoBehaviour
 
 
     }
- 
+
 
     // Update is called once per frame;
     void Update()
@@ -314,7 +314,7 @@ public class Nivel3 : MonoBehaviour
 
                 ShowDialogue();
 
-               // StartCoroutine(FinishRoutine());
+                // StartCoroutine(FinishRoutine());
 
                 break;
         }
@@ -597,8 +597,8 @@ public class Nivel3 : MonoBehaviour
 
         phase2Objects.SetActive(true);
 
-        backgroundRenderer.sprite =
-            AndyBackground;
+        // backgroundRenderer.sprite =
+        //     AndyBackground;
 
         currentStep = Step.Phase2Intro;
     }
@@ -985,7 +985,7 @@ public class Nivel3 : MonoBehaviour
                     "Ahora vamos a ver como colocar todo para por fin relizar la dialisis";
 
                 break;
-       
+
 
             case Step.ExplainGlucose:
 
@@ -1059,17 +1059,23 @@ public class Nivel3 : MonoBehaviour
 
                 break;
         }
-        
-        
+
+
     }
     private void FinishLevel()
     {
         instructionText.text =
             "¡Completaste correctamente el procedimiento!";
 
-
         congratsPanel.SetActive(true);
 
+        ReactConnection react =
+            FindFirstObjectByType<ReactConnection>();
+
+        if (react != null)
+        {
+            react.Send(new LevelCompletedMessage());
+        }
     }
 }
 

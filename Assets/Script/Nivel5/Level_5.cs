@@ -28,7 +28,7 @@ public class Level_5 : MonoBehaviour
     public enum Step
     {
         Intro,
-       // OpenPinza,
+        // OpenPinza,
 
         // 2. DRENAJE
         ChoosePosition1,
@@ -55,7 +55,7 @@ public class Level_5 : MonoBehaviour
         Finished
     }
 
-    
+
 
     //PERILLA////////////////////////////////
     [SerializeField]
@@ -99,7 +99,7 @@ public class Level_5 : MonoBehaviour
 
     public Button rightArrow;
     public Button leftArrow;
-    public Button  verifyButton;
+    public Button verifyButton;
 
     public Sprite DialisisInfusion;
     public Sprite DialisisDrenaje;
@@ -158,7 +158,7 @@ public class Level_5 : MonoBehaviour
 
 
 
-   
+
 
     public Collider2D ChicoDropZone;
 
@@ -173,7 +173,7 @@ public class Level_5 : MonoBehaviour
         // phase1Objects.SetActive(true);
         //phase2Objects.SetActive(false);
         Backgorund.SetActive(true);
-       
+
 
         congratsPanel.SetActive(false);
 
@@ -243,7 +243,7 @@ public class Level_5 : MonoBehaviour
              */
             case Step.Intro:
 
- 
+
 
                 break;
             case Step.RedirectFluid1:
@@ -256,7 +256,7 @@ public class Level_5 : MonoBehaviour
 
                 Phase2.SetActive(true);
                 Phase3.SetActive(true);
-                Phase1.SetActive(false); 
+                Phase1.SetActive(false);
                 Liquid2Obj.SetActive(true);
                 break;
 
@@ -322,20 +322,20 @@ public class Level_5 : MonoBehaviour
         nextButton.gameObject.SetActive(false);
     }
     void ToggleRikuExpression()
+    {
+        if (rikuRenderer == null) return;
+
+        rikuNeutralState = !rikuNeutralState;
+
+        if (rikuNeutralState)
         {
-            if (rikuRenderer == null) return;
-
-            rikuNeutralState = !rikuNeutralState;
-
-            if (rikuNeutralState)
-            {
-                rikuRenderer.sprite = rikuNeutral;
-            }
-            else
-            {
-                rikuRenderer.sprite = rikuCurious;
-            }
+            rikuRenderer.sprite = rikuNeutral;
         }
+        else
+        {
+            rikuRenderer.sprite = rikuCurious;
+        }
+    }
     /*private void StartOpenPinza()
     {
         currentStep = Step.OpenPinza;
@@ -404,7 +404,7 @@ public class Level_5 : MonoBehaviour
 
                 break;
             case Step.ChoosePosition1:
-           // case Step.ChoosePosition2:
+            // case Step.ChoosePosition2:
             case Step.ChoosePosition3:
             case Step.ChoosePosition4:
 
@@ -467,9 +467,9 @@ public class Level_5 : MonoBehaviour
     {
         pinObject.SetActive(true);
 
-       //OJO instructionText.text =    "Ahora colocá el PIN para asegurar el sistema.";
+        //OJO instructionText.text =    "Ahora colocá el PIN para asegurar el sistema.";
     }
-   
+
     private void StartChoosePosition1()
     {
         postionText.text =
@@ -528,7 +528,7 @@ public class Level_5 : MonoBehaviour
         leftArrow.gameObject.SetActive(false);
         rightArrow.gameObject.SetActive(false);
 
-       // knob.DisableInteraction();
+        // knob.DisableInteraction();
 
         currentStep = Step.Position1Correct;
 
@@ -541,7 +541,7 @@ public class Level_5 : MonoBehaviour
 
         Liquid1Obj.SetActive(true);
 
-       //OJO instructionText.text =        "Ahora seguí el recorrido del líquido hasta la bolsa de drenaje.";
+        //OJO instructionText.text =        "Ahora seguí el recorrido del líquido hasta la bolsa de drenaje.";
     }
     private void CorrectPosition2()
     {
@@ -549,12 +549,12 @@ public class Level_5 : MonoBehaviour
 
         leftArrow.gameObject.SetActive(false);
         rightArrow.gameObject.SetActive(false);
-       // knob.DisableInteraction();
+        // knob.DisableInteraction();
 
         currentStep = Step.Position2Correct;
 
         ShowDialogue(
-           
+
         );
     }
     private void ContinueFromPosition2()
@@ -576,7 +576,7 @@ public class Level_5 : MonoBehaviour
         currentStep = Step.Position3Correct;
 
         ShowDialogue(
-           
+
         );
     }
     private void ContinueFromPosition3()
@@ -595,7 +595,7 @@ public class Level_5 : MonoBehaviour
         currentStep = Step.Position4Correct;
 
         ShowDialogue(
-           
+
         );
     }
     private void ContinueFromPosition4()
@@ -660,7 +660,7 @@ public class Level_5 : MonoBehaviour
                 }
                 break;
         }*/
-    currentPosition = position;
+        currentPosition = position;
         Debug.Log("Level_5 recibió posición: " + position);
     }
     public void VerifyPosition()
@@ -734,7 +734,7 @@ public class Level_5 : MonoBehaviour
 
             case Step.ChoosePosition2:
                 postionText.text = "Esa no es la posición que necesitamos para realizar el lavado. Probá nuevamente.";
-                ShowDialogue( );
+                ShowDialogue();
 
                 break;
 
@@ -742,14 +742,14 @@ public class Level_5 : MonoBehaviour
             case Step.ChoosePosition3:
                 postionText.text = "Todavía no. Buscá la posición que permite comenzar la infusión.";
 
-                ShowDialogue( );
+                ShowDialogue();
 
                 break;
 
 
             case Step.ChoosePosition4:
                 postionText.text = "Todavía no. Necesitamos llevar la perilla hasta la posición final para cerrar el sistema.";
-                ShowDialogue( );
+                ShowDialogue();
 
                 break;
         }
@@ -758,7 +758,7 @@ public class Level_5 : MonoBehaviour
     {
         currentStep = Step.Infusion;
 
-       //OJO instructionText.text =   "Ahora seguí el recorrido del líquido hasta que termine la infusión.";
+        //OJO instructionText.text =   "Ahora seguí el recorrido del líquido hasta que termine la infusión.";
 
         //knob.DisableInteraction();
 
@@ -850,54 +850,54 @@ public class Level_5 : MonoBehaviour
     {
         Liquid1Obj.SetActive(true);
 
-// OJO       instructionText.text =          "Seguí el líquido hasta la bolsa de drenaje.";
+        // OJO       instructionText.text =          "Seguí el líquido hasta la bolsa de drenaje.";
     }
     private void StartFluid2()
     {
         Liquid2Obj.SetActive(true);
 
-      //OJO  instructionText.text =     "Seguí el líquido hasta el paciente.";
+        //OJO  instructionText.text =     "Seguí el líquido hasta el paciente.";
     }
     void BeginDrag(GameObject go)
+    {
+        draggingObject = go;
+
+        Vector3 mouseWorld =
+            Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        mouseWorld.z = 0f;
+
+        draggingOffset =
+            go.transform.position - mouseWorld;
+    }
+
+    void TryDrop(GameObject go)
+    {
+        bool insideDropZone = false;
+
+
+        // DROP MANOS
+        if ((go == Liquid1Obj) &&
+            Liquid1Position != null)
         {
-            draggingObject = go;
-
-            Vector3 mouseWorld =
-                Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            mouseWorld.z = 0f;
-
-            draggingOffset =
-                go.transform.position - mouseWorld;
+            insideDropZone =
+                Bolsa1Drop.OverlapPoint(go.transform.position);
         }
 
-        void TryDrop(GameObject go)
+        // SI FALLA
+        if (!insideDropZone)
         {
-            bool insideDropZone = false;
+            ReturnObject(go);
+            return;
+        }
 
-
-            // DROP MANOS
-            if ((go == Liquid1Obj) &&
-                Liquid1Position != null)
-            {
-                insideDropZone =
-                    Bolsa1Drop.OverlapPoint(go.transform.position);
-            }
-
-            // SI FALLA
-            if (!insideDropZone)
-            {
-                ReturnObject(go);
-                return;
-            }
-
-            // LIQUIDO1
-            if (go == Liquid1Obj &&
-                currentStep == Step.RedirectFluid1)
-            {
+        // LIQUIDO1
+        if (go == Liquid1Obj &&
+            currentStep == Step.RedirectFluid1)
+        {
             CompleteFluid1();
             return;
-            }
+        }
 
         // LIQUIDO2
         /*if (go == Liquid2Obj &&
@@ -915,26 +915,26 @@ public class Level_5 : MonoBehaviour
         }
     }
 
-        void ReturnObject(GameObject go)
+    void ReturnObject(GameObject go)
+    {
+        // PARTE1
+        if (go == Liquid1Obj &&
+            Liquid1Position != null)
         {
-            // PARTE1
-            if (go == Liquid1Obj &&
-                Liquid1Position != null)
-            {
-                go.transform.position =
-                    Liquid1Position.position;
-            }
-
-            // PARTE2
-            if (go == Liquid2Obj &&
-                Liquid2Position != null)
-            {
-                go.transform.position =
-                    Liquid2Position.position;
-            }
+            go.transform.position =
+                Liquid1Position.position;
         }
-        void CompleteFluid1()
+
+        // PARTE2
+        if (go == Liquid2Obj &&
+            Liquid2Position != null)
         {
+            go.transform.position =
+                Liquid2Position.position;
+        }
+    }
+    void CompleteFluid1()
+    {
         Liquid1Obj.SetActive(false);
 
         ChangeStep(Step.ChoosePosition2);
@@ -944,24 +944,24 @@ public class Level_5 : MonoBehaviour
         ShowDialogue();
     }
 
-      /*  void PlaceLiquid2()
-        {
-            if (BagCompleted) return;
+    /*  void PlaceLiquid2()
+      {
+          if (BagCompleted) return;
 
-        BagCompleted = true;
+      BagCompleted = true;
 
-            Liquid2Obj.SetActive(false);
-        Liquid1Obj.SetActive(false);
+          Liquid2Obj.SetActive(false);
+      Liquid1Obj.SetActive(false);
 
-        //SegundaBolsa.sprite = Bolsa2ConL;
+      //SegundaBolsa.sprite = Bolsa2ConL;
 
 
-        currentStep = Step.ChoosePosition3;
+      currentStep = Step.ChoosePosition3;
 
-        StartChoosePosition3();
-       
-            ShowDialogue();
-        }*/
+      StartChoosePosition3();
+
+          ShowDialogue();
+      }*/
     private void UpdateInstruction()
     {
         switch (currentStep)
@@ -973,16 +973,16 @@ public class Level_5 : MonoBehaviour
                     "cómo controlar el recorrido del líquido.";
 
                 break;
-                /*
+            /*
 
-            case Step.OpenPinza:
+        case Step.OpenPinza:
 
-                instructionText.text =
-                    "Primero tenemos que abrir la pinza " +
-                    "para permitir que el líquido pueda pasar.";
+            instructionText.text =
+                "Primero tenemos que abrir la pinza " +
+                "para permitir que el líquido pueda pasar.";
 
-                break;
-                */
+            break;
+            */
 
             case Step.ChoosePosition1:
 
@@ -1079,6 +1079,11 @@ public class Level_5 : MonoBehaviour
 
         congratsPanel.SetActive(true);
 
+        ReactConnection react = FindFirstObjectByType<ReactConnection>();
+        if (react != null)
+        {
+            react.Send(new LevelCompletedMessage());
+        }
     }
 
     // Update is called once per frame
