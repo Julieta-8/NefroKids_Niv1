@@ -1,41 +1,18 @@
-/*using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private void OnEnable()
-    {
-        ReactConnection.OnMessageReceived += ProcessMessage;
-    }
-
-    private void OnDisable()
-    {
-        ReactConnection.OnMessageReceived -= ProcessMessage;
-    }
-
-    void ProcessMessage(string json)
-    {
-        StartLevelMessage message =
-            JsonUtility.FromJson<StartLevelMessage>(json);
-
-        switch (message.type)
-        {
-            case "START_LEVEL":
-                StartLevel(message.level);
-                break;
-        }
-    }
+    // Start is called before the first frame update
     void Start()
     {
-        ReactConnection react = FindFirstObjectByType<ReactConnection>();
-
-        react.Send(new ReadyMessage());
+        
     }
-    
-    void StartLevel(int level)
+
+    // Update is called once per frame
+    void Update()
     {
-        Debug.Log($"Iniciando nivel {level}");
+        
     }
 }
-*/
-
-

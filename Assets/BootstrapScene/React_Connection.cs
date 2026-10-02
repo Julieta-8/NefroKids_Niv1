@@ -9,12 +9,23 @@ public class ReactConnection : MonoBehaviour
     private static extern void SendToReactNative(string json);
 #endif
 
-    // Evento para que otros scripts escuchen los mensajes
     public static Action<string> OnMessageReceived;
 
-    /// <summary>
-    /// Envía cualquier objeto serializable a React Native.
-    /// </summary>
+    private static ReactConnection instance;
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+
+        DontDestroyOnLoad(gameObject);
+    }
+
     public void Send(object message)
     {
         string json = JsonUtility.ToJson(message);
@@ -26,9 +37,6 @@ public class ReactConnection : MonoBehaviour
 #endif
     }
 
-    /// <summary>
-    /// React Native llama a este método mediante SendMessage().
-    /// </summary>
     public void Receive(string json)
     {
         Debug.Log($"[ReactConnection] Recibido: {json}");
@@ -36,6 +44,7 @@ public class ReactConnection : MonoBehaviour
 
         OnMessageReceived?.Invoke(json);
     }
+
     public void Log(string message)
     {
         Send(new DebugMessage { message = message });
@@ -47,4 +56,11 @@ public class ReactConnection : MonoBehaviour
         public string type = "DEBUG";
         public string message;
     }
+
+
+}
+[System.Serializable]
+public class LevelCompletedMessage
+{
+    public string type = "LEVEL_COMPLETED";
 }

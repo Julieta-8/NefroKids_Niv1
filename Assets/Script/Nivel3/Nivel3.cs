@@ -188,6 +188,10 @@ public class Nivel3 : MonoBehaviour
         bag3.bagData =
             GenerateRandomBag(correct == 2);
     }
+    private void Start()
+    {
+        StartLevel(); // reemplazar por el nombre real
+    }
     public void StartLevel()
     {
         GenerateBags();
@@ -1055,6 +1059,8 @@ public class Nivel3 : MonoBehaviour
 
                 break;
         }
+        
+        
     }
     private void FinishLevel()
     {
@@ -1066,36 +1072,22 @@ public class Nivel3 : MonoBehaviour
 
     }
 }
-   /* IEnumerator FinishRoutine()
-    {
-        IsCompleted = true;
-        OnLevelCompleted?.Invoke();
-        congratsPanel?.SetActive(true);
 
+// IEnumerator FinishRoutine()
+// {
+//     IsCompleted = true;
 
+//     OnLevelCompleted?.Invoke();
 
-        ResultData result = new ResultData
-        {
-            levelId = 3,
-         
-        };
-        React_Connection bridge = FindObjectOfType<React_Connection>();
-        if (bridge != null)
-        {
-            bridge.SendResult(result);
-        }
-        if (!string.IsNullOrEmpty(nextSceneName))
-        {
-            SceneManager.LoadScene(nextSceneName);
-        }
-    }
+//     congratsPanel?.SetActive(true);
 
+//     yield return new WaitForSeconds(2f);
 
+//     ReactConnection react =
+//         FindFirstObjectByType<ReactConnection>();
 
-
-
-
-
-
-
-}*/
+//     if (react != null)
+//     {
+//         react.Send(new LevelCompletedMessage());
+//     }
+// }

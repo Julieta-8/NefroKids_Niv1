@@ -1,14 +1,22 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    private Level_1 level1Manager;
-    private Level_2 level2Manager;
-    private Nivel3 level3Manager;
+    private static LevelManager instance;
 
-    [SerializeField] private GameObject nivel1;
-    [SerializeField] private GameObject nivel2;
-    [SerializeField] private GameObject nivel3;
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void OnEnable()
     {
@@ -19,93 +27,90 @@ public class LevelManager : MonoBehaviour
     {
         ReactConnection.OnMessageReceived -= ProcessMessage;
     }
-    private void Awake()
-    {
-        level1Manager = nivel1.GetComponentInChildren<Level_1>(true);
-        level2Manager = nivel2.GetComponentInChildren<Level_2>(true);
-        level3Manager = nivel3.GetComponentInChildren<Nivel3>(true);
-
-    }
 
     private void Start()
     {
-        nivel1.SetActive(false);
-        nivel2.SetActive(false);
-        nivel3.SetActive(false);
-#if UNITY_EDITOR
-        Debug.Log($"[DEBUG] Iniciando automáticamente el nivel {3}");
-        StartLevel(3);
-#else
         ReactConnection react = FindFirstObjectByType<ReactConnection>();
-        react.Log("Iniciando nivel");
-        react.Send(new ReadyMessage());
-#endif
+
+        if (react != null)
+        {
+            react.Log("Bootstrap listo");
+            react.Send(new ReadyMessage());
+        }
     }
 
     private void ProcessMessage(string json)
     {
-        ReactConnection react = FindFirstObjectByType<ReactConnection>();
-
-        react.Log("Entró a ProcessMessage");
+        Debug.Log($"[LevelManager] Mensaje recibido: {json}");
 
         StartLevelMessage message =
             JsonUtility.FromJson<StartLevelMessage>(json);
 
-        react.Log($"Tipo: {message.type}");
-        react.Log($"Nivel: {message.level}");
-
         if (message.type == "START_LEVEL")
         {
-            react.Log("Voy a StartLevel");
-
             StartLevel(message.level);
         }
     }
 
     private void StartLevel(int level)
     {
-        nivel1.SetActive(false);
-        nivel2.SetActive(false);
-        nivel3.SetActive(false);
-
-        switch (level)
+        string sceneName = level switch
         {
-            case 1:
-                nivel1.SetActive(true);
-                level1Manager.StartLevel();
-                break;
+            1 => "Nivel 1",
+            2 => "Nivel 2",
+            3 => "Nivel 3",
+            _ => null
+        };
 
-            case 2:
+        if (sceneName == null)
+        {
+            Debug.LogError($"[LevelManager] Nivel inválido: {level}");
+            return;
+        }
 
-                nivel2.SetActive(true);
-                level2Manager.StartLevel();
+        if (SceneManager.GetActiveScene().name == sceneName)
+        {
+            Debug.Log($"[LevelManager] Ya estamos en {sceneName}");
+            return;
+        }
 
-                break;
-            case 3:
+        Debug.Log($"[LevelManager] Cargando {sceneName}");
 
-                nivel3.SetActive(true);
-                level3Manager.StartLevel();
+        SceneManager.LoadScene(sceneName);
+    }
 
-                break;
+#if UNITY_EDITOR
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            StartLevel(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            StartLevel(2);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            StartLevel(3);
         }
     }
+
+#endif
 }
 
-    [System.Serializable]
-    public class LevelCompletedMessage
-    {
-        public string type = "LEVEL_COMPLETED";
+[System.Serializable]
+public class StartLevelMessage
+{
+    public string type;
+    public int level;
+}
 
-        public ResultData result;
-    }
-    [System.Serializable]
-    public class ReadyMessage
-    {
-        public string type = "READY";
-    }
-    [System.Serializable]
-    public class StartLevelMessage
-    {
-        public string type;
-        public int level;
-    }
+[System.Serializable]
+public class ReadyMessage
+{
+    public string type = "READY";
+}

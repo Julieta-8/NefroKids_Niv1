@@ -11,7 +11,7 @@ public class Level_2 : MonoBehaviour
     [Header("Materiales")]
     [SerializeField] private MaterialDialisis[] materiales;
 
-  
+
 
     [Header("Cartas")]
     [SerializeField] private cardScript[] cartas;
@@ -228,7 +228,6 @@ public class Level_2 : MonoBehaviour
 
     void FinalizarJuego()
     {
-        //cartas.SetActive(false);
         bloqueado = true;
 
         panelFinal.SetActive(true);
@@ -239,6 +238,14 @@ public class Level_2 : MonoBehaviour
                 "¡Felicitaciones!\n\n" +
                 "Has identificado correctamente todos los materiales necesarios para la diálisis peritoneal.\n\n" +
                 "Ahora conoces su función y la importancia de utilizarlos correctamente.";
+        }
+
+        ReactConnection react =
+            FindFirstObjectByType<ReactConnection>();
+
+        if (react != null)
+        {
+            react.Send(new LevelCompletedMessage());
         }
     }
 

@@ -38,8 +38,8 @@ public class Knob : MonoBehaviour
     public bool IsUnlocked => isUnlocked;
 
 
-    // Avisará cuando la perilla terminó de llegar
-    // a una posición.
+    // Avisarï¿½ cuando la perilla terminï¿½ de llegar
+    // a una posiciï¿½n.
     public event Action<KnobPosition> OnPositionReached;
 
 
@@ -72,7 +72,7 @@ public class Knob : MonoBehaviour
 
 
     // =====================================================
-    // INTERACCIÓN
+    // INTERACCIï¿½N
     // =====================================================
 
     public void EnableInteraction()
@@ -88,7 +88,7 @@ public class Knob : MonoBehaviour
 
 
     // Estos dos pueden quedar como alias para mantener
-    // compatibilidad con tu código anterior.
+    // compatibilidad con tu cï¿½digo anterior.
 
     public void Unlock()
     {
@@ -214,7 +214,7 @@ public class Knob : MonoBehaviour
 
 
     // =====================================================
-    // VOLVER A UNA POSICIÓN
+    // VOLVER A UNA POSICIï¿½N
     // =====================================================
 
     public void ResetToPosition(
