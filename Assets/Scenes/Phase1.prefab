@@ -337,6 +337,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MaskPosition
       objectReference: {fileID: 0}
+    - target: {fileID: 6873012668186794420, guid: 4243f96addb35f445b80498612bed7ce, type: 3}
+      propertyPath: m_Size.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6873012668186794420, guid: 4243f96addb35f445b80498612bed7ce, type: 3}
+      propertyPath: m_Size.y
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

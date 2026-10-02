@@ -952,7 +952,7 @@ public class Nivel3 : MonoBehaviour
         AndyRenderer.sprite = AndyLimpio;
 
         currentStep = Step.TowelPlaced;
-
+        FinishLevel();
         ShowDialogue();
     }
     void ToggleRikuExpression()
@@ -1062,7 +1062,15 @@ public class Nivel3 : MonoBehaviour
         
         
     }
-    
+    private void FinishLevel()
+    {
+        instructionText.text =
+            "¡Completaste correctamente el procedimiento!";
+
+
+        congratsPanel.SetActive(true);
+
+    }
 }
 
 // IEnumerator FinishRoutine()

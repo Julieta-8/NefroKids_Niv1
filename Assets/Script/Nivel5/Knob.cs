@@ -1,79 +1,290 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+using System;
+using System.Collections;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-//public class Knob : MonoBehaviour
-//{
-//    [SerializeField] private Transform knob;
+public class Knob : MonoBehaviour
+{
+    public enum KnobPosition
+    {
+        Posicion1,
+        Posicion2,
+        Posicion3,
+        Posicion4
+    }
 
-//    [SerializeField] private float[] rotationAngles;
+    [Header("REFERENCIA")]
+    [SerializeField] private Transform knob;
 
-//    [SerializeField] private float rotationDuration = 0.4f;
+    [Header("ROTACIONES")]
+    [SerializeField] private float[] rotationAngles;
 
-//    private int currentPosition = 0;
+    [SerializeField] private float rotationDuration = 0.4f;
 
-//    private bool isRotating = false;
-//    private bool isUnlocked = false;
+    [Header("ESTADO")]
+    [SerializeField]
+    private KnobPosition currentPosition =
+        KnobPosition.Posicion1;
 
-//    public int CurrentPosition => currentPosition;
+    private bool isRotating = false;
+    private bool isUnlocked = false;
 
-//    public void Unlock()
-//    {
-//        isUnlocked = true;
-//    }
+    public KnobPosition CurrentPosition => currentPosition;
 
-//    public void RotateRight()
-//    {
-//        if (!isUnlocked || isRotating)
-//            return;
+    public bool IsRotating => isRotating;
 
-//        if (currentPosition >= rotationAngles.Length - 1)
-//            return;
+    public bool IsUnlocked => isUnlocked;
 
-//        currentPosition++;
 
-//        StartCoroutine(RotateAnimation());
-//    }
-//    private IEnumerator RotateAnimation()
-//    {
-//        isRotating = true;
+    // Avisarï¿½ cuando la perilla terminï¿½ de llegar
+    // a una posiciï¿½n.
+    public event Action<KnobPosition> OnPositionReached;
 
-//        float startAngle = knob.eulerAngles.z;
-//        float targetAngle = rotationAngles[currentPosition];
 
-//        float elapsed = 0f;
+    private void Start()
+    {
+        SetInitialPosition();
+    }
 
-//        while (elapsed < rotationDuration)
-//        {
-//            elapsed += Time.deltaTime;
 
-//            float t = elapsed / rotationDuration;
+    private void SetInitialPosition()
+    {
+        currentPosition = KnobPosition.Posicion1;
 
-//            float angle = Mathf.LerpAngle(
-//                startAngle,
-//                targetAngle,
-//                t
-//            );
+        if (rotationAngles == null ||
+            rotationAngles.Length == 0)
+        {
+            Debug.Log(
+                "Knob: No hay rotationAngles configurados."
+            );
 
-//            knob.rotation = Quaternion.Euler(0, 0, angle);
+            return;
+        }
 
-//            yield return null;
-//        }
+        knob.rotation = Quaternion.Euler(
+            0,
+            0,
+            rotationAngles[(int)currentPosition]
+        );
+    }
 
-//        knob.rotation =
-//            Quaternion.Euler(0, 0, targetAngle);
 
-//        isRotating = false;
-//    }
-//    public void RotateLeft()
-//    {
-//        if (!isUnlocked || isRotating)
-//            return;
+    // =====================================================
+    // INTERACCIï¿½N
+    // =====================================================
 
-//        // Podríamos bloquearlo porque el sistema
-//        // solo permite avanzar.
-//        ShowWrongDirection();
+    public void EnableInteraction()
+    {
+        isUnlocked = true;
+    }
 
-//        return;
-//    }
-//}
+
+    public void DisableInteraction()
+    {
+        isUnlocked = false;
+    }
+
+
+    // Estos dos pueden quedar como alias para mantener
+    // compatibilidad con tu cï¿½digo anterior.
+
+    public void Unlock()
+    {
+        EnableInteraction();
+    }
+
+
+    public void Lock()
+    {
+        DisableInteraction();
+    }
+
+
+    // =====================================================
+    // MOVIMIENTO
+    // =====================================================
+
+    public void RotateRight()
+    {
+        if (!isUnlocked)
+            return;
+
+        if (isRotating)
+            return;
+
+        if (currentPosition ==
+            KnobPosition.Posicion4)
+            return;
+
+
+        KnobPosition nextPosition =
+            (KnobPosition)(
+                (int)currentPosition + 1
+            );
+
+
+        StartCoroutine(
+            RotateToPosition(nextPosition)
+        );
+    }
+
+    public void RotateLeft()
+    {
+        if (!isUnlocked || isRotating)
+            return;
+
+        if (currentPosition <= 0)
+            return;
+
+        KnobPosition nextPosition =
+            (KnobPosition)((int)currentPosition - 1);
+
+        currentPosition = nextPosition;
+
+        StartCoroutine(
+            RotateToPosition(nextPosition)
+        );
+    }
+    private IEnumerator RotateToPosition(
+        KnobPosition targetPosition)
+    {
+        isRotating = true;
+
+
+        float startAngle =
+            knob.eulerAngles.z;
+
+        float targetAngle =
+            rotationAngles[
+                (int)targetPosition
+            ];
+
+
+        float elapsed = 0f;
+
+
+        while (elapsed < rotationDuration)
+        {
+            elapsed += Time.deltaTime;
+
+            float t =
+                elapsed / rotationDuration;
+
+
+            float angle =
+                Mathf.LerpAngle(
+                    startAngle,
+                    targetAngle,
+                    t
+                );
+
+
+            knob.rotation =
+                Quaternion.Euler(
+                    0,
+                    0,
+                    angle
+                );
+
+
+            yield return null;
+        }
+
+
+        knob.rotation =
+            Quaternion.Euler(
+                0,
+                0,
+                targetAngle
+            );
+
+
+        currentPosition = targetPosition;
+
+        isRotating = false;
+
+
+        // Avisamos al Level_5
+        OnPositionReached?.Invoke(
+            currentPosition
+        );
+    }
+
+
+    // =====================================================
+    // VOLVER A UNA POSICIï¿½N
+    // =====================================================
+
+    public void ResetToPosition(
+        KnobPosition targetPosition)
+    {
+        if (isRotating)
+            return;
+
+        StartCoroutine(
+            ResetAnimation(targetPosition)
+        );
+    }
+
+
+    private IEnumerator ResetAnimation(
+        KnobPosition targetPosition)
+    {
+        isRotating = true;
+
+
+        float startAngle =
+            knob.eulerAngles.z;
+
+        float targetAngle =
+            rotationAngles[
+                (int)targetPosition
+            ];
+
+
+        float elapsed = 0f;
+
+
+        while (elapsed < rotationDuration)
+        {
+            elapsed += Time.deltaTime;
+
+            float t =
+                elapsed / rotationDuration;
+
+
+            float angle =
+                Mathf.LerpAngle(
+                    startAngle,
+                    targetAngle,
+                    t
+                );
+
+
+            knob.rotation =
+                Quaternion.Euler(
+                    0,
+                    0,
+                    angle
+                );
+
+
+            yield return null;
+        }
+
+
+        knob.rotation =
+            Quaternion.Euler(
+                0,
+                0,
+                targetAngle
+            );
+
+
+        currentPosition = targetPosition;
+
+        isRotating = false;
+    }
+}
