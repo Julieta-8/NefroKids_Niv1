@@ -990,19 +990,19 @@ public class Nivel3 : MonoBehaviour
             case Step.ExplainGlucose:
 
                 instructionText.text =
-                    "La glucosa es un tipo de azúcar que puede estar dentro de la bolsa.\r\nEn esta misión tenemos que mirar cuánto hay y comprobar que tenga el valor indicado. 1,5 %\r\n\r\n👀 Hay que mirar este número";
+                    "La glucosa es un tipo de azúcar que puede estar dentro de la bolsa.\r\nEn esta misión tenemos que mirar cuánto hay y comprobar que tenga el valor indicado. 1,5";
 
                 break;
 
             case Step.ExplainExpiration:
 
-                instructionText.text = "Es la fecha que nos dice hasta cuándo podemos usar la bolsa.\r\nSi la fecha ya pasó, la bolsa está vencida y no debemos elegirla.\r\n10/2028\r\n\r\n✅ Todavía sirve";
+                instructionText.text = "Es la fecha que nos dice hasta cuándo podemos usar la bolsa.\r\nSi la fecha ya pasó, la bolsa está vencida y no debemos elegirla.";
 
                 break;
 
             case Step.ExplainVolume:
 
-                instructionText.text = "El volumen nos dice cuánto líquido hay dentro de la bolsa.\r\nTenemos que comprobar que tenga la cantidad indicada.2000 ml\r\n\r\n✅ Cantidad correcta";
+                instructionText.text = "El volumen nos dice cuánto líquido hay dentro de la bolsa.\r\nTenemos que comprobar que tenga la cantidad indicada.2000 ml";
 
                 break;
 
