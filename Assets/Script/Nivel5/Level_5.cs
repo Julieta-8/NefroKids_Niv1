@@ -908,7 +908,7 @@ public class Level_5 : MonoBehaviour
         }*/
 
         if (go == Liquid2Obj &&
-                currentStep == Step.RedirectFluid2)
+                currentStep == Step.Infusion)
         {
 
             CompleteInfusion(); return;
