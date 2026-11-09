@@ -123,7 +123,8 @@ public class Level_1 : MonoBehaviour
 
     public SpriteRenderer backgroundRenderer;
     public SpriteRenderer backgroundRenderer_2;
-
+    public SpriteRenderer whiteB;
+    public Sprite White;
     public Sprite roomBackground;
     public Sprite sinkBackground;
 

@@ -92,6 +92,8 @@ public class Nivel3 : MonoBehaviour
     [Header("================================")]
 
     public SpriteRenderer backgroundRenderer;
+    public SpriteRenderer whiteB;
+    public Sprite White;
     public Sprite Mesa;
     public Sprite roomBackground;
     public Sprite AndyBackground;
