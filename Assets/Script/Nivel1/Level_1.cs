@@ -860,7 +860,7 @@ public class Level_1 : MonoBehaviour
             case Step.Intro:
 
                 instructionText.text =
-                    "�Hola! Soy Riku y voy a ense�arte c�mo prepararte correctamente.";
+                    "Hola! Soy Riku y voy a ensenarte como prepararte correctamente.";
 
                 break;
 
@@ -869,28 +869,28 @@ public class Level_1 : MonoBehaviour
             case Step.DragVest:
 
                 instructionText.text =
-                    "Primero coloca el chaleco sobre el maniqu�.";
+                    "Primero coloca el chaleco sobre el maniqui.";
                 HideDialogue();
                 break;
 
             case Step.VestPlaced:
 
                 instructionText.text =
-                    "�Muy bien! Ahora continuemos.";
+                    "Muy bien! Ahora continuemos.";
 
                 break;
 
             case Step.DragMask:
 
                 instructionText.text =
-                    "Ahora coloca el barbijo sobre el maniqu�.";
+                    "Ahora coloca el barbijo sobre el maniqui.";
                 HideDialogue();
                 break;
 
             case Step.MaskPlaced:
 
                 instructionText.text =
-                    "�Excelente! Ahora vamos a lavarnos las manos.";
+                    "Excelente! Ahora vamos a lavarnos las manos.";
 
                 break;
 
@@ -914,7 +914,7 @@ public class Level_1 : MonoBehaviour
             case Step.SoapPlaced:
 
                 instructionText.text =
-                    "�Perfecto! Ahora abre la canilla.";
+                    "Perfecto! Ahora abre la canilla.";
 
                 break;
 
@@ -928,13 +928,13 @@ public class Level_1 : MonoBehaviour
             case Step.WaterRunning:
 
                 instructionText.text =
-                    "�Muy bien! Ahora seca las manos con la toalla.";
+                    "Muy bien! Ahora seca las manos con la toalla.";
 
                 break;
             case Step.TurnOffWater:
 
                 instructionText.text =
-                    "�Muy bien! Ahora seca las manos con la toalla.";
+                    "Muy bien! Ahora seca las manos con la toalla.";
                 HideDialogue();
                 break;
             case Step.DragTowel:
@@ -947,14 +947,14 @@ public class Level_1 : MonoBehaviour
             case Step.TowelPlaced:
 
                 instructionText.text =
-                    "�Excelente trabajo! Terminaste correctamente.";
+                    "Excelente trabajo! Terminaste correctamente.";
 
                 break;
 
             case Step.Finished:
 
                 instructionText.text =
-                    "�Completado!";
+                    "Completado!";
 
                 break;
         }

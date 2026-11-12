@@ -19,4 +19,4 @@ MonoBehaviour:
   importancia: "Ayuda a preparar la medicaci\xF3n sin que se contamine antes de usarla."
   riesgo: "Si una aguja ya fue usada o no est\xE1 limpia, puede lastimar a quien
     la manipula."
-  imagen: {fileID: 21300000, guid: 4e068fe3bfb413d44bdf3d37974f1992, type: 3}
+  imagen: {fileID: 21300000, guid: 69cecc09b602bbf4f86b685299ca6b81, type: 3}
